@@ -1,15 +1,4 @@
 /*
-public class User {
-    private int id;
-    private String pname;
-    private String sname1;
-    private String sname2;
-    private String email;
-    private String pass;
-    private String bday;
-    private String address;
-    private String pcode;
-    private String country;
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -39,7 +28,7 @@ public class User {
     private Statement set;
     private ResultSet rs;
     
-    // Constructor
+    // Constructor of the User Object
     public User(int id, String pname, String sname1, String sname2, 
             String email, String pass, String bday, String address, 
             String pcode, String country, int flightsBought){
@@ -74,8 +63,9 @@ public class User {
     public boolean insertUser(User user){
         boolean inserted = false;
         int insertedId = -1;
-        String query = "INSERT INTO circuito (NOMBRE, CIUDAD, PAIS, LONGITUD, "
-                + "N_CURVAS, N_VUELTAS) VALUES ('"+user.pname+"',"
+        String query = "INSERT INTO users (NOMBRE, CIUDAD, PAIS, LONGITUD, "
+                + "N_C"
+                + "URVAS, N_VUELTAS) VALUES ('"+user.pname+"',"
                 + "'"+user.sname1+"','"+user.sname2+"',"+user.email+","
                 + ""+user.pass+","+user.bday+","+user.address+","+user.pcode+","
                 + ""+user.country+","+user.boughtFlights+")";
@@ -97,7 +87,7 @@ public class User {
     public boolean updateUser(User user){
         boolean updated = false;
         int updatedId = 0;
-        String query = "UPDATE TABLE circuito SET prename="+user.pname+","
+        String query = "UPDATE TABLE users SET prename="+user.pname+","
                 + "surname1="+user.sname1+", surname2="+user.sname2+", "
                 + "email= "+user.email+",password= "+user.pass+","
                 + "birthday= "+user.bday+", address= "+user.address+", "

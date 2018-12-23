@@ -70,7 +70,7 @@ public class Administrator {
     public boolean updateUser(Administrator admin){
         boolean updated = false;
         int updatedId = 0;
-        String query = "UPDATE TABLE sales SET email="+admin.email+","
+        String query = "UPDATE TABLE administrator SET email="+admin.email+","
                 + "password="+admin.pass+", prename="+admin.pname+", "
                 + "surname1= "+admin.sname1+",surname2= "+admin.sname2+
                 "WHERE id = "+admin.id+";";
@@ -91,7 +91,7 @@ public class Administrator {
     public boolean deleteUser(int id){
         boolean deleted = false;
         int deletedId = -1;
-        String query = "DELETE FROM sales WHERE id="+id+";";
+        String query = "DELETE FROM administrator WHERE id="+id+";";
         try {
             set = con.createStatement();
             deletedId = set.executeUpdate(query,Statement.SUCCESS_NO_INFO);

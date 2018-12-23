@@ -65,7 +65,7 @@ public class Reservation {
     public boolean updateUser(Reservation res){
         boolean updated = false;
         int updatedId = 0;
-        String query = "UPDATE TABLE sales SET user_id="+res.userId+","
+        String query = "UPDATE TABLE reservation SET user_id="+res.userId+","
                 + "flight_id="+res.flightId+";";
         try {
             set = con.createStatement();
