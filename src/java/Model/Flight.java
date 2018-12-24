@@ -12,7 +12,7 @@ import java.util.Date;
  * @author fabri
  */
 public class Flight {
-    
+
     private int id;
     private String locator;
     private Route route;
@@ -76,7 +76,5 @@ public class Flight {
     public void setSeatsLeft(int seatsLeft) {
         this.seatsLeft = seatsLeft;
     }
-    
-    
-    
+
 }

@@ -10,7 +10,7 @@ package Model;
  * @author fabri
  */
 public class Airport {
-    
+
     private int id;
     private String name;
     private String country;
@@ -54,7 +54,5 @@ public class Airport {
     public void setTax(int tax) {
         this.tax = tax;
     }
-    
-    
-    
+
 }

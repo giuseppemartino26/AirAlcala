@@ -32,9 +32,7 @@ public class JDBCUserDAO implements UserDAO {
 
     @Override
     public User find(int id) {
-        String query = "SELECT ...";
-        User user = new User();
-        return user;
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override

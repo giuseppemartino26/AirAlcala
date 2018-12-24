@@ -10,7 +10,7 @@ package Model;
  * @author fabri
  */
 public class Airplane {
-    
+
     private int id;
     private String name;
     private int places;
@@ -45,8 +45,4 @@ public class Airplane {
         this.places = places;
     }
 
-    
-    
-    
-    
 }

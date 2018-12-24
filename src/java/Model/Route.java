@@ -10,23 +10,23 @@ package Model;
  * @author fabri
  */
 public class Route {
-    
+
     private int id;
-    private String origin;
-    private String destination;
+    private Airport origin;
+    private Airport destination;
     private Airplane plane;
     private int ticketPrice;
     private int tax;
     private int luggagePrice;
 
-    public Route(int id, String origin, String destination, Airplane plane, int ticket_price, int tax, int luggage_price) {
+    public Route(int id, Airport origin, Airport destination, Airplane plane, int ticketPrice, int tax, int luggagePrice) {
         this.id = id;
         this.origin = origin;
         this.destination = destination;
         this.plane = plane;
-        this.ticketPrice = ticket_price;
+        this.ticketPrice = ticketPrice;
         this.tax = tax;
-        this.luggagePrice = luggage_price;
+        this.luggagePrice = luggagePrice;
     }
 
     public int getId() {
@@ -37,19 +37,19 @@ public class Route {
         this.id = id;
     }
 
-    public String getOrigin() {
+    public Airport getOrigin() {
         return origin;
     }
 
-    public void setOrigin(String origin) {
+    public void setOrigin(Airport origin) {
         this.origin = origin;
     }
 
-    public String getDestination() {
+    public Airport getDestination() {
         return destination;
     }
 
-    public void setDestination(String destination) {
+    public void setDestination(Airport destination) {
         this.destination = destination;
     }
 
@@ -84,7 +84,5 @@ public class Route {
     public void setLuggagePrice(int luggagePrice) {
         this.luggagePrice = luggagePrice;
     }
-    
-    
-    
+
 }
