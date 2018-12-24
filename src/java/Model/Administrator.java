@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Models;
+package Model;
 
 import java.sql.*;
 
@@ -11,29 +11,28 @@ import java.sql.*;
  *
  * @author marti
  */
-public class Sales {
+public class Administrator {
     private int id;
-    private int flightId;
-    private int userId;
-    private String place;
-    private int noLuggage;
-    private int ccId;
+    private String email;
+    private String pass;
+    private String pname;
+    private String sname1;
+    private String sname2;
     
     private Connection con;
     private Statement set;
     private ResultSet rs;
-
-    //Constructor
-    public Sales(int id, int flightId, int userId, String place, int noLuggage, int ccId){
+    
+    public Administrator(int id, String email, String pass, String pname, String sname1, String sname2){
         this.id = id;
-        this.flightId = flightId;
-        this.userId = userId;
-        this.place = place;
-        this.noLuggage = noLuggage;
-        this.ccId = ccId;
+        this. email = email;
+        this.pass = pass;
+        this.pname = pname;
+        this.sname1 = sname1;
+        this.sname2 = sname2;
     }
     
-    // Connect to DataBase
+     // Connect to DataBase
     public void dbConnect() {
         try{
             Class.forName( "org.apache.derby.jdbc.ClientDriver" );
@@ -47,12 +46,12 @@ public class Sales {
     }
     
      // Insert User Object passed from Controller into DataBase
-    public boolean insertUser(Sales sales){
+    public boolean insertUser(Administrator admin){
         boolean inserted = false;
         int insertedId = -1;
-        String query = "INSERT INTO sales (flight_id, user_id, place, number_Luggages, "
-                + "credit_card) VALUES ("+sales.flightId+","+sales.userId+","
-                + ""+sales.place+"',"+sales.noLuggage+","+sales.ccId+")";
+        String query = "INSERT INTO administrator (email, password, prename, surname1, "
+                + "surname2) VALUES ("+admin.email+","+admin.pass+","
+                + ""+admin.pname+"',"+admin.sname1+","+admin.sname2+")";
         try {
             set = con.createStatement();
             insertedId = set.executeUpdate(query,Statement.RETURN_GENERATED_KEYS);
@@ -68,13 +67,13 @@ public class Sales {
     }
     
     // Update User by Object passed from Controller
-    public boolean updateUser(Sales sales){
+    public boolean updateUser(Administrator admin){
         boolean updated = false;
         int updatedId = 0;
-        String query = "UPDATE TABLE sales SET flight_id="+sales.flightId+","
-                + "user_id="+sales.userId+", place="+sales.place+", "
-                + "email= "+sales.noLuggage+",credid_card= "+sales.ccId+
-                "WHERE id = "+sales.id+";";
+        String query = "UPDATE TABLE administrator SET email="+admin.email+","
+                + "password="+admin.pass+", prename="+admin.pname+", "
+                + "surname1= "+admin.sname1+",surname2= "+admin.sname2+
+                "WHERE id = "+admin.id+";";
         try {
             set = con.createStatement();
             updatedId = set.executeUpdate(query,Statement.SUCCESS_NO_INFO);
@@ -92,7 +91,7 @@ public class Sales {
     public boolean deleteUser(int id){
         boolean deleted = false;
         int deletedId = -1;
-        String query = "DELETE FROM sales WHERE id="+id+";";
+        String query = "DELETE FROM administrator WHERE id="+id+";";
         try {
             set = con.createStatement();
             deletedId = set.executeUpdate(query,Statement.SUCCESS_NO_INFO);
@@ -115,43 +114,43 @@ public class Sales {
         this.id = id;
     }
     
-    public int getFlightid(){
-        return flightId;
+    public String getEmail(){
+        return email;
     }
     
-    public void setFlightid(int flightId){
-        this.flightId = flightId;
+    public void setEmail(String email){
+        this.email = email;
     }
     
-    public int getUserid(){
-        return userId;
+    public String getPass(){
+        return pass;
     }
     
-    public void setUserid(){
-        this.userId = userId;
+    public void setPass(){
+        this.pass = pass;
     }
     
-    public String getPlace(){
-        return place;
+    public String getPname(){
+        return pname;
     }
     
-    public void setPlace(String place){
-        this.place = place;
+    public void setPname(String pname){
+        this.pname = pname;
     }
     
-    public int getNoluggage(){
-        return noLuggage;
+    public String getSname1(){
+        return sname1;
     }
     
-    public void setNoluggage(int noLuggage){
-        this.noLuggage = noLuggage;
+    public void setSname1(String sname1){
+        this.sname1 = sname1;
     }
     
-    public int getCcId(){
-        return ccId;
+    public String getSname2(){
+        return sname2;
     }
-    public void setCcId(int ccId){
-        this.ccId = ccId;
+    public void setSname2(String sname2){
+        this.sname2 = sname2;
     }
     
 }
