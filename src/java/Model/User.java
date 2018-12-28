@@ -25,7 +25,8 @@ public class User {
     private String country;
     private int boughtFlights;
 
-    public User(int id, String pname, String sname1, String sname2, String email, String pass, Date bday, String address, String pcode, String country, int boughtFlights) {
+    public User(int id, String pname, String sname1, String sname2, String email, 
+            String pass, Date bday, String address, String pcode, String country, int boughtFlights) {
         this.id = id;
         this.pname = pname;
         this.sname1 = sname1;

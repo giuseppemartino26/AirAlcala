@@ -20,7 +20,7 @@ public class JDBCAdministratorDAO implements AdministratorDAO {
     public void dbConnect() {
         try {
             Class.forName("org.apache.derby.jdbc.ClientDriver");
-            conn = DriverManager.getConnection("jdbc:derby://localhost:1527/Formula1", "app", "app");
+            conn = DriverManager.getConnection("jdbc:derby://localhost:1527/airAlcala", "root", "root");
             System.out.println("Connected.");
         } catch (ClassNotFoundException | SQLException e) {
             System.out.println("Not Connected. ");
