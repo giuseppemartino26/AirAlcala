@@ -39,11 +39,10 @@ public class JDBCUserDAO implements UserDAO {
 	} catch (Exception exObj) {
             exObj.printStackTrace();
         }		
-	}
+    }
 
     @Override
     public User find(int id) {
-        boolean found = false;
         User user = null;
         String query = "SELECT * FROM users WHERE id = ?";
         try {
@@ -125,8 +124,8 @@ public class JDBCUserDAO implements UserDAO {
             stmtObj.setInt(11,user.getId());
             
             updatedId = stmtObj.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
-            rsObj.close();
-            stmtObj.close();
+            
+            dbDisconnect();
         } catch (SQLException e) {
             System.out.println("Not inserted. " + e);
         }
@@ -147,8 +146,8 @@ public class JDBCUserDAO implements UserDAO {
             stmtObj.setInt(1,id);
 
             deletedId = stmtObj.executeUpdate(query);
-            rsObj.close();
-            stmtObj.close();
+            
+            dbDisconnect();
         } catch (SQLException e) {
             System.out.println("Not inserted. " + e);
         }

@@ -5,11 +5,16 @@
  */
 package Model.Repository.JDBC;
 
+import Model.CreditCard;
+import Model.Flight;
+import Model.Repository.CreditCardDAO;
+import Model.Repository.FlightDAO;
 import Model.Sale;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 import Model.Repository.SaleDAO;
+import Model.Repository.UserDAO;
+import Model.User;
+
 
 /**
  *
@@ -17,37 +22,141 @@ import Model.Repository.SaleDAO;
  */
 public class JDBCSaleDAO implements SaleDAO {
 
-    private Connection conn;
-
-    public void dbConnect() {
+    private static Connection connObj;
+    private static PreparedStatement stmtObj;
+    private static ResultSet rsObj;
+    
+    private Connection dbConnect() {
         try {
             Class.forName("org.apache.derby.jdbc.ClientDriver");
-            conn = DriverManager.getConnection("jdbc:derby://localhost:1527/airAlcala", "root", "root");
+            connObj = DriverManager.getConnection("jdbc:derby://localhost:1527/airAlcala", "root", "root");
             System.out.println("Connected.");
         } catch (ClassNotFoundException | SQLException e) {
             System.out.println("Not Connected. ");
             System.out.println(e);
         }
+        return connObj;
+    }
+    
+    public static void dbDisconnect() {
+	try {
+            rsObj.close();
+            stmtObj.close();
+            connObj.close();
+	} catch (Exception exObj) {
+            exObj.printStackTrace();
+        }		
     }
 
     @Override
     public Sale find(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Sale sale = null;
+        String query = "SELECT * FROM sales WHERE id = ?";
+        try {
+            connObj = dbConnect();
+            stmtObj = connObj.prepareStatement(query);
+            stmtObj.setInt(1, id);
+            rsObj.close();
+            stmtObj.close();
+            
+            FlightDAO flightDAO = new JDBCFlightDAO();
+            Flight flight = flightDAO.find(rsObj.getInt("flight_id"));
+            
+            UserDAO userDAO = new JDBCUserDAO();
+            User user = userDAO.find(rsObj.getInt("user_id"));
+            
+            CreditCardDAO ccDAO = new JDBCCreditCardDAO();
+            CreditCard cc = ccDAO.find(rsObj.getInt("credit_card"));
+            
+            sale = new Sale(rsObj.getInt("id"), flight ,
+            user,rsObj.getString("place"), rsObj.getInt("number_luggages"),
+            cc);
+            
+            dbDisconnect();
+        } catch (SQLException e) {
+            System.out.println("Not inserted. " + e);
+        }
+        return sale;
     }
 
     @Override
     public boolean insert(Sale sale) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        boolean inserted = false;
+        int insertedId = 0;
+        String query = "INSERT INTO sales (flight_id, user_id, place, number_luggages, credit_card) "
+                + "VALUES (?,?,?,?,?)";
+        
+        try {
+            connObj = dbConnect();
+            stmtObj = connObj.prepareStatement(query);
+            stmtObj.setInt(1, sale.getFlight().getId() );
+            stmtObj.setInt(2,sale.getUser().getId());
+            stmtObj.setString(3,sale.getPlace());
+            stmtObj.setInt(4,sale.getNoLuggage());
+            stmtObj.setInt(5, sale.getCreditCard().getId() );
+            
+            insertedId = stmtObj.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
+            
+            dbDisconnect();
+        } catch (SQLException e) {
+            System.out.println("Not inserted. " + e);
+        }
+        if (insertedId > 0) {
+            inserted = true;
+        }
+        return inserted;
     }
 
     @Override
     public boolean update(Sale sale) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        boolean updated = false;
+        int updatedId = 0;
+        String query = "UPDATE TABLE sales SET flight_id = ?, user_id = ?,"
+                + "place = ?, number_luggages = ?,credit_card = ?"
+                + "WHERE id = ?;";
+        try {
+            connObj = dbConnect();
+            stmtObj = connObj.prepareStatement(query);
+           
+            stmtObj.setInt(1,sale.getFlight().getId());
+            stmtObj.setInt(2,sale.getUser().getId());            
+            stmtObj.setString(3,sale.getPlace());
+            stmtObj.setInt(4, sale.getNoLuggage());
+            stmtObj.setInt(5, sale.getCreditCard().getId());
+            stmtObj.setInt(6, sale.getId());
+            
+            updatedId = stmtObj.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
+            
+            dbDisconnect();
+        } catch (SQLException e) {
+            System.out.println("Not inserted. " + e);
+        }
+        if (updatedId > 0) {
+            updated = true;
+        }
+        return updated;    
     }
 
     @Override
     public boolean delete(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        boolean deleted = false;
+        int deletedId = 0;
+        String query = "DELETE FROM sales WHERE id= ?;";
+        try {
+            connObj = dbConnect();
+            stmtObj = connObj.prepareStatement(query);
+            stmtObj.setInt(1,id);
+
+            deletedId = stmtObj.executeUpdate(query);
+            
+            dbDisconnect();
+        } catch (SQLException e) {
+            System.out.println("Not inserted. " + e);
+        }
+        if (deletedId > 0) {
+            deleted = true;
+        }
+        return deleted;
     }
 
 }
