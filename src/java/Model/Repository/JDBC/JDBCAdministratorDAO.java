@@ -8,6 +8,7 @@ package Model.Repository.JDBC;
 import Model.Administrator;
 import Model.Repository.AdministratorDAO;
 import java.sql.*;
+import java.util.ArrayList;
 
 /**
  *
@@ -49,6 +50,8 @@ public class JDBCAdministratorDAO implements AdministratorDAO {
             connObj = dbConnect();
             stmtObj = connObj.prepareStatement(query);
             stmtObj.setInt(1, id);
+            rsObj = stmtObj.executeQuery();
+            
             
             admin = new Administrator(rsObj.getInt("id"), rsObj.getString("email"),
             rsObj.getString("pass"),rsObj.getString("prename"),
@@ -59,6 +62,29 @@ public class JDBCAdministratorDAO implements AdministratorDAO {
             System.out.println("Not inserted. " + e);
         }
         return admin;
+    }
+    
+    public ArrayList<Administrator> findAll(){
+        ArrayList<Administrator> adminList = new ArrayList<Administrator>();
+        String query = "SELECT * FROM administrators";
+        
+        try{
+            connObj = dbConnect();
+            stmtObj = connObj.prepareStatement(query);
+            rsObj = stmtObj.executeQuery();
+            
+            while(rsObj.next()){
+                Administrator admin = new Administrator(rsObj.getInt("id"),rsObj.getString("email"),
+                rsObj.getString("pass"),rsObj.getString("prename"),rsObj.getString("surname1"),
+                rsObj.getString("surname2"));
+                
+                adminList.add(admin);
+            }
+            dbDisconnect();
+        } catch(SQLException e){
+            System.out.println("Error Retrieving Data. " + e);
+        }
+        return adminList;
     }
 
     @Override
@@ -77,7 +103,7 @@ public class JDBCAdministratorDAO implements AdministratorDAO {
             stmtObj.setString(4,admin.getSname1());
             stmtObj.setString(5,admin.getSname2());
             
-            insertedId = stmtObj.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
+            insertedId = stmtObj.executeUpdate();
             
             dbDisconnect();
         } catch (SQLException e) {
@@ -107,7 +133,7 @@ public class JDBCAdministratorDAO implements AdministratorDAO {
             stmtObj.setString(5,admin.getSname2());
             stmtObj.setInt(6, admin.getId());
             
-            updatedId = stmtObj.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
+            updatedId = stmtObj.executeUpdate();
 
             dbDisconnect();
         } catch (SQLException e) {

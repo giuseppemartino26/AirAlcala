@@ -1,4 +1,4 @@
-/*
+yy/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -14,6 +14,7 @@ import java.sql.*;
 import Model.Repository.SaleDAO;
 import Model.Repository.UserDAO;
 import Model.User;
+import java.util.ArrayList;
 
 
 /**
@@ -56,6 +57,7 @@ public class JDBCSaleDAO implements SaleDAO {
             connObj = dbConnect();
             stmtObj = connObj.prepareStatement(query);
             stmtObj.setInt(1, id);
+            rsObj = stmtObj.executeQuery();
             
             FlightDAO flightDAO = new JDBCFlightDAO();
             Flight flight = flightDAO.find(rsObj.getInt("flight_id"));
@@ -76,6 +78,38 @@ public class JDBCSaleDAO implements SaleDAO {
         }
         return sale;
     }
+    
+        public ArrayList<Sale> findAll(){
+        ArrayList<Sale> saleList = new ArrayList<Sale>();
+        String query = "SELECT * FROM sales";
+        
+        try{
+            connObj = dbConnect();
+            stmtObj = connObj.prepareStatement(query);
+            rsObj = stmtObj.executeQuery();
+            
+            while(rsObj.next()){
+                FlightDAO flightDAO = new JDBCFlightDAO();
+                Flight flight = flightDAO.find(rsObj.getInt("flight_id"));
+                
+                UserDAO userDAO = new JDBCUserDAO();
+                User user = userDAO.find(rsObj.getInt("user_id"));
+                
+                CreditCardDAO ccDAO = new JDBCCreditCardDAO();
+                CreditCard cc = ccDAO.find(rsObj.getInt("credit_card"));
+                
+                Sale sale = new Sale(rsObj.getInt("id"),flight,user,rsObj.getString("place"),
+                rsObj.getInt("number_luggages"),cc);
+                
+                saleList.add(sale);
+            }
+            dbDisconnect();
+
+        } catch(SQLException e){
+            System.out.println("Error Retrieving Data. " + e);
+        }
+        return saleList;
+    }
 
     @Override
     public boolean insert(Sale sale) {
@@ -93,7 +127,7 @@ public class JDBCSaleDAO implements SaleDAO {
             stmtObj.setInt(4,sale.getNoLuggage());
             stmtObj.setInt(5, sale.getCreditCard().getId() );
             
-            insertedId = stmtObj.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
+            insertedId = stmtObj.executeUpdate();
             
             dbDisconnect();
         } catch (SQLException e) {
@@ -123,7 +157,7 @@ public class JDBCSaleDAO implements SaleDAO {
             stmtObj.setInt(5, sale.getCreditCard().getId());
             stmtObj.setInt(6, sale.getId());
             
-            updatedId = stmtObj.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
+            updatedId = stmtObj.executeUpdate();
             
             dbDisconnect();
         } catch (SQLException e) {
@@ -145,7 +179,7 @@ public class JDBCSaleDAO implements SaleDAO {
             stmtObj = connObj.prepareStatement(query);
             stmtObj.setInt(1,id);
 
-            deletedId = stmtObj.executeUpdate(query);
+            deletedId = stmtObj.executeUpdate();
             
             dbDisconnect();
         } catch (SQLException e) {

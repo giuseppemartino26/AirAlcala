@@ -12,6 +12,7 @@ import Model.Repository.UserDAO;
 import Model.Reservation;
 import Model.User;
 import java.sql.*;
+import java.util.ArrayList;
 
 /**
  *
@@ -69,6 +70,35 @@ public class JDBCReservationDAO implements ReservationDAO {
         }
         return reservation;
     }
+    
+    public ArrayList<Reservation> findAll(){
+        ArrayList<Reservation> reservationList = new ArrayList<Reservation>();
+        String query = "SELECT * FROM reservations";
+        
+        try{
+            connObj = dbConnect();
+            stmtObj = connObj.prepareStatement(query);
+            rsObj = stmtObj.executeQuery();
+            
+            while(rsObj.next()){
+                UserDAO userDAO = new JDBCUserDAO();
+                User user = userDAO.find(rsObj.getInt("user_id"));
+                
+                FlightDAO flightDAO = new JDBCFlightDAO();
+                Flight flight = flightDAO.find(rsObj.getInt("flight_id"));
+                
+                Reservation reservation = new Reservation(rsObj.getInt("id"),user,flight);
+                
+                reservationList.add(reservation);
+            }
+            dbDisconnect();
+
+            
+        } catch(SQLException e){
+            System.out.println("Error Retrieving Data. " + e);
+        }
+        return reservationList;
+    }
 
     @Override
     public boolean insert(Reservation reservation) {
@@ -83,7 +113,7 @@ public class JDBCReservationDAO implements ReservationDAO {
             stmtObj.setInt(1, reservation.getUser().getId() );
             stmtObj.setInt(2, reservation.getFlight().getId() );
             
-            insertedId = stmtObj.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
+            insertedId = stmtObj.executeUpdate();
             
             dbDisconnect();
         } catch (SQLException e) {
@@ -107,7 +137,7 @@ public class JDBCReservationDAO implements ReservationDAO {
             stmtObj.setInt(1,reservation.getUser().getId());            
             stmtObj.setInt(2,reservation.getFlight().getId());
             
-            updatedId = stmtObj.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
+            updatedId = stmtObj.executeUpdate();
             
             dbDisconnect();
         } catch (SQLException e) {
@@ -129,7 +159,7 @@ public class JDBCReservationDAO implements ReservationDAO {
             stmtObj = connObj.prepareStatement(query);
             stmtObj.setInt(1,id);
 
-            deletedId = stmtObj.executeUpdate(query);
+            deletedId = stmtObj.executeUpdate();
             
             dbDisconnect();
         } catch (SQLException e) {

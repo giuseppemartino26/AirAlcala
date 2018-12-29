@@ -8,6 +8,7 @@ package Model.Repository.JDBC;
 import Model.Repository.UserDAO;
 import Model.User;
 import java.sql.*;
+import java.util.ArrayList;
 
 /**
  *
@@ -25,8 +26,7 @@ public class JDBCUserDAO implements UserDAO {
             connObj = DriverManager.getConnection("jdbc:derby://localhost:1527/airAlcala", "root", "root");
             System.out.println("Connected.");
         } catch (ClassNotFoundException | SQLException e) {
-            System.out.println("Not Connected. ");
-            System.out.println(e);
+            System.out.println("Not Connected. "+e);
         }
         return connObj;
     }
@@ -49,9 +49,8 @@ public class JDBCUserDAO implements UserDAO {
             connObj = dbConnect();
             stmtObj = connObj.prepareStatement(query);
             stmtObj.setInt(1, id);
-            rsObj.close();
-            stmtObj.close();
-            
+            rsObj = stmtObj.executeQuery();
+
             user = new User(rsObj.getInt("id"), rsObj.getString("prename"),
             rsObj.getString("surname1"),rsObj.getString("surname2"),
             rsObj.getString("email"),rsObj.getString("pass"),rsObj.getDate("birthday"),
@@ -63,7 +62,32 @@ public class JDBCUserDAO implements UserDAO {
             System.out.println("Not inserted. " + e);
         }
         return user;
-    } 
+    }
+    
+    public ArrayList<User> findAll(){
+        ArrayList<User> userList = new ArrayList<User>();
+        String query = "SELECT * FROM users";
+        
+        try{
+            connObj = dbConnect();
+            stmtObj = connObj.prepareStatement(query);
+            rsObj = stmtObj.executeQuery();
+            
+            while(rsObj.next()){
+                User user = new User(rsObj.getInt("id"),rsObj.getString("prename"),
+                rsObj.getString("surname1"), rsObj.getString("surname2"), 
+                rsObj.getString("email"), rsObj.getString("pass"),rsObj.getDate("birthday"),
+                rsObj.getString("address"),rsObj.getString("postalcode"),rsObj.getString("country"),
+                rsObj.getInt("flights_bought"));
+                
+                userList.add(user);
+            }
+            dbDisconnect();
+        } catch(SQLException e){
+            System.out.println("Error Retrieving Data. " + e);
+        }
+        return userList;
+    }
 
     @Override
     public boolean insert(User user) {
@@ -87,7 +111,7 @@ public class JDBCUserDAO implements UserDAO {
             stmtObj.setString(9, user.getCountry());
             stmtObj.setInt(10, user.getBoughtFlights());
             
-            insertedId = stmtObj.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
+            insertedId = stmtObj.executeUpdate();
             
             dbDisconnect();
         } catch (SQLException e) {
@@ -123,7 +147,7 @@ public class JDBCUserDAO implements UserDAO {
             stmtObj.setInt(10, user.getBoughtFlights());
             stmtObj.setInt(11,user.getId());
             
-            updatedId = stmtObj.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
+            updatedId = stmtObj.executeUpdate();
             
             dbDisconnect();
         } catch (SQLException e) {
@@ -145,7 +169,7 @@ public class JDBCUserDAO implements UserDAO {
             stmtObj = connObj.prepareStatement(query);
             stmtObj.setInt(1,id);
 
-            deletedId = stmtObj.executeUpdate(query);
+            deletedId = stmtObj.executeUpdate();
             
             dbDisconnect();
         } catch (SQLException e) {
