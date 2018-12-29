@@ -56,8 +56,6 @@ public class JDBCSaleDAO implements SaleDAO {
             connObj = dbConnect();
             stmtObj = connObj.prepareStatement(query);
             stmtObj.setInt(1, id);
-            rsObj.close();
-            stmtObj.close();
             
             FlightDAO flightDAO = new JDBCFlightDAO();
             Flight flight = flightDAO.find(rsObj.getInt("flight_id"));

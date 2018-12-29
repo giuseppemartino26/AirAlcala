@@ -49,8 +49,6 @@ public class JDBCAdministratorDAO implements AdministratorDAO {
             connObj = dbConnect();
             stmtObj = connObj.prepareStatement(query);
             stmtObj.setInt(1, id);
-            rsObj.close();
-            stmtObj.close();
             
             admin = new Administrator(rsObj.getInt("id"), rsObj.getString("email"),
             rsObj.getString("pass"),rsObj.getString("prename"),
