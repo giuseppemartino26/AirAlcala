@@ -6,6 +6,7 @@
 package Model.Repository;
 
 import Model.Sale;
+import java.util.ArrayList;
 
 /**
  *
@@ -20,5 +21,8 @@ public interface SaleDAO {
     public boolean update(Sale sale);
 
     public boolean delete(int id);
+    
+    public ArrayList<Sale> findAll();
+
 
 }

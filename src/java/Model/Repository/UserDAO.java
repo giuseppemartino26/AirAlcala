@@ -6,6 +6,7 @@
 package Model.Repository;
 
 import Model.User;
+import java.util.ArrayList;
 
 /**
  *
@@ -20,5 +21,7 @@ public interface UserDAO {
     public boolean update(User user);
 
     public boolean delete(int id);
+    
+    public ArrayList<User> findAll();
 
 }

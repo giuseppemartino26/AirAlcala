@@ -6,6 +6,7 @@
 package Model.Repository;
 
 import Model.Reservation;
+import java.util.ArrayList;
 
 /**
  *
@@ -20,5 +21,8 @@ public interface ReservationDAO {
     public boolean update(Reservation reservation);
 
     public boolean delete(int id);
+    
+    public ArrayList<Reservation> findAll();
+
 
 }

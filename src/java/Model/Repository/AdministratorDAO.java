@@ -6,6 +6,7 @@
 package Model.Repository;
 
 import Model.Administrator;
+import java.util.ArrayList;
 
 /**
  *
@@ -20,6 +21,9 @@ public interface AdministratorDAO {
     public boolean update(Administrator admin);
 
     public boolean delete(int id);
+    
+    public ArrayList<Administrator> findAll();
+
     
     
 }
