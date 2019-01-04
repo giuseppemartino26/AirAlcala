@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+
+   <html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ <title>PaginaAd</title>   
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script
+src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script
+src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+ <style>
+            body
+            {
+                background: #e6f3ff;
+            }
+
+            * {box-sizing: border-box;} 
+
+
+
+            .form-popup {
+                display: none;
+                position: fixed;
+                left: 15px;
+                z-index: 9;
+                margin-left: 10px;
+                margin-top: 50px;
+            }
+
+            .form-container {
+                padding: 20px;
+                border: 1px solid #B0C4DE;
+                background: white;
+                border-radius: 0px 0px 10px 10px;
+                width: 100%;
+            }
+
+            .form-container input[type=text], .form-container input[type=number], .form-container input[type=datetime-local] {
+                width: 100%;
+                padding: 15px;
+                margin: 5px 0 22px 0;
+                border: none;
+                background: #f1f1f1;
+            }
+
+            /* Set a style for the "envio" button */
+            .form-container .btn {
+                background-color: #4CAF50;
+                color: white;
+                padding: 16px 20px;
+                border: none;
+                cursor: pointer;
+                width: 100%;
+                margin-bottom:10px;
+                opacity: 0.8;
+            }
+
+
+            /* Add some hover effects to button */
+            .form-container .btn:hover, .open-button:hover {
+                opacity: 1;
+            }
+
+            h2{
+                font-size: 50px;
+                font-family: Arial, Helvetica, sans-serif;
+                color: DarkBlue;
+                margin-left: 40px;
+                margin-top: 25px
+            }
+            
+            table,td{
+                border: 0;  
+                text-align: left;
+                height: 23px;
+                margin-left: 44px;
+                width: 1149px;
+                padding: 2px;
+                border-collapse: separate;
+                border-spacing: 2px;
+                
+                
+            }
+        </style>
+
+    </head><body style="height: 84px;">
+        <br>
+
+       
+     
+       
+        <h2 style="margin-top: 0px; height: 47px;">P&aacute;gina de gesti&oacute;n de los
+            vuelos</h2>
+
+        <br>
+
+       <table>
+
+            <tbody>
+                <tr>
+                    <td style="vertical-align: top; height: 23px; width: 298px;"> <input name="UpdateFlight" id="Anadirvuelo" value="Anadirvuelo" type="radio">
+                        <label for="Anadirvuelo">A&ntilde;adir vuelo</label> </td>
+                    <td style="vertical-align: top; height: 23px; width: 307px;"><input name="UpdateFlight" id="Modificarvuelo" value="Modificarvuelo" type="radio"> <label for="Modificarvuelo">Modificar vuelo</label><br>
+                    </td>
+                    <td style="vertical-align: top; height: 23px; width: 537px;"><input name="UpdateFlight" id="Borrarvuelo" value="Borrarvuelo" type="radio">
+                        <label for="Borrarvuelo">Borrar vuelo</label><br>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div style="display: block; margin-top: 10px; height: 702px;" class="form-popup" id="myForm">
+            <form style="margin-top: 3px; height: 701px;" class="form-container" action="/airAlcala/Servelt" method="post"> <label for="localizador"><b>Localizador</b></label>
+                <input placeholder="Insertar Localizador" name="localizador" id="localizador" type="text" required=""> <label for="ruta"><b>ID ruta</b></label> <input placeholder="Insertar ID de la ruta" name="ruta" id="ruta" required="" type="number"> <label for="date"><b>Datetime</b></label> <input  name="date" id="date" type="datetime-local"> <label for="intervalo"><b>Intervalo</b></label> <input placeholder="Insertar Intervalo" id="intervalo" name="intervalo" type="text"> <label for="plazas"><b>Plazas disponibles</b></label> <input placeholder="Insertar numero de las plazas disponibles" name="plazas" id="plazas" type="number"> <button type="submit" class="btn">Env&iacute;o</button> </form>
+        </div>
+
+    </body></html>
