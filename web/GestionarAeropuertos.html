@@ -1,0 +1,140 @@
+/* autor: Giuseppe */
+
+<!DOCTYPE html>
+
+   <html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ <title>PaginaAd</title>   
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script
+src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script
+src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+ <style>
+            body
+            {
+                background: #e6f3ff;
+            }
+
+            * {box-sizing: border-box;} 
+
+
+
+            .form-popup {
+                display: none;
+                position: fixed;
+                left: 15px;
+                z-index: 9;
+                margin-left: 10px;
+                margin-top: 50px;
+            }
+
+            .form-container {
+                padding: 20px;
+                border: 1px solid #B0C4DE;
+                background: white;
+                border-radius: 0px 0px 10px 10px;
+                width: 100%;
+            }
+
+            .form-container input[type=text], .form-container input[type=number] {
+                width: 100%;
+                padding: 15px;
+                margin: 5px 0 22px 0;
+                border: none;
+                background: #f1f1f1;
+            }
+
+            /* Set a style for the "envio" button */
+            .form-container .btn {
+                background-color: #4CAF50;
+                color: white;
+                padding: 16px 20px;
+                border: none;
+                cursor: pointer;
+                width: 100%;
+                margin-bottom:10px;
+                opacity: 0.8;
+            }
+
+
+            /* Add some hover effects to button */
+            .form-container .btn:hover, .open-button:hover {
+                opacity: 1;
+            }
+
+            h2{
+                font-size: 50px;
+                font-family: Arial, Helvetica, sans-serif;
+                color: DarkBlue;
+                margin-left: 40px;
+                margin-top: 25px
+            }
+            
+            table,td{
+                border: 0;  
+                text-align: left;
+                height: 23px;
+                margin-left: 44px;
+                width: 1149px;
+                padding: 2px;
+                border-collapse: separate;
+                border-spacing: 2px;
+                
+                
+            }
+        </style>
+
+    </head>
+
+        <br>
+
+        <h2>P&aacute;gina de gesti&oacute;n de los aeropuertos</h2>
+
+        <br>
+
+       <table>
+
+            <tbody>
+                <tr>
+                    <td > <input name="UpdateAirport" id="Anadiraerop" value="Anadiraerop" type="radio">
+                        <label for="Anadiraerop">A&ntilde;adir aeropuerto</label> </td>
+
+                    <td><input name="UpdateAirport" id="Modificaraerop" value="Modificaraerop" type="radio">
+			 <label for="Modificaraerop">Modificar aeropuerto</label><br> </td>
+
+                    <td><input name="UpdateAirport" id="Borraraerop" value="Borraraerop" type="radio">
+                        <label for="Borraraerop">Borrar aeropuerto</label><br>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div style="display: block; margin-top: 10px; height: 702px;" class="form-popup" id="myForm">
+
+            <form class="form-container" action="/airAlcala/Servelt" method="post"> 
+                
+                <label for="code"><b>Codigo aeropuerto</b></label>
+                <input placeholder="Insertar el codigo del aeropuerto" name="code" id="code" type="number" required="">
+		
+		<label for="nombre"><b>Nombre aeropuerto</b></label>
+                <input placeholder="Insertar el nombre del aeropuerto" name="nombre" id="nombre" type="text"> 
+
+		<label for="impuesto"><b>Impuesto</b></label> 
+		<input placeholder="Insertar el impuesto" name="impuesto" id="impuesto"  type="number"> 
+
+		<label for="pais"><b>Pa&iacute;s</b></label> 
+		<input placeholder="Insertar el pais" name="pais" id="pais" type="text"> 
+
+		
+
+		<button type="submit" class="btn">Env&iacute;o</button> </form>
+        </div>
+
+    </body>
+</html>
