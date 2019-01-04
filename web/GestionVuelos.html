@@ -88,7 +88,8 @@ src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></scri
             }
         </style>
 
-    </head><body style="height: 84px;">
+    </head>
+	<body style="height: 84px;">
         <br>
 
        
@@ -103,11 +104,13 @@ src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></scri
 
             <tbody>
                 <tr>
-                    <td style="vertical-align: top; height: 23px; width: 298px;"> <input name="UpdateFlight" id="Anadirvuelo" value="Anadirvuelo" type="radio">
+                    <td > <input name="UpdateFlight" id="Anadirvuelo" value="Anadirvuelo" type="radio">
                         <label for="Anadirvuelo">A&ntilde;adir vuelo</label> </td>
-                    <td style="vertical-align: top; height: 23px; width: 307px;"><input name="UpdateFlight" id="Modificarvuelo" value="Modificarvuelo" type="radio"> <label for="Modificarvuelo">Modificar vuelo</label><br>
-                    </td>
-                    <td style="vertical-align: top; height: 23px; width: 537px;"><input name="UpdateFlight" id="Borrarvuelo" value="Borrarvuelo" type="radio">
+
+                    <td><input name="UpdateFlight" id="Modificarvuelo" value="Modificarvuelo" type="radio">
+			 <label for="Modificarvuelo">Modificar vuelo</label><br> </td>
+
+                    <td><input name="UpdateFlight" id="Borrarvuelo" value="Borrarvuelo" type="radio">
                         <label for="Borrarvuelo">Borrar vuelo</label><br>
                     </td>
                 </tr>
@@ -115,8 +118,26 @@ src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></scri
         </table>
 
         <div style="display: block; margin-top: 10px; height: 702px;" class="form-popup" id="myForm">
-            <form style="margin-top: 3px; height: 701px;" class="form-container" action="/airAlcala/Servelt" method="post"> <label for="localizador"><b>Localizador</b></label>
-                <input placeholder="Insertar Localizador" name="localizador" id="localizador" type="text" required=""> <label for="ruta"><b>ID ruta</b></label> <input placeholder="Insertar ID de la ruta" name="ruta" id="ruta" required="" type="number"> <label for="date"><b>Datetime</b></label> <input  name="date" id="date" type="datetime-local"> <label for="intervalo"><b>Intervalo</b></label> <input placeholder="Insertar Intervalo" id="intervalo" name="intervalo" type="text"> <label for="plazas"><b>Plazas disponibles</b></label> <input placeholder="Insertar numero de las plazas disponibles" name="plazas" id="plazas" type="number"> <button type="submit" class="btn">Env&iacute;o</button> </form>
+
+            <form style="margin-top: 3px; height: 701px;" class="form-container" action="/airAlcala/Servelt" method="post"> 
+		
+		<label for="localizador"><b>Localizador</b></label>
+                <input placeholder="Insertar Localizador" name="localizador" id="localizador" type="text" required=""> 
+
+		<label for="ruta"><b>ID ruta</b></label> 
+		<input placeholder="Insertar ID de la ruta" name="ruta" id="ruta" required="" type="number"> 
+
+		<label for="date"><b>Datetime</b></label> 
+		<input  name="date" id="date" type="datetime-local"> 
+
+		<label for="intervalo"><b>Intervalo</b></label> 
+		<input placeholder="Insertar Intervalo" id="intervalo" name="intervalo" type="text"> 
+
+		<label for="plazas"><b>Plazas disponibles</b></label> 
+		<input placeholder="Insertar numero de las plazas disponibles" name="plazas" id="plazas" type="number"> 
+
+		<button type="submit" class="btn">Env&iacute;o</button> </form>
         </div>
 
-    </body></html>
+    </body>
+</html>
