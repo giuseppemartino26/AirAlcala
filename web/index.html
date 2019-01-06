@@ -1,16 +1,146 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<html>
+
+<html lang="es">
     <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+       <title>AirAlcala</title>
+       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <style>         /*Styles for get nice header and a sticky footer at the bottom of the page*/
+            * {
+                margin: 0;
+                padding: 0;
+            }
+            html,body {
+                height:100%;
+            }
+            #wrapper {  /*wraps the body and the header to make the footer work*/
+                min-height:100%;
+            }
+            header{
+                background:#597ea2;
+                color:#fff;
+            }
+            footer {
+                position: relative;
+                height: 40px;
+                padding:5px 0px;
+                clear: both;
+                background: #8aa4bd;
+                text-align: center;
+                color: #fff;
+            }
+        </style>
+        <script>
+            $(document).ready(function () {
+                $("#round_trip").on("click",function(){
+                    $("#div_departure_2").toggle();        /*only show if you select the checkbox*/       
+                });
+            });
+            function check_data(){  
+                var dNow = new Date();
+                var date = new Date($("#departure_date").val());
+                if($("#source").val()==""){
+                    alert("Falta el origen del vuelo");
+                    return false;
+                }
+                if($("#destination").val()==""){
+                    alert("Falta el destino del vuelo");
+                    return false;
+                }
+                if(dNow>date){  /*cant pick today */
+                    alert("Fecha de salida invalida");
+                    return false;
+                }
+                if($("#round_trip").prop("checked")){   /*validate only with round_trip checked */
+                    var date2=new Date($("#departure_date_2").val());
+                    if(date>date2){
+                        alert("Fecha de salida del vuelo de vuelta invalida");
+                        return false;
+                    };
+                }
+                return true;
+            };
+
+
+        </script>
     </head>
     <body>
-        <div>TODO write content</div>
+        <div id="wrapper">
+            <header>
+                <div class="container">
+                    <h1>AirAlcala</h1>
+                </div>
+            </header>
+            <div class="btn-group btn-group-justified" >
+                    <a href="index.html" class="btn btn-primary"><span class="glyphicon glyphicon-home"></span> Inicio</a>
+                    <a href="#" class="btn btn-primary"><span class="glyphicon glyphicon-user"></span> Mi cuenta</a>
+                    <a href="#" class="btn btn-primary"><span class="glyphicon glyphicon-lock"></span> Administrador</a>
+            </div>
+            <br>
+            <div class="container">
+                <form id="form" action=""  onsubmit="return check_data()">
+                    <div class="form-group">
+                        <label for="source" class="control-label">Origen</label>
+                        <input type="text" id="source" class="form-control"> 
+                    </div>
+                    <div class="form-group">
+                        <label for="destination">Destino</label>
+                        <input type="text" id="destination" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="departure_date">Fecha de Salida</label>
+                        <input type="date" id="departure_date" class="form-control"> 
+                    </div>
+                    <div class="form-group">
+                        <!--Only 5 passengers with you-->
+                        <label for="passengers">Pasajeros</label>
+                        <select class="form-control" name="" id="passengers">
+                            <option value="1">1 pasajero</option>
+                            <option value="2">2 pasajeros</option>
+                            <option value="3">3 pasajeros</option>
+                            <option value="4">4 pasajeros</option>
+                            <option value="5">5 pasajeros</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="class">Clase</label>
+                        <select class="form-control" name="" id="class">
+                                <option value="economy">Turista</option>
+                                <option value="first">Primera</option>
+                        </select>
+                    </div>
+                    <label for="round_trip">Ida/Vuelta</label>
+                    <input type="checkbox" name="" id="round_trip"><br>
+
+                    <!--hide until you check round_trip-->
+                    <div class="form-group" id="div_departure_2" style="display:none">  
+                        <label for="departure_date_2" id="label_date_2" >Fecha de salida del vuelo de vuelta</label>
+                        <input type="date" name="" id="departure_date_2" class="form-control">
+                    </div>
+
+                    <button type="submit" class="btn btn-secondary"><span class="glyphicon glyphicon-search"></span> Buscar</button>
+                </form>
+            </div>
+        </div>
+        <footer>
+            <div class='container'>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <p>
+                            AirAlcala - Alcal&aacute; de Henares, Madrid, España
+                        </p>
+                    </div>
+                    <div class="col-xs-6">
+                        <ul class="list-inline text-right">
+                            <li><a href="https://twitter.com/">Twitter</a></li>
+                            <li><a href="https://www.facebook.com/">Facebook</a></li>
+                            <li>Contacto 900 900 411 <a href="mailto:ciu@uah.es">ciu@uah.es</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </footer>
     </body>
 </html>
