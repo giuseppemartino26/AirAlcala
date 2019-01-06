@@ -14,18 +14,15 @@ src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></scri
 
 
  <style>
-            body
-            {
-                background: #e6f3ff;
+           html, body {
+              height: 100%;
+              background-color: #e6f3ff;
+             overflow: auto;
             }
-
-            * {box-sizing: border-box;} 
-
 
 
             .form-popup {
                 display: none;
-                position: fixed;
                 left: 15px;
                 z-index: 9;
                 margin-left: 10px;
@@ -116,6 +113,9 @@ src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></scri
         <div style="display: block; margin-top: 10px; height: 702px;" class="form-popup" id="myForm">
 
             <form class="form-container" action="/airAlcala/Servelt" method="post"> 
+            
+         <label for="idv"><b>ID Vuelo</b></label>
+            <input placeholder="Insertar el ID" name="idvuelo" id="idv" type="number" required=""> 
 		
 		<label for="localizador"><b>Localizador</b></label>
                 <input placeholder="Insertar Localizador" name="localizador" id="localizador" type="text" required=""> 
