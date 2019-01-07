@@ -34,11 +34,14 @@ public class flightController extends HttpServlet {
     private FlightDAO flightDAO;
     private RouteDAO routeDAO;
     
+    @Override
     public void init(ServletConfig cfg) throws ServletException{
        flightDAO = new JDBCFlightDAO();
-       routeDAO = new JDBCRouteDAO();    }
+       routeDAO = new JDBCRouteDAO();    
+    }
 
 
+    @Override
     public void service(HttpServletRequest req,
     HttpServletResponse res) throws ServletException, IOException{
         HttpSession s = req.getSession(true);
@@ -60,9 +63,9 @@ public class flightController extends HttpServlet {
                     Integer.parseInt(req.getParameter("places_left")));
             success = flightDAO.insert(flight);
             if(success){
-                res.sendRedirect(res.encodeRedirectURL("/MVC/InsertSuccess.jsp"));
+                res.sendRedirect(res.encodeRedirectURL("/MVC/InsertSuccess.jsp")); // o conseguir mensaje Alarma con AJAX/JavaScript
             } else{
-                res.sendRedirect(res.encodeRedirectURL("/MVC/InsertError.jsp"));
+                res.sendRedirect(res.encodeRedirectURL("/MVC/InsertError.jsp"));  // o conseguir mensaje Alarma con AJAX/JavaScript
             }
         }
         if(operation == "edit"){
@@ -70,7 +73,12 @@ public class flightController extends HttpServlet {
                     req.getParameter("locator"),route,flightDate,
                     Integer.parseInt(req.getParameter("interval")),
                     Integer.parseInt(req.getParameter("places_left")));
+            
             success = flightDAO.update(flight);
+            
+            s.setAttribute("flightLocator", flight.getLocator());
+            s.setAttribute("flightOrigin", route.getOrigin());
+            s.setAttribute("flightDest", route.getDestination());
             if(success){
                 res.sendRedirect(res.encodeRedirectURL("/MVC/UpdateSuccess.jsp")); // o conseguir mensaje Alarma con AJAX/JavaScript
             } else{
@@ -88,6 +96,7 @@ public class flightController extends HttpServlet {
     }
 
 
+    @Override
     public void destroy(){
     }
 

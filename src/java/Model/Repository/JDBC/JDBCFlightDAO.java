@@ -9,6 +9,8 @@ import Model.Flight;
 import Model.Repository.FlightDAO;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
@@ -17,17 +19,29 @@ import java.sql.SQLException;
  */
 public class JDBCFlightDAO implements FlightDAO {
 
-    private Connection conn;
-
+    private static Connection connObj;
+    private static PreparedStatement stmtObj;
+    private static ResultSet rsObj;
+    
     public void dbConnect() {
         try {
             Class.forName("org.apache.derby.jdbc.ClientDriver");
-            conn = DriverManager.getConnection("jdbc:derby://localhost:1527/airAlcala", "root", "root");
+            connObj = DriverManager.getConnection("jdbc:derby://localhost:1527/airAlcala", "root", "root");
             System.out.println("Connected.");
         } catch (ClassNotFoundException | SQLException e) {
             System.out.println("Not Connected. ");
             System.out.println(e);
         }
+    }
+    
+    public static void dbDisconnect() {
+	try {
+            rsObj.close();
+            stmtObj.close();
+            connObj.close();
+	} catch (Exception exObj) {
+            exObj.printStackTrace();
+        }		
     }
 
     @Override
