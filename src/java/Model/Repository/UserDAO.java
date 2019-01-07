@@ -23,5 +23,8 @@ public interface UserDAO {
     public boolean delete(int id);
     
     public ArrayList<User> findAll();
+    
+    public int login(String email, String pass);
+
 
 }
