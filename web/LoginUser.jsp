@@ -88,7 +88,11 @@ form, .content {
             <h1>AirAlcala</h1>
         </div>
     </header>
-    
+    <div class="btn-group btn-group-justified" >
+            <a href="index.html" class="btn btn-primary"><span class="glyphicon glyphicon-home"></span> Inicio</a>
+            <a href="#" class="btn btn-primary"><span class="glyphicon glyphicon-user"></span> Mi cuenta</a>
+            <a href="#" class="btn btn-primary"><span class="glyphicon glyphicon-lock"></span> Administrador</a>
+    </div>
   <div class="header">
   	<h2> Login</h2>
   </div>
