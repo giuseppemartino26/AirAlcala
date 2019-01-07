@@ -59,8 +59,8 @@
     </header>
     <div class="btn-group btn-group-justified" >
             <a href="index.html" class="btn btn-primary"><span class="glyphicon glyphicon-home"></span> Inicio</a>
-            <a href="#" class="btn btn-primary"><span class="glyphicon glyphicon-user"></span> Mi cuenta</a>
-            <a href="#" class="btn btn-primary"><span class="glyphicon glyphicon-lock"></span> Administrador</a>
+            <a href="LoginUser.jsp" class="btn btn-primary"><span class="glyphicon glyphicon-user"></span> Mi cuenta</a>
+            <a href="LoginAd2.html" class="btn btn-primary"><span class="glyphicon glyphicon-lock"></span> Administrador</a>
     </div>
     <br>
     <div class="container">

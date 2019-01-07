@@ -48,18 +48,22 @@
                 i++;
             };
         });
-        function check_data(){
-            var i=1;
-            while(i<=passengers){       /*validate the data of the passengers we want*/
-                if($("#name_"+i).val()=="" || $("#dni_"+i).val()==""){
-                    alert("Faltan datos del pasajero "+i+"");
-                    return false;
-                };
-                i++;
-            };
+        /*first form*/
+        function check_first_data(){
+            if($("#name").val()==""){
+                alert("Falta el Nombre y Apellido/s");
+                return false;
+            }
+            if($("#dni").val()==""){
+                alert("Falta el DNI");
+                return false;
+            }
+            if($("#email").val()==""){
+                alert("Falta el email");
+                return false;
+            }
             return true;
         };
-        
         
     </script>
 </head>
@@ -80,14 +84,14 @@
         <form action="" method="post" onsubmit="return check_data()">
             <div class="form-group" id="passenger1" style="display:none">
                 <h4>Formulario</h4>
-                <label for="name_1">Nombre y Apellidos</label>
-                <input type="text" id="name_1" class="form-control">
-                <label for="dni_1">DNI/Pasaporte/NIE</label>
-                <input type="text" id="dni_1" class="form-control">
-                <label for="dni_1">Email</label>
+                <label for="name">Nombre y Apellidos</label>
+                <input type="text" id="name" class="form-control">
+                <label for="dni">DNI/Pasaporte/NIE</label>
+                <input type="text" id="dni" class="form-control">
+                <label for="email">Email</label>
                 <input type="text" id="email" class="form-control">
             </div>
-            <button type="submit" class="btn btn-primary">Registrar</button>
+            <button type="submit" class="btn btn-primary" id="button_sign"onclick="return check_first_data()">Registrar</button>
         </form>
     </div>
 </div>

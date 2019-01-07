@@ -68,49 +68,49 @@
                 <td>Origin</td><!--<%=session.getAttribute("flightOrigin")%>-->
                 <td>Destino</td>
                 <td>Destination</td><!--<%=session.getAttribute("flightDest")%>-->
-                <td><button type="button" class="btn" name="info">Información</button><td>
+                <td><a href="InfoFlight.jsp">Information</a><td>
             </tr>
             <tr>
                 <td>Origen</td>
                 <td>Origin</td><!--<%=session.getAttribute("flightOrigin")%>-->
                 <td>Destino</td>
                 <td>Destination</td><!--<%=session.getAttribute("flightDest")%>-->
-                <td><button type="button" class="btn" name="info">Información</button><td>
+                <td><a href="InfoFlight.jsp">Information</a><td>
             </tr>
             <tr>
                 <td>Origen</td>
                 <td>Origin</td><!--<%=session.getAttribute("flightOrigin")%>-->
                 <td>Destino</td>
                 <td>Destination</td><!--<%=session.getAttribute("flightDest")%>-->
-                <td><button type="button" class="btn" name="info">Información</button><td>
+                <td><a href="InfoFlight.jsp">Information</a><td>
             </tr>
             <tr>
                 <td>Origen</td>
                 <td>Origin</td><!--<%=session.getAttribute("flightOrigin")%>-->
                 <td>Destino</td>
                 <td>Destination</td><!--<%=session.getAttribute("flightDest")%>-->
-                <td><button type="button" class="btn" name="info">Información</button><td>
+                <td><a href="InfoFlight.jsp">Information</a></button><td>
             </tr>
             <tr>
                 <td>Origen</td>
                 <td>Origin</td><!--<%=session.getAttribute("flightOrigin")%>-->
                 <td>Destino</td>
                 <td>Destination</td><!--<%=session.getAttribute("flightDest")%>-->
-                <td><button type="button" class="btn" name="info">Información</button><td>
+                <td><a href="InfoFlight.jsp">Information</a><td>
             </tr>
             <tr>
                 <td>Origen</td>
                 <td>Origin</td><!--<%=session.getAttribute("flightOrigin")%>-->
                 <td>Destino</td>
                 <td>Destination</td><!--<%=session.getAttribute("flightDest")%>-->
-                <td><button type="button" class="btn" name="info">Información</button><td>
+                <td><a href="InfoFlight.jsp">Information</a><td>
             </tr>
             <tr>
                 <td>Origen</td>
                 <td>Origin</td><!--<%=session.getAttribute("flightOrigin")%>-->
                 <td>Destino</td>
                 <td>Destination</td><!--<%=session.getAttribute("flightDest")%>-->
-                <td><button type="button" class="btn" name="info">Información</button><td>
+                <td><a href="InfoFlight.jsp">Information</a><td>
             </tr>
         </table>
     </div>
