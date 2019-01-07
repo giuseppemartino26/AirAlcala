@@ -5,10 +5,20 @@
  */
 package Model.Repository.JDBC;
 
+import Helpers.SecurePasswordHelper;
 import Model.Repository.UserDAO;
 import Model.User;
+import java.math.BigInteger;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.security.spec.InvalidKeySpecException;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
+
 
 /**
  *
@@ -180,5 +190,41 @@ public class JDBCUserDAO implements UserDAO {
         }
         return deleted;
     }
-
+    
+    @Override
+    public int login(String email, String pass){
+         User user = null;
+         int user_id = 0;
+         String query = "SELECT * FROM users WHERE email = ?;";
+         
+         try {
+            connObj = dbConnect();
+            stmtObj = connObj.prepareStatement(query);
+            stmtObj.setString(1, email);
+            rsObj = stmtObj.executeQuery();
+            
+            if(rsObj.next()){
+                user = new User(rsObj.getInt("id"), rsObj.getString("prename"),
+                rsObj.getString("surname1"),rsObj.getString("surname2"),
+                rsObj.getString("email"),rsObj.getString("pass"),rsObj.getDate("birthday"),
+                rsObj.getString("address"),rsObj.getString("postalcode"),rsObj.getString("country"),
+                rsObj.getInt("flihgts_bought"));
+                user_id = user.getId();
+            }
+            dbDisconnect();
+        } catch (SQLException e) {
+            System.out.println("Not inserted. " + e);
+        }
+         
+        SecurePasswordHelper sec = new SecurePasswordHelper();
+        try {
+            if(sec.validatePassword(pass, user.getPass())){
+                return user_id;
+            }
+        } catch (NoSuchAlgorithmException | InvalidKeySpecException ex) {
+            Logger.getLogger(JDBCUserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return 0; 
+    }
 }

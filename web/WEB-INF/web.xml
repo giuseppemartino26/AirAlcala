@@ -4,9 +4,25 @@
         <servlet-name>flightController</servlet-name>
         <servlet-class>Controller.flightController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>userController</servlet-name>
+        <servlet-class>Controller.userController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>loginController</servlet-name>
+        <servlet-class>Controller.loginController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>flightController</servlet-name>
         <url-pattern>/flightController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>userController</servlet-name>
+        <url-pattern>/userController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>loginController</servlet-name>
+        <url-pattern>/loginController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
