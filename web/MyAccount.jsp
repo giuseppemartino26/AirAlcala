@@ -39,28 +39,7 @@
             }
         </style>
     <script>
-        var passengers=3;/*these instead of 3 <%=session.getAttribute("Passengers")%>*/
-        $(document).ready(function () {
-            var i=1;
-             
-            while(i<=passengers){   /*Show shows only the passengers we want*/
-                $("#passenger"+i).toggle();
-                i++;
-            };
-        });
-        function check_data(){
-            var i=1;
-            while(i<=passengers){       /*validate the data of the passengers we want*/
-                if($("#name_"+i).val()=="" || $("#dni_"+i).val()==""){
-                    alert("Faltan datos del pasajero "+i+"");
-                    return false;
-                };
-                i++;
-            };
-            return true;
-        };
-        
-        
+
     </script>
 </head>
 <body>

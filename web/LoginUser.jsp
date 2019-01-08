@@ -78,7 +78,20 @@ form, .content {
 }
 
 </style>
-
+<script>
+        /*first form*/
+        function check_first_data(){
+            if($("#Username").val()==""){
+                alert("Falta el usuario");
+                return false;
+            }
+            if($("#Password").val()==""){
+                alert("Falta la contraseña");
+                return false;
+            }
+            return true;
+        };
+</script>
     </head>
     
 <body>
@@ -90,8 +103,8 @@ form, .content {
     </header>
     <div class="btn-group btn-group-justified" >
             <a href="index.html" class="btn btn-primary"><span class="glyphicon glyphicon-home"></span> Inicio</a>
-            <a href="#" class="btn btn-primary"><span class="glyphicon glyphicon-user"></span> Mi cuenta</a>
-            <a href="#" class="btn btn-primary"><span class="glyphicon glyphicon-lock"></span> Administrador</a>
+            <a href="LoginUser.jsp" class="btn btn-primary"><span class="glyphicon glyphicon-user"></span> Mi cuenta</a>
+            <a href="LoginAD2.jsp" class="btn btn-primary"><span class="glyphicon glyphicon-lock"></span> Administrador</a>
     </div>
   <div class="header">
   	<h2> Login</h2>
@@ -101,7 +114,7 @@ form, .content {
   	
   	<div class="input-group">
   		<label>Username</label>
-  		<input type="text" id="User" name="username" >
+  		<input type="text" id="user" name="username" >
   	</div>
   	<div class="input-group">
   		<label>Password</label>
