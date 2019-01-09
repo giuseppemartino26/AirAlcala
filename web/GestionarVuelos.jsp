@@ -148,8 +148,31 @@ src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></scri
 		<label for="Locator"><b>Localizador</b></label>
                 <input placeholder="Insertar Localizador" name="Locator" id="Locator" type="text"> 
 
-		<label for="Route"><b>ID ruta</b></label> 
-		<input placeholder="Insertar ID de la ruta" name="Route" id="Route" type="number"> 
+		<label>Ruta:</label>
+                <select class="form-control"  style="width: 250px;">
+                <option>Elige la ruta</option>
+                <%
+                try
+                {
+                    Class.forName("org.apache.derby.jdbc.ClientDriver").newInstance();
+                    Connection conn=DriverManager.getConnection("jdbc:derby://localhost:1527/airAlcala","root","root");
+                    Statement stm=conn.createStatement();
+                    ResultSet rs=stm.executeQuery("select * from routes");
+                    while(rs.next())
+                    {
+                        %>
+                        <option><%=rs.getString("origin")+" -> "+rs.getString("destination")%></option>
+                        <%
+                    }
+                }
+                catch(Exception ex)
+                {
+                    ex.printStackTrace();
+                    out.println("Error "+ex);
+                }
+            
+                %>     
+        </select>
 
 		<label for="date"><b>Fecha</b></label> 
 		<input  name="date" id="date" type="date"> 
@@ -176,20 +199,16 @@ src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></scri
              <%
                try
                {
-                 String Query="select * from flights";
-                 Class.forName("com.mysql.jdbc.Driver").newInstance();
-                 Connection conn=DriverManager.getConnection("jdbc:derby://localhost:1527/jsp","root","root");
-                 Statement stm=conn.createStatement();
-                 ResultSet rs=stm.executeQuery(Query);
-                 while(rs.next())
-                 {
-                     %>
-                     <option><%=rs.getString("localizador")%></option>
-           
-                     <%
-                 
-                 }
-                 
+                    Class.forName("org.apache.derby.jdbc.ClientDriver").newInstance();
+                    Connection conn=DriverManager.getConnection("jdbc:derby://localhost:1527/airAlcala","root","root");
+                    Statement stm=conn.createStatement();
+                    ResultSet rs=stm.executeQuery("SELECT * FROM flights");
+                    while(rs.next())
+                    {
+                        %>
+                        <option><%=rs.getString("locator")%></option>
+                        <%
+                    }
                }
                catch(Exception ex)
                {
@@ -199,36 +218,31 @@ src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></scri
             
             %>     
         </select>
-        
-           
-                    <label>Ruta:</label>
+             
+        <label>Ruta:</label>
         <select class="form-control"  style="width: 250px;">
-             <option>Eliges la ruta</option>
-             <%
-               try
-               {
-                 String Query2="select * from flights";
-                 Class.forName("com.mysql.jdbc.Driver").newInstance();
-                 Connection conn=DriverManager.getConnection("jdbc:derby://localhost:1527/jsp","root","root");
-                 Statement stm=conn.createStatement();
-                 ResultSet rs=stm.executeQuery(Query2);
-                 while(rs.next())
-                 {
-                     %>
-                     <option><%=rs.getInt("route_id")%></option>
-           
-                     <%
-                 
-                 }
-                 
-               }
-               catch(Exception ex)
-               {
-                 ex.printStackTrace();
-                 out.println("Error"+ex.getMessage());
-               }
+             <option>Elige la ruta</option>
+                <%
+                try
+                {
+                    Class.forName("org.apache.derby.jdbc.ClientDriver").newInstance();
+                    Connection conn=DriverManager.getConnection("jdbc:derby://localhost:1527/airAlcala","root","root");
+                    Statement stm=conn.createStatement();
+                    ResultSet rs=stm.executeQuery("select * from routes");
+                    while(rs.next())
+                    {
+                        %>
+                        <option><%=rs.getString("origin")+" -> "+rs.getString("destination")%></option>
+                        <%
+                    }
+                }
+                catch(Exception ex)
+                {
+                    ex.printStackTrace();
+                    out.println("Error "+ex);
+                }
             
-            %>     
+                %>     
         </select>
                 
 		<label for="date"><b>Fecha</b></label> 
@@ -256,20 +270,16 @@ src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></scri
              <%
                try
                {
-                 String Query="select * from flights";
-                 Class.forName("com.mysql.jdbc.Driver").newInstance();
-                 Connection conn=DriverManager.getConnection("jdbc:derby://localhost:1527/jsp","root","root");
-                 Statement stm=conn.createStatement();
-                 ResultSet rs=stm.executeQuery(Query);
-                 while(rs.next())
-                 {
-                     %>
-                     <option><%=rs.getString("localizador")%></option>
-           
-                     <%
-                 
-                 }
-                 
+                    Class.forName("org.apache.derby.jdbc.ClientDriver").newInstance();
+                    Connection conn=DriverManager.getConnection("jdbc:derby://localhost:1527/airAlcala","root","root");
+                    Statement stm=conn.createStatement();
+                    ResultSet rs=stm.executeQuery("SELECT * FROM flights");
+                    while(rs.next())
+                    {
+                        %>
+                        <option><%=rs.getString("locator")%></option>
+                        <%
+                    }
                }
                catch(Exception ex)
                {
@@ -277,7 +287,7 @@ src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></scri
                  out.println("Error"+ex.getMessage());
                }
             
-            %>     
+            %>       
         </select>
                     
         <br>
