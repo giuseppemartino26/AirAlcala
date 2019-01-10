@@ -150,7 +150,6 @@ src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></scri
 
 		<label>Ruta:</label>
                 <select class="form-control"  style="width: 250px;">
-                <option>Elige la ruta</option>
                 <%
                 try
                 {

@@ -5,9 +5,11 @@
        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
        <title>AirAlcala</title>
        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        <style>         /*Styles for get nice header and a sticky footer at the bottom of the page*/
+       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    
+       <style>         /*Styles for get nice header and a sticky footer at the bottom of the page*/
             * {
                 margin: 0;
                 padding: 0;
@@ -73,11 +75,26 @@
                     <h1>AirAlcala</h1>
                 </div>
             </header>
-            <div class="btn-group btn-group-justified" >
-                    <a href="index.html" class="btn btn-primary"><span class="glyphicon glyphicon-home"></span> Inicio</a>
-                    <a href="#" class="btn btn-primary"><span class="glyphicon glyphicon-user"></span> Mi cuenta</a>
-                    <a href="#" class="btn btn-primary"><span class="glyphicon glyphicon-lock"></span> Administrador</a>
-            </div>
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">AirAlcalá</a>
+                </div>
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="index.html">Inicio</a></li>
+                    <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Administrador
+                            <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                              <li><a href="userController?operation=list">Usarios</a></li>
+                              <li><a href="#">Vuelos</a></li>
+                              <li><a href="#">Rutas</a></li>
+                              <li><a href="#">...</a></li>
+                            </ul>
+                    </li>         
+                </ul>
+              </div>
+            </nav>
             <br>
             <div class="container">
                 <form id="form" action=""  onsubmit="return check_data()">
@@ -96,7 +113,7 @@
                     <div class="form-group">
                         <!--Only 5 passengers with you-->
                         <label for="passengers">Pasajeros</label>
-                        <select class="form-control" name="" id="passengers">
+                        <select class="form-control" id="passengers">
                             <option value="1">1 pasajero</option>
                             <option value="2">2 pasajeros</option>
                             <option value="3">3 pasajeros</option>
@@ -106,18 +123,18 @@
                     </div>
                     <div class="form-group">
                         <label for="class">Clase</label>
-                        <select class="form-control" name="" id="class">
+                        <select class="form-control" id="class">
                                 <option value="economy">Turista</option>
                                 <option value="first">Primera</option>
                         </select>
                     </div>
                     <label for="round_trip">Ida/Vuelta</label>
-                    <input type="checkbox" name="" id="round_trip"><br>
+                    <input type="checkbox" id="round_trip"><br>
 
                     <!--hide until you check round_trip-->
                     <div class="form-group" id="div_departure_2" style="display:none">  
                         <label for="departure_date_2" id="label_date_2" >Fecha de salida del vuelo de vuelta</label>
-                        <input type="date" name="" id="departure_date_2" class="form-control">
+                        <input type="date" id="departure_date_2" class="form-control">
                     </div>
 
                     <button type="submit" class="btn btn-secondary"><span class="glyphicon glyphicon-search"></span> Buscar</button>

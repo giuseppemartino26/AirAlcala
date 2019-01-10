@@ -8,16 +8,12 @@ package Model.Repository.JDBC;
 import Helpers.SecurePasswordHelper;
 import Model.Repository.UserDAO;
 import Model.User;
-import java.math.BigInteger;
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.PBEKeySpec;
 
 
 /**
@@ -41,7 +37,7 @@ public class JDBCUserDAO implements UserDAO {
         return connObj;
     }
     
-    public static void dbDisconnect() {
+    public void dbDisconnect() {
 	try {
             rsObj.close();
             stmtObj.close();
@@ -60,13 +56,22 @@ public class JDBCUserDAO implements UserDAO {
             stmtObj = connObj.prepareStatement(query);
             stmtObj.setInt(1, id);
             rsObj = stmtObj.executeQuery();
-
-            user = new User(rsObj.getInt("id"), rsObj.getString("prename"),
-            rsObj.getString("surname1"),rsObj.getString("surname2"),
-            rsObj.getString("email"),rsObj.getString("pass"),rsObj.getDate("birthday"),
-            rsObj.getString("address"),rsObj.getString("postalcode"),rsObj.getString("country"),
-            rsObj.getInt("flihgts_bought"));
             
+            if (rsObj.next()) {
+                user = new User();
+
+                user.setId(rsObj.getInt("id"));
+                user.setPname(rsObj.getString("prename"));
+                user.setSname1(rsObj.getString("surname1"));
+                user.setSname2(rsObj.getString("surname2"));
+                user.setEmail(rsObj.getString("email"));
+                user.setPass(rsObj.getString("pass"));
+                user.setBday(rsObj.getDate("birthday"));
+                user.setAddress(rsObj.getString("address"));
+                user.setPcode(rsObj.getString("postalcode"));
+                user.setCity(rsObj.getString("city"));
+                user.setCountry(rsObj.getString("country"));
+            }
             dbDisconnect();
         } catch (SQLException e) {
             System.out.println("Not inserted. " + e);
@@ -84,12 +89,18 @@ public class JDBCUserDAO implements UserDAO {
             rsObj = stmtObj.executeQuery();
             
             while(rsObj.next()){
-                User user = new User(rsObj.getInt("id"),rsObj.getString("prename"),
-                rsObj.getString("surname1"), rsObj.getString("surname2"), 
-                rsObj.getString("email"), rsObj.getString("pass"),rsObj.getDate("birthday"),
-                rsObj.getString("address"),rsObj.getString("postalcode"),rsObj.getString("country"),
-                rsObj.getInt("flights_bought"));
-                
+                User user = new User();
+                user.setId(rsObj.getInt("id"));
+                user.setPname(rsObj.getString("prename"));
+                user.setSname1(rsObj.getString("surname1"));
+                user.setSname2(rsObj.getString("surname2"));
+                user.setEmail(rsObj.getString("email"));
+                user.setPass(rsObj.getString("pass"));
+                user.setBday(rsObj.getDate("birthday"));
+                user.setAddress(rsObj.getString("address"));
+                user.setPcode(rsObj.getString("postalcode"));
+                user.setCity(rsObj.getString("city"));
+                user.setCountry(rsObj.getString("country"));
                 userList.add(user);
             }
             dbDisconnect();
@@ -103,30 +114,60 @@ public class JDBCUserDAO implements UserDAO {
     public boolean insert(User user) {
         boolean inserted = false;
         int insertedId = 0;
-        String query = "INSERT INTO users (prename, surname1, surname2, email,"
-                + "pass, birthday, address, postalcode, country, boughtflights ) "
-                + "VALUES (?,?,?,?,?,?,?,?,?,?)";
         
-        try {
-            connObj = dbConnect();
-            stmtObj = connObj.prepareStatement(query);
-            stmtObj.setString(1, user.getPname());
-            stmtObj.setString(2,user.getSname1());
-            stmtObj.setString(3,user.getSname2());
-            stmtObj.setString(4,user.getEmail());
-            stmtObj.setString(5,user.getPass());
-            stmtObj.setDate(6, (Date) user.getBday());
-            stmtObj.setString(7,user.getAddress());
-            stmtObj.setString(8,user.getPcode());
-            stmtObj.setString(9, user.getCountry());
-            stmtObj.setInt(10, user.getBoughtFlights());
-            
-            insertedId = stmtObj.executeUpdate();
-            
-            dbDisconnect();
-        } catch (SQLException e) {
-            System.out.println("Not inserted. " + e);
+        if(user.getPass().equals("")){
+             String query = "INSERT INTO users (prename, surname1, surname2, email,"
+                + "birthday, address, postalcode, city, country ) "
+                + "VALUES (?,?,?,?,?,?,?,?,?,?)";
+             
+            try {
+                connObj = dbConnect();
+                stmtObj = connObj.prepareStatement(query);
+                stmtObj.setString(1, user.getPname());
+                stmtObj.setString(2,user.getSname1());
+                stmtObj.setString(3,user.getSname2());
+                stmtObj.setString(4,user.getEmail());
+                stmtObj.setDate(5, (Date)user.getBday());
+                stmtObj.setString(6,user.getAddress());
+                stmtObj.setString(7,user.getPcode());
+                stmtObj.setString(8,user.getCity());
+                stmtObj.setString(9, user.getCountry());
+
+                insertedId = stmtObj.executeUpdate();
+
+                dbDisconnect();
+            } catch (SQLException e) {
+                System.out.println("Not inserted. " + e);
+            }
+        } else{
+            String query = "INSERT INTO users (prename, surname1, surname2, email,"
+                + "pass, birthday, address, postalcode, city, country ) "
+                + "VALUES (?,?,?,?,?,?,?,?,?,?)";
+             
+            try {
+                connObj = dbConnect();
+                stmtObj = connObj.prepareStatement(query);
+                stmtObj.setString(1, user.getPname());
+                stmtObj.setString(2,user.getSname1());
+                stmtObj.setString(3,user.getSname2());
+                stmtObj.setString(4,user.getEmail());
+                stmtObj.setString(5,user.getPass());
+                stmtObj.setDate(6, (Date)user.getBday());
+                stmtObj.setString(7,user.getAddress());
+                stmtObj.setString(8,user.getPcode());
+                stmtObj.setString(9,user.getCity());
+                stmtObj.setString(10, user.getCountry());
+
+                insertedId = stmtObj.executeUpdate();
+
+                dbDisconnect();
+            } catch (SQLException e) {
+                System.out.println("Not inserted. " + e);
+            }            
         }
+       
+        
+
         if (insertedId > 0) {
             inserted = true;
         }
@@ -137,10 +178,10 @@ public class JDBCUserDAO implements UserDAO {
     public boolean update(User user) {
         boolean updated = false;
         int updatedId = 0;
-        String query = "UPDATE TABLE users SET prename= ?, surname1= ?,"
+        String query = "UPDATE users SET prename= ?, surname1= ?,"
                 + "surname2= ?, email= ?,pass= ?, birthday=  ?, "
-                + "address= ?, postalcode= ?, country= ?, boughtFlights= ?"
-                + "WHERE id = ?;";
+                + "address= ?, postalcode= ?, city=?, country= ?"
+                + "WHERE id = ?";
         try {
             connObj = dbConnect();
             stmtObj = connObj.prepareStatement(query);
@@ -153,8 +194,8 @@ public class JDBCUserDAO implements UserDAO {
             stmtObj.setDate(6, (Date) user.getBday());
             stmtObj.setString(7,user.getAddress());
             stmtObj.setString(8,user.getPcode());
-            stmtObj.setString(9, user.getCountry());
-            stmtObj.setInt(10, user.getBoughtFlights());
+            stmtObj.setString(9,user.getCity());
+            stmtObj.setString(10, user.getCountry());
             stmtObj.setInt(11,user.getId());
             
             updatedId = stmtObj.executeUpdate();
@@ -173,7 +214,7 @@ public class JDBCUserDAO implements UserDAO {
     public boolean delete(int id) {
         boolean deleted = false;
         int deletedId = 0;
-        String query = "DELETE FROM users WHERE id=?;";
+        String query = "DELETE FROM users WHERE id=?";
         try {
             connObj = dbConnect();
             stmtObj = connObj.prepareStatement(query);
@@ -204,11 +245,19 @@ public class JDBCUserDAO implements UserDAO {
             rsObj = stmtObj.executeQuery();
             
             if(rsObj.next()){
-                user = new User(rsObj.getInt("id"), rsObj.getString("prename"),
-                rsObj.getString("surname1"),rsObj.getString("surname2"),
-                rsObj.getString("email"),rsObj.getString("pass"),rsObj.getDate("birthday"),
-                rsObj.getString("address"),rsObj.getString("postalcode"),rsObj.getString("country"),
-                rsObj.getInt("flihgts_bought"));
+                user = new User();          
+                user.setId(rsObj.getInt("id"));
+                user.setPname(rsObj.getString("prename"));
+                user.setSname1(rsObj.getString("surname1"));
+                user.setSname2(rsObj.getString("surname2"));
+                user.setEmail(rsObj.getString("email"));
+                user.setPass(rsObj.getString("pass"));
+                user.setBday(rsObj.getDate("birthday"));
+                user.setAddress(rsObj.getString("address"));
+                user.setPcode(rsObj.getString("postalcode"));
+                user.setCity(rsObj.getString("city"));
+                user.setCountry(rsObj.getString("country"));
+                
                 user_id = user.getId();
             }
             dbDisconnect();

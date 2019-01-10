@@ -19,25 +19,13 @@ public class User {
     private String sname2;
     private String email;
     private String pass;
-    private Date bday;
+    private java.sql.Date bday;
     private String address;
     private String pcode;
+    private String city;
     private String country;
-    private int boughtFlights;
 
-    public User(int id, String pname, String sname1, String sname2, String email, 
-            String pass, Date bday, String address, String pcode, String country, int boughtFlights) {
-        this.id = id;
-        this.pname = pname;
-        this.sname1 = sname1;
-        this.sname2 = sname2;
-        this.email = email;
-        this.pass = pass;
-        this.bday = bday;
-        this.address = address;
-        this.pcode = pcode;
-        this.country = country;
-        this.boughtFlights = boughtFlights;
+    public User() {
     }
 
     public int getId() {
@@ -92,7 +80,7 @@ public class User {
         return bday;
     }
 
-    public void setBday(Date bday) {
+    public void setBday(java.sql.Date bday) {
         this.bday = bday;
     }
 
@@ -112,6 +100,14 @@ public class User {
         this.pcode = pcode;
     }
 
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }    
+    
     public String getCountry() {
         return country;
     }
@@ -119,13 +115,4 @@ public class User {
     public void setCountry(String country) {
         this.country = country;
     }
-
-    public int getBoughtFlights() {
-        return boughtFlights;
-    }
-
-    public void setBoughtFlights(int boughtFlights) {
-        this.boughtFlights = boughtFlights;
-    }
-
 }

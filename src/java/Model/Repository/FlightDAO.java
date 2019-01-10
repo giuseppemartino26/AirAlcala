@@ -6,6 +6,7 @@
 package Model.Repository;
 
 import Model.Flight;
+import java.util.ArrayList;
 
 /**
  *
@@ -14,6 +15,8 @@ import Model.Flight;
 public interface FlightDAO {
 
     public Flight find(int id);
+    
+    public ArrayList<Flight> findAll();
 
     public boolean insert(Flight flight);
 

@@ -15,11 +15,14 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -29,6 +32,9 @@ import javax.servlet.http.HttpSession;
  *
  * @author marti
  */
+@WebServlet(
+  name = "StudentServlet", 
+  urlPatterns = "/Web Pages/manageFlights")
 public class flightController extends HttpServlet {
     private Flight flight;
     private FlightDAO flightDAO;
@@ -40,10 +46,26 @@ public class flightController extends HttpServlet {
        routeDAO = new JDBCRouteDAO();    
     }
 
-
     @Override
-    public void service(HttpServletRequest req,
-    HttpServletResponse res) throws ServletException, IOException{
+    protected void doGet(
+      HttpServletRequest request, HttpServletResponse response) 
+      throws ServletException, IOException {
+  
+        ArrayList<Flight> flightList = new ArrayList();
+     
+        flightList = flightDAO.findAll();
+        
+        request.setAttribute("flightList", flightList);
+       
+        RequestDispatcher dispatcher = request.getRequestDispatcher(
+          "/Web Pages/manageFlights.jsp");
+        dispatcher.forward(request, response);
+    }
+    
+    
+    @Override
+    public void doPost(HttpServletRequest req, HttpServletResponse res)
+    throws ServletException, IOException {
         HttpSession s = req.getSession(true);
         String operation=(String)req.getParameter("UpdateFlight");
         Route route = routeDAO.find(Integer.parseInt(req.getParameter("route_id")));
@@ -94,10 +116,4 @@ public class flightController extends HttpServlet {
             }
         }
     }
-
-
-    @Override
-    public void destroy(){
-    }
-
 }

@@ -10,15 +10,14 @@ import Model.User;
 import Model.Repository.JDBC.JDBCUserDAO;
 import Model.Repository.UserDAO;
 import java.io.IOException;
+import static java.lang.System.out;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.ServletConfig;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 
@@ -30,86 +29,104 @@ public class userController extends HttpServlet {
     private User user;
     private UserDAO userDAO;
     
-    @Override
-    public void init(ServletConfig cfg) throws ServletException{
-       userDAO = new JDBCUserDAO();
+    public userController() {
+        super();
+        userDAO = new JDBCUserDAO();
     }
-
+    
+    // Will be run at GET Events (e.g. hitting a link)
     @Override
-    public void service(HttpServletRequest req,
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String forward="";
+        String operation = request.getParameter("operation");
+        boolean success = false;
+        int userId;
+        System.err.print(operation);
+        
+        if (operation.equalsIgnoreCase("delete")){
+            userId = Integer.parseInt(request.getParameter("userId"));
+            success = userDAO.delete(userId);
+            forward = "listUsers.jsp";
+            request.setAttribute("users", userDAO.findAll());
+        } else if (operation.equalsIgnoreCase("add")){
+            forward = "createUser.jsp";
+            request.setAttribute("user", user);
+        } else if (operation.equalsIgnoreCase("edit")){
+            userId = Integer.parseInt(request.getParameter("userId"));
+            forward = "editUser.jsp";
+            User user = userDAO.find(userId);
+            request.setAttribute("user", user);
+        } else if (operation.equalsIgnoreCase("list")){
+            forward = "listUsers.jsp";
+            request.setAttribute("users", userDAO.findAll());
+        } else if (operation.equalsIgnoreCase("view")){
+            userId = Integer.parseInt(request.getParameter("userId"));
+            forward = "viewUser.jsp";
+            request.setAttribute("user", userDAO.find(userId));
+        } else {
+            forward = "listUsers.jsp";
+        }
+        
+        RequestDispatcher view = request.getRequestDispatcher(forward);
+        view.forward(request, response);
+    }
+    
+    // Will be run at POST Events (e.g. sending a form)
+    @Override
+    public void doPost(HttpServletRequest req,
     HttpServletResponse res) throws ServletException, IOException{
         HttpSession s = req.getSession(true);
-        String operation=(String)req.getParameter("manageUser");
         DateFormat format = new SimpleDateFormat("yyyy-mm-dd");
-        Date userBday = new Date();
+        java.sql.Date userBday;
         Boolean success = false;
-        try {
-            userBday = format.parse(req.getParameter("birthday"));
-        } catch (ParseException ex) {
-            Logger.getLogger(flightController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        String securePass = null;
-        String clearPass = req.getParameter("pass");
+        String securePass = "";
+
+        userBday = java.sql.Date.valueOf(req.getParameter("bday"));
+        
+        String clearPass = req.getParameter("pass1");
         SecurePasswordHelper sec = new SecurePasswordHelper();
         
+        // Convert Password into secure hash using helper class
         try {
             securePass = sec.generateSecurePasswordHash(clearPass);
         } catch (NoSuchAlgorithmException | InvalidKeySpecException ex) {
             Logger.getLogger(userController.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        if(operation=="add"){
-            user = new User(0,req.getParameter("prename"),
-                    req.getParameter("surname1"),
-                    req.getParameter("surname2"),
-                    req.getParameter("email"), 
-                    securePass, userBday,
-                    req.getParameter("address"),
-                    req.getParameter("postalcode"),
-                    req.getParameter("country"),
-                    Integer.parseInt(req.getParameter("flights_booked")));
-            
+        user = new User();
+        user.setPname(req.getParameter("pname"));
+        user.setSname1(req.getParameter("sname1"));
+        user.setSname2(req.getParameter("sname2"));
+        user.setEmail(req.getParameter("email"));
+        user.setPass(securePass);
+        user.setBday(userBday);
+        user.setAddress(req.getParameter("addr"));
+        user.setPcode(req.getParameter("pcode"));
+        user.setCity(req.getParameter("city"));
+        user.setCountry(req.getParameter("country"));
+        
+        //This is the "add user" case
+        if(req.getParameter("id") == null || req.getParameter("id").isEmpty()){
             success = userDAO.insert(user);
+            req.setAttribute("success", success);
             if(success){
-                res.sendRedirect(res.encodeRedirectURL("/MVC/InsertUserSuccess.jsp")); // o conseguir mensaje Alarma con AJAX/JavaScript
-            } else{
-                res.sendRedirect(res.encodeRedirectURL("/MVC/InsertUserError.jsp"));  // o conseguir mensaje Alarma con AJAX/JavaScript
+                RequestDispatcher view = req.getRequestDispatcher("viewUser.jsp");
+                req.setAttribute("user", user);
+                view.forward(req, res);
+                res.sendRedirect(res.encodeRedirectURL("viewUser.jsp"));
             }
         }
-        if(operation == "edit"){
-            user = new User(Integer.parseInt(req.getParameter("id")),
-                    req.getParameter("prename"),
-                    req.getParameter("surname1"),
-                    req.getParameter("surname2"),
-                    req.getParameter("email"), 
-                    securePass, userBday,
-                    req.getParameter("address"),
-                    req.getParameter("postalcode"),
-                    req.getParameter("country"),
-                    Integer.parseInt(req.getParameter("flights_booked")));
-            
+        // This is the "edit user" case
+        else{
+            user.setId(Integer.parseInt(req.getParameter("id")));
             success = userDAO.update(user);
-            
-            s.setAttribute("pname", user.getPname());
-            s.setAttribute("sname1", user.getSname1());
-            s.setAttribute("sname2", user.getSname2());
+            req.setAttribute("success", success);
             if(success){
-                res.sendRedirect(res.encodeRedirectURL("/MVC/UpdateUserSuccess.jsp")); // o conseguir mensaje Alarma con AJAX/JavaScript
-            } else{
-                res.sendRedirect(res.encodeRedirectURL("/MVC/UpdateUserError.jsp"));  // o conseguir mensaje Alarma con AJAX/JavaScript
+                RequestDispatcher view = req.getRequestDispatcher("viewUser.jsp");
+                req.setAttribute("user", user);
+                view.forward(req, res);
+                res.sendRedirect(res.encodeRedirectURL("viewUser.jsp"));
             }
         }
-        if(operation=="delete"){
-            success = userDAO.delete(Integer.parseInt(req.getParameter("id")));
-            if(success){
-                res.sendRedirect(res.encodeRedirectURL("/MVC/deleteUserSuccess.jsp")); // o conseguir mensaje Alarma con AJAX/JavaScript
-            } else{
-                res.sendRedirect(res.encodeRedirectURL("/MVC/deleteUserError.jsp"));  // o conseguir mensaje Alarma con AJAX/JavaScript
-            }
-        }
-    }
-    
-    @Override
-    public void destroy(){
     }
 }
