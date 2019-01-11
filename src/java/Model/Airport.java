@@ -16,11 +16,7 @@ public class Airport {
     private String country;
     private int tax;
 
-    public Airport(int id, String name, String country, int tax) {
-        this.id = id;
-        this.name = name;
-        this.country = country;
-        this.tax = tax;
+    public Airport() {
     }
 
     public int getId() {
