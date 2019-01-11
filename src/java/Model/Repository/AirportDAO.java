@@ -6,6 +6,7 @@
 package Model.Repository;
 
 import Model.Airport;
+import java.util.ArrayList;
 
 /**
  *
@@ -16,6 +17,8 @@ public interface AirportDAO {
     public Airport find(int id);
 
     public boolean insert(Airport airport);
+    
+    public ArrayList<Airport> findAll();
 
     public boolean update(Airport airport);
 

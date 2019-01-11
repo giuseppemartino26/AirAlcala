@@ -54,7 +54,7 @@ public class airportController extends HttpServlet {
         } else if (operation.equalsIgnoreCase("edit")){
             airportId = Integer.parseInt(request.getParameter("airportId"));
             forward = "editAirport.jsp";
-            User user = airportDAO.find(airportId);
+            Airport airport = airportDAO.find(airportId);
             request.setAttribute("airports", airport);
         } else if (operation.equalsIgnoreCase("airport")){
             forward = "listAirports.jsp";
@@ -96,7 +96,7 @@ public class airportController extends HttpServlet {
         airport = new Airport();
         airport.setName(req.getParameter("name"));
         airport.setCountry(req.getParameter("country"));
-        airport.setTax(req.getParameter("tax"));
+        airport.setTax(Integer.parseInt(req.getParameter("tax")));
         
         //This is the "add user" case
         if(req.getParameter("id") == null || req.getParameter("id").isEmpty()){
