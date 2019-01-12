@@ -15,10 +15,7 @@ public class Airplane {
     private String name;
     private int places;
 
-    public Airplane(int id, String name, int places) {
-        this.id = id;
-        this.name = name;
-        this.places = places;
+    public Airplane () {
     }
 
     public int getId() {

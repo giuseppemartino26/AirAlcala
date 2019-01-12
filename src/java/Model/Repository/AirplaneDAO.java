@@ -6,7 +6,7 @@
 package Model.Repository;
 
 import Model.Airplane;
-
+import java.util.ArrayList;
 /**
  *
  * @author fabri
@@ -21,6 +21,8 @@ public interface AirplaneDAO { //DAO = Data Access Object
     public Airplane find(int id);
 
     public boolean insert(Airplane airplane);
+    
+    public ArrayList<Airplane> findAll();
 
     public boolean update(Airplane airplane);
 

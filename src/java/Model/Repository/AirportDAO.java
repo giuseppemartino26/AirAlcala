@@ -7,10 +7,14 @@ package Model.Repository;
 
 import Model.Airport;
 import java.util.ArrayList;
-
 /**
  *
  * @author fabri
+ */
+
+/*
+* This interface is based on the design pattern Repository
+* by Eric Evans (Domain-Driven Design: Tackling Complexity in the Heart of Software)
  */
 public interface AirportDAO {
 
