@@ -44,7 +44,7 @@ public class JDBCAdministratorDAO implements AdministratorDAO {
 
     @Override
     public Administrator find(int id) {
-        Administrator admin = null;
+        Administrator admin = new Administrator();
         String query = "SELECT * FROM administrators WHERE id = ?";
         try {
             connObj = dbConnect();
@@ -52,11 +52,14 @@ public class JDBCAdministratorDAO implements AdministratorDAO {
             stmtObj.setInt(1, id);
             rsObj = stmtObj.executeQuery();
             
-            
-            admin = new Administrator(rsObj.getInt("id"), rsObj.getString("email"),
-            rsObj.getString("pass"),rsObj.getString("prename"),
-            rsObj.getString("surname1"),rsObj.getString("surname2"));
-            
+            if(rsObj.next()){
+                admin.setId(rsObj.getInt("id"));
+                admin.setPname(rsObj.getString("prename"));
+                admin.setSname1(rsObj.getString("surname1"));
+                admin.setSname2(rsObj.getString("surname2"));
+                admin.setEmail(rsObj.getString("email"));
+                admin.setPass(rsObj.getString("pass"));
+            }
             dbDisconnect();
         } catch (SQLException e) {
             System.out.println("Not inserted. " + e);
@@ -67,17 +70,21 @@ public class JDBCAdministratorDAO implements AdministratorDAO {
     public ArrayList<Administrator> findAll(){
         ArrayList<Administrator> adminList = new ArrayList<Administrator>();
         String query = "SELECT * FROM administrators";
-        
+
         try{
             connObj = dbConnect();
             stmtObj = connObj.prepareStatement(query);
             rsObj = stmtObj.executeQuery();
             
             while(rsObj.next()){
-                Administrator admin = new Administrator(rsObj.getInt("id"),rsObj.getString("email"),
-                rsObj.getString("pass"),rsObj.getString("prename"),rsObj.getString("surname1"),
-                rsObj.getString("surname2"));
-                
+                Administrator admin = new Administrator();
+                admin.setId(rsObj.getInt("id"));
+                admin.setPname(rsObj.getString("prename"));
+                admin.setSname1(rsObj.getString("surname1"));
+                admin.setSname2(rsObj.getString("surname2"));
+                admin.setEmail(rsObj.getString("email"));
+                admin.setPass(rsObj.getString("pass"));
+            
                 adminList.add(admin);
             }
             dbDisconnect();
@@ -119,9 +126,9 @@ public class JDBCAdministratorDAO implements AdministratorDAO {
     public boolean update(Administrator admin) {
         boolean updated = false;
         int updatedId = 0;
-        String query = "UPDATE TABLE administrators SET email= ?, pass= ?,"
+        String query = "UPDATE administrators SET email= ?, pass= ?,"
                 + "prename= ?, surname1= ?,surname2= ?"
-                + "WHERE id = ?;";
+                + "WHERE id = ?";
         try {
             connObj = dbConnect();
             stmtObj = connObj.prepareStatement(query);
@@ -149,13 +156,13 @@ public class JDBCAdministratorDAO implements AdministratorDAO {
     public boolean delete(int id) {
         boolean deleted = false;
         int deletedId = 0;
-        String query = "DELETE FROM administrators WHERE id=?;";
+        String query = "DELETE FROM administrators WHERE id=?";
         try {
             connObj = dbConnect();
             stmtObj = connObj.prepareStatement(query);
             stmtObj.setInt(1,id);
 
-            deletedId = stmtObj.executeUpdate(query);
+            deletedId = stmtObj.executeUpdate();
            
             dbDisconnect();
         } catch (SQLException e) {

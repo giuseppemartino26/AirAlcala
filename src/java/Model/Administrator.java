@@ -18,13 +18,7 @@ public class Administrator {
     private String sname1;
     private String sname2;
 
-    public Administrator(int id, String email, String pass, String pname, String sname1, String sname2) {
-        this.id = id;
-        this.email = email;
-        this.pass = pass;
-        this.pname = pname;
-        this.sname1 = sname1;
-        this.sname2 = sname2;
+    public Administrator() {
     }
 
     public int getId() {

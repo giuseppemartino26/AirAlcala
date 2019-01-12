@@ -98,45 +98,25 @@ public class JDBCAirportDAO implements AirportDAO{
     public boolean insert(Airport airport) {
         boolean inserted = false;
         int insertedId = 0;
-        
-        if(user.getPass().equals("")){
-             String query = "INSERT INTO users (prename, surname1, surname2, email,"
-                + "birthday, address, postalcode, city, country ) "
-                + "VALUES (?,?,?,?,?,?,?,?,?,?)";
-             
-            try {
-                connObj = dbConnect();
-                stmtObj = connObj.prepareStatement(query);
-                stmtObj.setString(1, airport.getName());
-                stmtObj.setString(2,airport.getCountry());
-                stmtObj.setInt(3,airport.getTax());
-                
-                insertedId = stmtObj.executeUpdate();
+   
+        String query = "INSERT INTO airports (prename, surname1, surname2, email,"
+            + "pass, birthday, address, postalcode, city, country ) "
+            + "VALUES (?,?,?,?,?,?,?,?,?,?)";
 
-                dbDisconnect();
-            } catch (SQLException e) {
-                System.out.println("Not inserted. " + e);
-            }
-        } else{
-            String query = "INSERT INTO airports (prename, surname1, surname2, email,"
-                + "pass, birthday, address, postalcode, city, country ) "
-                + "VALUES (?,?,?,?,?,?,?,?,?,?)";
-             
-            try {
-                connObj = dbConnect();
-                stmtObj = connObj.prepareStatement(query);
-                stmtObj.setString(1, airport.getName());
-                stmtObj.setString(2,airport.getCountry());
-                stmtObj.setInt(3,airport.getTax());
+        try {
+            connObj = dbConnect();
+            stmtObj = connObj.prepareStatement(query);
+            stmtObj.setString(1, airport.getName());
+            stmtObj.setString(2,airport.getCountry());
+            stmtObj.setInt(3,airport.getTax());
 
-                insertedId = stmtObj.executeUpdate();
+            insertedId = stmtObj.executeUpdate();
 
-                dbDisconnect();
-            } catch (SQLException e) {
-                System.out.println("Not inserted. " + e);
-            }            
-        }
-       
+            dbDisconnect();
+        } catch (SQLException e) {
+            System.out.println("Not inserted. " + e);
+        }            
+
         
 
         if (insertedId > 0) {
