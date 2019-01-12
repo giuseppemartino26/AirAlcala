@@ -8,32 +8,7 @@
        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    
-       <style>         /*Styles for get nice header and a sticky footer at the bottom of the page*/
-            * {
-                margin: 0;
-                padding: 0;
-            }
-            html,body {
-                height:100%;
-            }
-            #wrapper {  /*wraps the body and the header to make the footer work*/
-                min-height:100%;
-            }
-            header{
-                background:#597ea2;
-                color:#fff;
-            }
-            footer {
-                position: relative;
-                height: 40px;
-                padding:5px 0px;
-                clear: both;
-                background: #8aa4bd;
-                text-align: center;
-                color: #fff;
-            }
-        </style>
+        <link rel="stylesheet" type="text/css" href="styles/styles.css">
         <script>
             $(document).ready(function () {
                 $("#round_trip").on("click",function(){
@@ -87,9 +62,9 @@
                             <span class="caret"></span></a>
                             <ul class="dropdown-menu">
                               <li><a href="userController?operation=list">Usarios</a></li>
-                              <li><a href="#">Vuelos</a></li>
+                              <li><a href="flightController?operation=list">Vuelos</a></li>
                               <li><a href="#">Rutas</a></li>
-                              <li><a href="#">...</a></li>
+                              <li><a href="#"></a></li>
                             </ul>
                     </li>         
                 </ul>

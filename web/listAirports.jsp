@@ -18,40 +18,7 @@
    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
    <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.1.min.js"></script>
    <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.0/jquery.dataTables.min.js"></script>
-   
-   <style>         
-        /*Styles for get nice header and a sticky footer at the bottom of the page*/
-            * {
-                margin: 0;
-                padding: 0;
-            }
-            html,body {
-                height:100%;
-            }
-            #wrapper {  /*wraps the body and the header to make the footer work*/
-                min-height:100%;
-            }
-            header{
-                background:#597ea2;
-                color:#fff;
-            }
-            footer {
-                position: relative;
-                height: 40px;
-                padding:5px 0px;
-                clear: both;
-                background: #8aa4bd;
-                text-align: center;
-                color: #fff;
-            }
-            
-            .topButton{
-                padding-top: 5px;
-                padding-right: 3px;
-                padding-bottom: 5px;
-                padding-left: 3px;
-            }
-    </style>
+<link rel="stylesheet" type="text/css" href="styles/styles.css">
     
     <script>
     $(document).ready( function () {
