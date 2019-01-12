@@ -99,9 +99,8 @@ public class JDBCAirportDAO implements AirportDAO{
         boolean inserted = false;
         int insertedId = 0;
         
-        if(user.getPass().equals("")){
-             String query = "INSERT INTO users (prename, surname1, surname2, email,"
-                + "birthday, address, postalcode, city, country ) "
+        if (airport.getName().equals("")){
+             String query = "INSERT INTO airports (name, country, tax"
                 + "VALUES (?,?,?,?,?,?,?,?,?,?)";
              
             try {
@@ -118,8 +117,7 @@ public class JDBCAirportDAO implements AirportDAO{
                 System.out.println("Not inserted. " + e);
             }
         } else{
-            String query = "INSERT INTO airports (prename, surname1, surname2, email,"
-                + "pass, birthday, address, postalcode, city, country ) "
+            String query = "INSERT INTO airports (name, country, tax)"
                 + "VALUES (?,?,?,?,?,?,?,?,?,?)";
              
             try {
@@ -150,9 +148,7 @@ public class JDBCAirportDAO implements AirportDAO{
     public boolean update(Airport airport) {
         boolean updated = false;
         int updatedId = 0;
-        String query = "UPDATE users SET prename= ?, surname1= ?,"
-                + "surname2= ?, email= ?,pass= ?, birthday=  ?, "
-                + "address= ?, postalcode= ?, city=?, country= ?"
+        String query = "UPDATE airports SET name= ?, country= ?, tax= ?"
                 + "WHERE id = ?";
         try {
             connObj = dbConnect();
