@@ -98,41 +98,56 @@ public class JDBCAirportDAO implements AirportDAO{
     public boolean insert(Airport airport) {
         boolean inserted = false;
         int insertedId = 0;
-   
-        String query = "INSERT INTO airports (prename, surname1, surname2, email,"
-            + "pass, birthday, address, postalcode, city, country ) "
-            + "VALUES (?,?,?,?,?,?,?,?,?,?)";
+        
+        if (airport.getName().equals("")){
+             String query = "INSERT INTO airports (name, country, tax"
+                + "VALUES (?,?,?,?,?,?,?,?,?,?)";
+             
+            try {
+                connObj = dbConnect();
+                stmtObj = connObj.prepareStatement(query);
+                stmtObj.setString(1, airport.getName());
+                stmtObj.setString(2,airport.getCountry());
+                stmtObj.setInt(3,airport.getTax());
+                
+                insertedId = stmtObj.executeUpdate();
 
-        try {
-            connObj = dbConnect();
-            stmtObj = connObj.prepareStatement(query);
-            stmtObj.setString(1, airport.getName());
-            stmtObj.setString(2,airport.getCountry());
-            stmtObj.setInt(3,airport.getTax());
+                dbDisconnect();
+            } catch (SQLException e) {
+                System.out.println("Not inserted. " + e);
+            }
+        } else{
+            String query = "INSERT INTO airports (name, country, tax)"
+                + "VALUES (?,?,?,?,?,?,?,?,?,?)";
+             
+            try {
+                connObj = dbConnect();
+                stmtObj = connObj.prepareStatement(query);
+                stmtObj.setString(1, airport.getName());
+                stmtObj.setString(2,airport.getCountry());
+                stmtObj.setInt(3,airport.getTax());
 
             insertedId = stmtObj.executeUpdate();
 
             dbDisconnect();
-        } catch (SQLException e) {
-            System.out.println("Not inserted. " + e);
-        }            
-
+            } catch (SQLException e) {
+                System.out.println("Not inserted. " + e);
+            }            
+        }    
         
 
         if (insertedId > 0) {
             inserted = true;
         }
         return inserted;
-    }
+        }
 
 
     @Override
     public boolean update(Airport airport) {
         boolean updated = false;
         int updatedId = 0;
-        String query = "UPDATE users SET prename= ?, surname1= ?,"
-                + "surname2= ?, email= ?,pass= ?, birthday=  ?, "
-                + "address= ?, postalcode= ?, city=?, country= ?"
+        String query = "UPDATE airports SET name= ?, country= ?, tax= ?"
                 + "WHERE id = ?";
         try {
             connObj = dbConnect();
