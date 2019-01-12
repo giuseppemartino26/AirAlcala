@@ -6,6 +6,7 @@
 package Model.Repository;
 
 import Model.Route;
+import java.util.ArrayList;
 
 /**
  *
@@ -20,5 +21,7 @@ public interface RouteDAO {
     public boolean update(Route route);
 
     public boolean delete(int id);
+
+    public ArrayList<Route> findAll();
 
 }

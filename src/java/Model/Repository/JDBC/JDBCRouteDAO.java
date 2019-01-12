@@ -10,6 +10,7 @@ import Model.Route;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  *
@@ -47,6 +48,11 @@ public class JDBCRouteDAO implements RouteDAO {
 
     @Override
     public boolean delete(int id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList<Route> findAll() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
