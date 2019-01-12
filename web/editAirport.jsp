@@ -1,7 +1,7 @@
 <%-- 
     Document   : newjsp
-    Created on : 10-en-2019, 9.40.51
-    Author     : David
+    Created on : 09-en-2019, 9.40.51
+    Author     : Martin
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -130,15 +130,14 @@ table,td{
 }
 </style>
 
-</head>
-
-<body>
-    <div id="wrapper">
-    <header>
-        <div class="container">
-            <h1>Air Alcala</h1>
-        </div>
-    </header>
+    </head>
+    <body>
+        <div id="wrapper">
+            <header>
+                <div class="container">
+                <h1>Air Alcala</h1>
+                </div>
+            </header>
             <nav class="navbar navbar-default">
                 <div class="container-fluid">
                 <div class="navbar-header">
@@ -150,7 +149,7 @@ table,td{
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">Administrador
                             <span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                              <li><a href="userController?operation=list">Aeropuertos></li>
+                              <li><a href="userController?operation=list">Usarios</a></li>
                               <li><a href="#">Vuelos</a></li>
                               <li><a href="#">Rutas</a></li>
                               <li><a href="#">...</a></li>
@@ -161,26 +160,30 @@ table,td{
             </nav>
             <br>
             <div class="container">
-            <h2>Crear Aeropuerto</h2>
+            <h2>Editar Aeropuerto</h2>
             <br>
-        <div class="btn-group topButton" role="group" aria-label="Basic example">
-            <a href="airportController?operation=list" class="btn btn-primary" role="button">Volver a Lista</a>
-        </div>
+            <div class="btn-group topButton" role="group" aria-label="Basic example">
+            <a href="airportController?operation=list" class="btn btn-primary" role="button">Volver a Lista</a>        
+            </div>
             <form method="POST" action="airportController" class="form-container" onsubmit="showResponse()">
             <div class="row">
+                <input type="hidden" name="id" value="${airport.id}" />
                 <div class="col-lg-4">
                 <label for="name"><b>Nombre</b></label>
-                <input placeholder="Nombre" name="name" id="name" type="text">
+                <input placeholder="Nombre" name="name" id="name" type="text"
+                       value="${airport.name}" />
                 </div>
                 
                 <div class="col-lg-4">              
                 <label for="country"><b>País</b></label>
-                <input placeholder="País" name="country" id="country" type="text">
+                <input placeholder="País" name="country" id="country" type="text"
+                       value="${airport.country}" />
                 </div>
                 
                 <div class="col-lg-4">
                 <label for="tax"><b>Tax</b></label>
-                <input placeholder="Tax" name="tax" id="tax" type="number">
+                <input placeholder="Tax" name="tax" id="tax" type="number"
+                       value="${airport.tax}" />
                 </div>
             </div>
                 
@@ -214,6 +217,5 @@ table,td{
                 </div>
             </div>
         </footer>
-    </div>
-</body>
+    </body>
 </html>
