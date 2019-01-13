@@ -26,14 +26,14 @@ import javax.servlet.http.HttpSession;
  *
  * @author pablo
  */
-public class crediCardController extends HttpServlet {
+public class creditCardController extends HttpServlet {
 
     private CreditCard creditCard;
     private User user;
     private CreditCardDAO creditCardDAO;
     private UserDAO userDAO;
 
-    public crediCardController() {
+    public creditCardController() {
         super();
         creditCardDAO = new JDBCCreditCardDAO();
         userDAO = new JDBCUserDAO();

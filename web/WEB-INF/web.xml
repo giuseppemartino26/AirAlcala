@@ -17,7 +17,7 @@
         <servlet-class>Controller.administratorController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>creditCardConstroller</servlet-name>
+        <servlet-name>creditCardController</servlet-name>
         <servlet-class>Controller.crediCardController</servlet-class>
     </servlet>
     <servlet>
@@ -41,8 +41,8 @@
         <url-pattern>/administratorController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>credit_cardConstroller</servlet-name>
-        <url-pattern>/credit_cardConstroller</url-pattern>
+        <servlet-name>creditCardController</servlet-name>
+        <url-pattern>/creditCardController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>saleController</servlet-name>
