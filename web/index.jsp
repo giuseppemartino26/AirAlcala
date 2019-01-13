@@ -31,7 +31,7 @@
                     <a class="navbar-brand" href="#">AirAlcalá</a>
                 </div>
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="index.html">Inicio</a></li>
+                    <li class="active"><a href="index.jsp">Inicio</a></li>
                     <li class="active"><a href="userController?operation=add">Crear Cuenta</a></li>       
                 </ul>
               </div>

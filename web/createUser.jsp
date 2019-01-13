@@ -49,7 +49,7 @@ src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></scri
                 <li class="active"><a href="salesController?operation=list&userId=<%=session.getAttribute("sessionUserId")%>">Mirar Compras</a></li>
                 <li class="active"><a href="creditcardController?operation=list">Editar Medios de Pago</a></li>
             <%} if(session.getAttribute("sessionUserId") == null && session.getAttribute("sessionAdminId") == null){ %>
-                <li class="active"><a href="index.html">Inicio</a></li>
+                <li class="active"><a href="index.jsp">Inicio</a></li>
                 <li class="active"><a href="userController?operation=add">Crear Cuenta</a></li>
             <%}%>
         </ul>

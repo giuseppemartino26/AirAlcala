@@ -37,7 +37,7 @@
                     <h1>Air Alcala</h1>
                 </div>
             </header>
-       <nav class="navbar navbar-default">
+      <nav class="navbar navbar-default">
         <div class="container-fluid">
         <div class="navbar-header">
             <a class="navbar-brand" href="#">AirAlcalá</a>
@@ -56,7 +56,7 @@
                 <li class="active"><a href="salesController?operation=list&userId=<%=session.getAttribute("sessionUserId")%>">Mirar Compras</a></li>
                 <li class="active"><a href="creditcardController?operation=list">Editar Medios de Pago</a></li>
             <%} if(session.getAttribute("sessionUserId") == null && session.getAttribute("sessionAdminId") == null){ %>
-                <li class="active"><a href="index.html">Inicio</a></li>
+                <li class="active"><a href="index.jsp">Inicio</a></li>
                 <li class="active"><a href="userController?operation=add">Crear Cuenta</a></li>
             <%}%>
         </ul>
