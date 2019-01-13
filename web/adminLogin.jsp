@@ -23,7 +23,7 @@
                     <a class="navbar-brand" href="#">AirAlcalá</a>
                 </div>
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="index.html">Inicio</a></li>
+                    <li class="active"><a href="index.jsp">Inicio</a></li>
               </div>
             </nav>
             <br>
@@ -59,7 +59,6 @@
                     </div>
                     <div class="col-xs-6">
                         <ul class="list-inline text-right">
-                            <li><a href="https://www.facebook.com/">Facebook</a></li>
                             <li><a href="https://twitter.com/">Twitter</a></li>
                             <li><a href="https://www.facebook.com/">Facebook</a></li>
                             <li>Contacto 900 900 411 <a href="mailto:ciu@uah.es">ciu@uah.es</a></li>

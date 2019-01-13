@@ -41,7 +41,6 @@ public class airportController extends HttpServlet {
         String operation = request.getParameter("operation");
         boolean success = false;
         int airportId;
-        System.err.print(operation);
         
         if (operation.equalsIgnoreCase("delete")){
             airportId = Integer.parseInt(request.getParameter("airportId"));
@@ -56,9 +55,10 @@ public class airportController extends HttpServlet {
             forward = "editAirport.jsp";
             Airport airport = airportDAO.find(airportId);
             request.setAttribute("airports", airport);
-        } else if (operation.equalsIgnoreCase("airport")){
+        } else if (operation.equalsIgnoreCase("list")){
             forward = "listAirports.jsp";
             request.setAttribute("airports", airportDAO.findAll());
+            System.out.println("piep");
         } else if (operation.equalsIgnoreCase("view")){
             airportId = Integer.parseInt(request.getParameter("airportId"));
             forward = "viewAirport.jsp";

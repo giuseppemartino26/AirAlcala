@@ -31,14 +31,12 @@ public class logoutController extends HttpServlet {
     
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher view = request.getRequestDispatcher("index.html");
-         view.forward(request, response);
     	//invalidate the session if exists
     	HttpSession session = request.getSession(false);
-    	System.out.println("User="+session.getAttribute("sessionUserPname"));
     	if(session != null){
     		session.invalidate();
     	}
-    	response.sendRedirect("loginController");         
+        response.sendRedirect("loginController");
+
     }
 }

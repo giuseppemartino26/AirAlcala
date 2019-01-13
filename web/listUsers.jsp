@@ -100,6 +100,7 @@
                 <th>País</th>
                 <th></th>
                 <th></th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
@@ -133,6 +134,7 @@
                 <th>Codigo Postal</th>
                 <th>Ciudad</th>
                 <th>País</th>
+                <th></th>
                 <th></th>
                 <th></th>
             </tr> 
