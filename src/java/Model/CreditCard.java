@@ -16,7 +16,7 @@ public class CreditCard {
     private int id;
     private User user;
     private int number;
-    private Date expiration;
+    private java.sql.Date expiration;
     private int securityCode;
     private int month;
     private int year;
@@ -48,11 +48,11 @@ public class CreditCard {
         this.number = number;
     }
 
-    public Date getExpiration() {
+    public java.sql.Date getExpiration() {
         return expiration;
     }
 
-    public void setExpiration(Date expiration) {
+    public void setExpiration(java.sql.Date expiration) {
         this.expiration = expiration;
     }
 

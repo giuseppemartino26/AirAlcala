@@ -15,6 +15,8 @@ public interface CreditCardDAO {
 
     public CreditCard find(int id);
 
+    public CreditCard findByUserId(int userId);
+
     public boolean insert(CreditCard creditCard);
 
     public boolean update(CreditCard creditCard);
