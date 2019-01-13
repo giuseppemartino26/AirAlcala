@@ -7,6 +7,8 @@ package Model.Repository.JDBC;
 
 import Model.Flight;
 import Model.Repository.FlightDAO;
+import Model.Repository.RouteDAO;
+import Model.Route;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -20,11 +22,11 @@ import java.util.ArrayList;
  */
 public class JDBCFlightDAO implements FlightDAO {
 
-    private static Connection connObj;
+     private static Connection connObj;
     private static PreparedStatement stmtObj;
     private static ResultSet rsObj;
     
-    public void dbConnect() {
+    private Connection dbConnect() {
         try {
             Class.forName("org.apache.derby.jdbc.ClientDriver");
             connObj = DriverManager.getConnection("jdbc:derby://localhost:1527/airAlcala", "root", "root");
@@ -33,6 +35,7 @@ public class JDBCFlightDAO implements FlightDAO {
             System.out.println("Not Connected. ");
             System.out.println(e);
         }
+        return connObj;
     }
     
     public static void dbDisconnect() {
@@ -47,27 +50,138 @@ public class JDBCFlightDAO implements FlightDAO {
 
     @Override
     public Flight find(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
-    @Override
-    public ArrayList<Flight> findAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Flight flight = new Flight();
+        Route route = new Route();
+        String query = "SELECT * FROM flight WHERE id = ?";
+        try {
+            connObj = dbConnect();
+            stmtObj = connObj.prepareStatement(query);
+            stmtObj.setInt(1, id);
+            rsObj = stmtObj.executeQuery();
+            
+            RouteDAO routeDAO = new JDBCRouteDAO();
+            route = routeDAO.find(rsObj.getInt("route_id"));
+           
+            flight.setId(rsObj.getInt("id"));
+            flight.setLocator(rsObj.getString("locator"));
+            flight.setRoute(route);
+            flight.setDeparture(rsObj.getDate("departure"));
+            flight.setArrival(rsObj.getDate("arrival"));
+            
+            dbDisconnect();
+        } catch (SQLException e) {
+            System.out.println("Not inserted. " + e);
+        }
+        return flight;
     }
 
     @Override
     public boolean insert(Flight flight) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        boolean inserted = false;
+        int insertedId = 0;
+        String query = "INSERT INTO flights (locator, route_id, departure, arrival) "
+                + "VALUES (?,?,?,?)";
+        
+        try {
+            connObj = dbConnect();
+            stmtObj = connObj.prepareStatement(query);
+            stmtObj.setString(1, flight.getLocator() );
+            stmtObj.setInt(2, flight.getRoute().getId());
+            stmtObj.setDate(3, flight.getDeparture());
+            stmtObj.setDate(4, flight.getArrival());
+            
+            insertedId = stmtObj.executeUpdate();
+            
+            dbDisconnect();
+        } catch (SQLException e) {
+            System.out.println("Not inserted. " + e);
+        }
+        if (insertedId > 0) {
+            inserted = true;
+        }
+        return inserted;
     }
 
     @Override
     public boolean update(Flight flight) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        boolean updated = false;
+        int updatedId = 0;
+        String query = "UPDATE routes SET locator = ?, route_id = ?,"
+                + "departure = ?, arrival = ?"
+                + "WHERE id = ?;";
+        try {
+            connObj = dbConnect();
+            stmtObj = connObj.prepareStatement(query);
+           
+            stmtObj = connObj.prepareStatement(query);
+            stmtObj.setString(1, flight.getLocator() );
+            stmtObj.setInt(2, flight.getRoute().getId());
+            stmtObj.setDate(3, flight.getDeparture());
+            stmtObj.setDate(4, flight.getArrival());
+            stmtObj.setInt(5, flight.getId());
+            
+            updatedId = stmtObj.executeUpdate();
+            
+            dbDisconnect();
+        } catch (SQLException e) {
+            System.out.println("Not inserted. " + e);
+        }
+        if (updatedId > 0) {
+            updated = true;
+        }
+        return updated;    
     }
 
     @Override
     public boolean delete(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+        boolean deleted = false;
+        int deletedId = 0;
+        String query = "DELETE FROM flights WHERE id= ?;";
+        try {
+            connObj = dbConnect();
+            stmtObj = connObj.prepareStatement(query);
+            stmtObj.setInt(1,id);
 
+            deletedId = stmtObj.executeUpdate();
+            
+            dbDisconnect();
+        } catch (SQLException e) {
+            System.out.println("Not inserted. " + e);
+        }
+        if (deletedId > 0) {
+            deleted = true;
+        }
+        return deleted;
+    }
+    
+    @Override
+        public ArrayList<Flight> findAll(){
+        ArrayList<Flight> flightList = new ArrayList<Flight>();
+        String query = "SELECT * FROM flights";
+        
+        try{
+            connObj = dbConnect();
+            stmtObj = connObj.prepareStatement(query);
+            rsObj = stmtObj.executeQuery();
+            
+            while(rsObj.next()){
+                Flight flight = new Flight();
+                RouteDAO routeDAO = new JDBCRouteDAO();
+                Route route = routeDAO.find(rsObj.getInt("route_id"));
+
+                flight.setId(rsObj.getInt("id"));
+                flight.setLocator(rsObj.getString("locator"));
+                flight.setRoute(route);
+                flight.setDeparture(rsObj.getDate("departure"));
+                flight.setArrival(rsObj.getDate("arrival"));
+                
+                flightList.add(flight);
+            }
+            dbDisconnect();
+
+        } catch(SQLException e){
+            System.out.println("Error Retrieving Data. " + e);
+        }
+        return flightList;
+    }
 }

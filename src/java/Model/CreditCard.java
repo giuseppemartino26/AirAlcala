@@ -21,14 +21,7 @@ public class CreditCard {
     private int month;
     private int year;
 
-    public CreditCard(int id, User user, int number, Date expiration, int securityCode) {
-        this.id = id;
-        this.user = user;
-        this.number = number;
-        this.expiration = expiration;
-        this.securityCode = securityCode;
-        month=expiration.getMonth();
-        year=expiration.getYear();
+    public CreditCard() {
     }
 
     public int getId() {

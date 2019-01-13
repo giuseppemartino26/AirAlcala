@@ -68,9 +68,14 @@ public class JDBCSaleDAO implements SaleDAO {
             CreditCardDAO ccDAO = new JDBCCreditCardDAO();
             CreditCard cc = ccDAO.find(rsObj.getInt("credit_card"));
             
-            sale = new Sale(rsObj.getInt("id"), flight ,
-            user,rsObj.getString("place"), rsObj.getInt("number_luggages"),
-            cc, rsObj.getDouble("price"));
+            sale = new Sale();
+            sale.setId(rsObj.getInt("id"));
+            sale.setFlight(flight);
+            sale.setUser(user);
+            sale.setPlace(rsObj.getString("place"));
+            sale.setNoLuggage(rsObj.getInt("number_luggages"));
+            sale.setCreditCard(cc);
+            sale.setPrice(rsObj.getDouble("price"));
             
             dbDisconnect();
         } catch (SQLException e) {
@@ -98,8 +103,14 @@ public class JDBCSaleDAO implements SaleDAO {
                 CreditCardDAO ccDAO = new JDBCCreditCardDAO();
                 CreditCard cc = ccDAO.find(rsObj.getInt("credit_card"));
                 
-                Sale sale = new Sale(rsObj.getInt("id"),flight,user,rsObj.getString("place"),
-                rsObj.getInt("number_luggages"),cc, rsObj.getDouble("price"));
+                Sale sale = new Sale();
+                sale.setId(rsObj.getInt("id"));
+                sale.setFlight(flight);
+                sale.setUser(user);
+                sale.setPlace(rsObj.getString("place"));
+                sale.setNoLuggage(rsObj.getInt("number_luggages"));
+                sale.setCreditCard(cc);
+                sale.setPrice(rsObj.getDouble("price"));
                 
                 saleList.add(sale);
             }

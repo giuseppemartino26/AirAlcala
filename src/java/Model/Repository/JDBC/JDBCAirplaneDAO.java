@@ -72,7 +72,7 @@ public class JDBCAirplaneDAO implements AirplaneDAO {
     
         public ArrayList<Airplane> findAll(){
         ArrayList<Airplane> airplaneList = new ArrayList<Airplane>();
-        String query = "SELECT * FROM airpolanes";
+        String query = "SELECT * FROM airplanes";
         
         try{
             connObj = dbConnect();
@@ -98,8 +98,8 @@ public class JDBCAirplaneDAO implements AirplaneDAO {
         int insertedId = 0;
         
         if (airplane.getName().equals("")){
-             String query = "INSERT INTO airplanes (name, places"
-                + "VALUES (?,?,?,?,?,?,?,?,?,?)";
+             String query = "INSERT INTO airplanes (name, places)"
+                + "VALUES (?,?)";
              
             try {
                 connObj = dbConnect();
@@ -115,7 +115,7 @@ public class JDBCAirplaneDAO implements AirplaneDAO {
             }
         } else{
             String query = "INSERT INTO airplanes (name, places)"
-                + "VALUES (?,?,?,?,?,?,?,?,?,?)";
+                + "VALUES (?,?)";
              
             try {
                 connObj = dbConnect();

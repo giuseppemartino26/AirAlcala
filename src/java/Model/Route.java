@@ -15,18 +15,11 @@ public class Route {
     private Airport origin;
     private Airport destination;
     private Airplane plane;
-    private int ticketPrice;
-    private int tax;
-    private int luggagePrice;
+    private double ticketPrice;
+    private double tax;
+    private double luggagePrice;
 
-    public Route(int id, Airport origin, Airport destination, Airplane plane, int ticketPrice, int tax, int luggagePrice) {
-        this.id = id;
-        this.origin = origin;
-        this.destination = destination;
-        this.plane = plane;
-        this.ticketPrice = ticketPrice;
-        this.tax = tax;
-        this.luggagePrice = luggagePrice;
+    public Route() {
     }
 
     public int getId() {
@@ -61,7 +54,7 @@ public class Route {
         this.plane = plane;
     }
 
-    public int getTicketPrice() {
+    public double getTicketPrice() {
         return ticketPrice;
     }
 
@@ -69,19 +62,19 @@ public class Route {
         this.ticketPrice = ticketPrice;
     }
 
-    public int getTax() {
+    public double getTax() {
         return tax;
     }
 
-    public void setTax(int tax) {
+    public void setTax(double tax) {
         this.tax = tax;
     }
 
-    public int getLuggagePrice() {
+    public double getLuggagePrice() {
         return luggagePrice;
     }
 
-    public void setLuggagePrice(int luggagePrice) {
+    public void setLuggagePrice(double luggagePrice) {
         this.luggagePrice = luggagePrice;
     }
 

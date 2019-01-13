@@ -100,8 +100,8 @@ public class JDBCAirportDAO implements AirportDAO{
         int insertedId = 0;
         
         if (airport.getName().equals("")){
-             String query = "INSERT INTO airports (name, country, tax"
-                + "VALUES (?,?,?,?,?,?,?,?,?,?)";
+             String query = "INSERT INTO airports (name, country, tax)"
+                + "VALUES (?,?,?)";
              
             try {
                 connObj = dbConnect();
@@ -118,7 +118,7 @@ public class JDBCAirportDAO implements AirportDAO{
             }
         } else{
             String query = "INSERT INTO airports (name, country, tax)"
-                + "VALUES (?,?,?,?,?,?,?,?,?,?)";
+                + "VALUES (?,?,?)";
              
             try {
                 connObj = dbConnect();

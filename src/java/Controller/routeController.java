@@ -77,7 +77,8 @@ public class routeController extends HttpServlet {
             int ticketPrice = Integer.parseInt(req.getParameter("ticketPrice"));
             int tax = Integer.parseInt(req.getParameter("tax"));
             int luggagePrice = Integer.parseInt(req.getParameter("luggagePrice"));
-            route = new Route(0, origin, destination, plane, ticketPrice, tax, luggagePrice);
+            route = new Route();
+            
             success = routeDAO.insert(route);
             if(success){
                 res.sendRedirect(res.encodeRedirectURL("/MVC/InsertSuccess.jsp")); // o conseguir mensaje Alarma con AJAX/JavaScript
@@ -92,7 +93,14 @@ public class routeController extends HttpServlet {
             int ticketPrice = Integer.parseInt(req.getParameter("ticketPrice"));
             int tax = Integer.parseInt(req.getParameter("tax"));
             int luggagePrice = Integer.parseInt(req.getParameter("luggagePrice"));
-            route = new Route(Integer.parseInt(req.getParameter("id")), origin, destination, plane, ticketPrice, tax, luggagePrice);
+            route = new Route();
+            route.setOrigin(origin);
+            route.setDestination(destination);
+            route.setPlane(plane);
+            route.setTicketPrice(ticketPrice);
+            route.setLuggagePrice(luggagePrice);
+            route.setTax(tax);
+            
             success = routeDAO.update(route);
             if(success){
                 res.sendRedirect(res.encodeRedirectURL("/MVC/UpdateSuccess.jsp")); // o conseguir mensaje Alarma con AJAX/JavaScript

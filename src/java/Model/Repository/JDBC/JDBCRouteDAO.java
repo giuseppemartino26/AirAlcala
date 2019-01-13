@@ -5,10 +5,16 @@
  */
 package Model.Repository.JDBC;
 
+import Model.Airplane;
+import Model.Airport;
+import Model.Repository.AirplaneDAO;
+import Model.Repository.AirportDAO;
 import Model.Repository.RouteDAO;
 import Model.Route;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -18,42 +24,186 @@ import java.util.ArrayList;
  */
 public class JDBCRouteDAO implements RouteDAO {
 
-    private Connection conn;
-
-    public void dbConnect() {
+    private static Connection connObj;
+    private static PreparedStatement stmtObj;
+    private static ResultSet rsObj;
+    
+    private Connection dbConnect() {
         try {
             Class.forName("org.apache.derby.jdbc.ClientDriver");
-            conn = DriverManager.getConnection("jdbc:derby://localhost:1527/airAlcala", "root", "root");
+            connObj = DriverManager.getConnection("jdbc:derby://localhost:1527/airAlcala", "root", "root");
             System.out.println("Connected.");
         } catch (ClassNotFoundException | SQLException e) {
             System.out.println("Not Connected. ");
             System.out.println(e);
         }
+        return connObj;
+    }
+    
+    public static void dbDisconnect() {
+	try {
+            rsObj.close();
+            stmtObj.close();
+            connObj.close();
+	} catch (Exception exObj) {
+            exObj.printStackTrace();
+        }		
     }
 
     @Override
     public Route find(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Route route = new Route();
+        String query = "SELECT * FROM route WHERE id = ?";
+        try {
+            connObj = dbConnect();
+            stmtObj = connObj.prepareStatement(query);
+            stmtObj.setInt(1, id);
+            rsObj = stmtObj.executeQuery();
+            
+            RouteDAO routeDAO = new JDBCRouteDAO();
+            route = routeDAO.find(rsObj.getInt("route_id"));
+            
+            AirplaneDAO planeDAO = new JDBCAirplaneDAO();
+            Airplane plane = planeDAO.find(rsObj.getInt("airplane_id"));
+            
+            AirportDAO airportDAO = new JDBCAirportDAO();
+            Airport origin = airportDAO.find(rsObj.getInt("origin"));
+            Airport destination = airportDAO.find(rsObj.getInt("destination"));
+           
+            route.setId(rsObj.getInt("id"));
+            route.setOrigin(origin);
+            route.setDestination(destination);
+            route.setPlane(plane);
+            route.setTicketPrice(rsObj.getInt("ticketprice"));
+            route.setLuggagePrice(rsObj.getInt("luggageprice"));
+            route.setTax(rsObj.getDouble("tax"));
+            
+            dbDisconnect();
+        } catch (SQLException e) {
+            System.out.println("Not inserted. " + e);
+        }
+        return route;
     }
 
     @Override
     public boolean insert(Route route) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        boolean inserted = false;
+        int insertedId = 0;
+        String query = "INSERT INTO routes (origin, destination, airplane_id, ticketprice, luggageprice, tax) "
+                + "VALUES (?,?,?,?,?,?)";
+        
+        try {
+            connObj = dbConnect();
+            stmtObj = connObj.prepareStatement(query);
+            stmtObj.setInt(1, route.getOrigin().getId());
+            stmtObj.setInt(2, route.getDestination().getId());
+            stmtObj.setInt(3, route.getPlane().getId());
+            stmtObj.setDouble(4, route.getTicketPrice());
+            stmtObj.setDouble(5, route.getLuggagePrice() );
+            stmtObj.setDouble(5, route.getTax() );
+
+            
+            insertedId = stmtObj.executeUpdate();
+            
+            dbDisconnect();
+        } catch (SQLException e) {
+            System.out.println("Not inserted. " + e);
+        }
+        if (insertedId > 0) {
+            inserted = true;
+        }
+        return inserted;
     }
 
     @Override
     public boolean update(Route route) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        boolean updated = false;
+        int updatedId = 0;
+        String query = "UPDATE routes SET origin = ?, destination = ?,"
+                + "airplane_id = ?, ticketprice = ?,luggageprice = ?, tax = ?"
+                + "WHERE id = ?;";
+        try {
+            connObj = dbConnect();
+            stmtObj = connObj.prepareStatement(query);
+           
+            stmtObj.setInt(1, route.getOrigin().getId() );
+            stmtObj.setInt(2, route.getDestination().getId());
+            stmtObj.setInt(3, route.getPlane().getId());
+            stmtObj.setDouble(4, route.getTicketPrice());
+            stmtObj.setDouble(5, route.getLuggagePrice() );
+            stmtObj.setDouble(6, route.getTax() );
+            stmtObj.setInt(7, route.getId());
+            updatedId = stmtObj.executeUpdate();
+            
+            dbDisconnect();
+        } catch (SQLException e) {
+            System.out.println("Not inserted. " + e);
+        }
+        if (updatedId > 0) {
+            updated = true;
+        }
+        return updated;    
     }
 
     @Override
     public boolean delete(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+        boolean deleted = false;
+        int deletedId = 0;
+        String query = "DELETE FROM routes WHERE id= ?;";
+        try {
+            connObj = dbConnect();
+            stmtObj = connObj.prepareStatement(query);
+            stmtObj.setInt(1,id);
 
+            deletedId = stmtObj.executeUpdate();
+            
+            dbDisconnect();
+        } catch (SQLException e) {
+            System.out.println("Not inserted. " + e);
+        }
+        if (deletedId > 0) {
+            deleted = true;
+        }
+        return deleted;
+    }
+    
     @Override
-    public ArrayList<Route> findAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        public ArrayList<Route> findAll(){
+        ArrayList<Route> routeList = new ArrayList<Route>();
+        String query = "SELECT * FROM routes";
+        
+        try{
+            connObj = dbConnect();
+            stmtObj = connObj.prepareStatement(query);
+            rsObj = stmtObj.executeQuery();
+            
+            while(rsObj.next()){
+                RouteDAO routeDAO = new JDBCRouteDAO();
+                Route route = routeDAO.find(rsObj.getInt("route_id"));
+
+                AirplaneDAO planeDAO = new JDBCAirplaneDAO();
+                Airplane plane = planeDAO.find(rsObj.getInt("airplane_id"));
+
+                AirportDAO airportDAO = new JDBCAirportDAO();
+                Airport origin = airportDAO.find(rsObj.getInt("origin"));
+                Airport destination = airportDAO.find(rsObj.getInt("destination"));
+
+                route.setId(rsObj.getInt("id"));
+                route.setOrigin(origin);
+                route.setDestination(destination);
+                route.setPlane(plane);
+                route.setTicketPrice(rsObj.getInt("ticketprice"));
+                route.setLuggagePrice(rsObj.getInt("luggageprice"));
+                route.setTax(rsObj.getDouble("tax"));
+                
+                routeList.add(route);
+            }
+            dbDisconnect();
+
+        } catch(SQLException e){
+            System.out.println("Error Retrieving Data. " + e);
+        }
+        return routeList;
     }
 
 }

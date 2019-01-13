@@ -32,9 +32,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author marti
  */
-@WebServlet(
-  name = "StudentServlet", 
-  urlPatterns = "/Web Pages/manageFlights")
+
 public class flightController extends HttpServlet {
     private Flight flight;
     private FlightDAO flightDAO;
@@ -51,15 +49,44 @@ public class flightController extends HttpServlet {
       HttpServletRequest request, HttpServletResponse response) 
       throws ServletException, IOException {
   
-        ArrayList<Flight> flightList = new ArrayList();
-     
-        flightList = flightDAO.findAll();
+        String forward="";
+        String operation = request.getParameter("operation");
+        boolean success = false;
+        int flightId;
         
-        request.setAttribute("flightList", flightList);
-       
-        RequestDispatcher dispatcher = request.getRequestDispatcher(
-          "/Web Pages/manageFlights.jsp");
-        dispatcher.forward(request, response);
+        ArrayList<Route> routeList = new ArrayList<Route>();
+        RouteDAO routeDAO = new JDBCRouteDAO();
+        routeList = routeDAO.findAll();
+        
+        
+        if (operation.equalsIgnoreCase("delete")){
+            flightId = Integer.parseInt(request.getParameter("flightId"));
+            success = flightDAO.delete(flightId);
+            forward = "listFlights.jsp";
+            request.setAttribute("flights", flightDAO.findAll());
+        } else if (operation.equalsIgnoreCase("add")){
+            forward = "createFlights.jsp";
+            request.setAttribute("flight", flight);
+            request.setAttribute("routes", routeList);
+        } else if (operation.equalsIgnoreCase("edit")){
+            flightId = Integer.parseInt(request.getParameter("flightId"));
+            forward = "editFlight.jsp";
+            Flight flight = flightDAO.find(flightId);
+            request.setAttribute("routes", routeList);
+            request.setAttribute("flight", flight);
+        } else if (operation.equalsIgnoreCase("list")){
+            forward = "listFlights.jsp";
+            request.setAttribute("flights", flightDAO.findAll());
+        } else if (operation.equalsIgnoreCase("view")){
+            flightId = Integer.parseInt(request.getParameter("flightId"));
+            forward = "viewFlight.jsp";
+            request.setAttribute("flights", flightDAO.find(flightId));
+        } else {
+            forward = "listFlights.jsp";
+        }
+        
+        RequestDispatcher view = request.getRequestDispatcher(forward);
+        view.forward(request, response);
     }
     
     
@@ -67,52 +94,42 @@ public class flightController extends HttpServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse res)
     throws ServletException, IOException {
         HttpSession s = req.getSession(true);
-        String operation=(String)req.getParameter("UpdateFlight");
-        Route route = routeDAO.find(Integer.parseInt(req.getParameter("route_id")));
-        DateFormat format = new SimpleDateFormat("yyyy-mm-dd");
-        Date flightDate = new Date();
         Boolean success = false;
         
-        try {
-            flightDate = format.parse(req.getParameter("datetime"));
-        } catch (ParseException ex) {
-            Logger.getLogger(flightController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        flight = new Flight();
+        Route route = new Route();
+        RouteDAO routeDAO = new JDBCRouteDAO();
+        routeDAO.find(Integer.parseInt(req.getParameter("route_id")));
         
-        if(operation=="add"){
-            flight = new Flight(0,req.getParameter("locator"),
-                    route,flightDate, Integer.parseInt(req.getParameter("interval")),
-                    Integer.parseInt(req.getParameter("places_left")));
+        java.sql.Date departureDate = java.sql.Date.valueOf(req.getParameter("departure"));
+        java.sql.Date arrivalDate = java.sql.Date.valueOf(req.getParameter("arrival"));
+        
+        flight.setLocator(req.getParameter("locator"));
+        flight.setRoute(route);
+        flight.setDeparture(departureDate);
+        flight.setArrival(arrivalDate);
+
+        //This is the "add flight" case
+        if(req.getParameter("id") == null || req.getParameter("id").isEmpty()){
             success = flightDAO.insert(flight);
+            req.setAttribute("success", success);
             if(success){
-                res.sendRedirect(res.encodeRedirectURL("/MVC/InsertSuccess.jsp")); // o conseguir mensaje Alarma con AJAX/JavaScript
-            } else{
-                res.sendRedirect(res.encodeRedirectURL("/MVC/InsertError.jsp"));  // o conseguir mensaje Alarma con AJAX/JavaScript
+                RequestDispatcher view = req.getRequestDispatcher("viewFlight.jsp");
+                req.setAttribute("flight", flight);
+                view.forward(req, res);
+                res.sendRedirect(res.encodeRedirectURL("viewFlight.jsp"));
             }
         }
-        if(operation == "edit"){
-            flight = new Flight(Integer.parseInt(req.getParameter("id")),
-                    req.getParameter("locator"),route,flightDate,
-                    Integer.parseInt(req.getParameter("interval")),
-                    Integer.parseInt(req.getParameter("places_left")));
-            
+        // This is the "edit flight" case
+        else{
+            flight.setId(Integer.parseInt(req.getParameter("id")));
             success = flightDAO.update(flight);
-            
-            s.setAttribute("flightLocator", flight.getLocator());
-            s.setAttribute("flightOrigin", route.getOrigin());
-            s.setAttribute("flightDest", route.getDestination());
+            req.setAttribute("success", success);
             if(success){
-                res.sendRedirect(res.encodeRedirectURL("/MVC/UpdateSuccess.jsp")); // o conseguir mensaje Alarma con AJAX/JavaScript
-            } else{
-                res.sendRedirect(res.encodeRedirectURL("/MVC/UpdateError.jsp"));  // o conseguir mensaje Alarma con AJAX/JavaScript
-            }
-        }
-        if(operation=="delete"){
-            success = flightDAO.delete(Integer.parseInt(req.getParameter("id")));
-            if(success){
-                res.sendRedirect(res.encodeRedirectURL("/MVC/deleteSuccess.jsp")); // o conseguir mensaje Alarma con AJAX/JavaScript
-            } else{
-                res.sendRedirect(res.encodeRedirectURL("/MVC/deleteError.jsp"));  // o conseguir mensaje Alarma con AJAX/JavaScript
+                RequestDispatcher view = req.getRequestDispatcher("viewFlight.jsp");
+                req.setAttribute("flight", flight);
+                view.forward(req, res);
+                res.sendRedirect(res.encodeRedirectURL("viewFlight.jsp"));
             }
         }
     }

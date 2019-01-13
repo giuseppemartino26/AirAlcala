@@ -81,7 +81,12 @@ public class crediCardController extends HttpServlet {
         int number = Integer.parseInt(req.getParameter("number"));
         expiration = java.sql.Date.valueOf(req.getParameter("year")+"-"+req.getParameter("month"));
         int cvc = Integer.parseInt(req.getParameter("cvc"));
-        creditCard = new CreditCard(0,user,number,expiration,cvc);
+        
+        creditCard = new CreditCard();
+        creditCard.setUser(user);
+        creditCard.setNumber(number);
+        creditCard.setExpiration(expiration);
+        creditCard.setSecurityCode(cvc);
         
         //This is the "add cc" case
         if(req.getParameter("id") == null || req.getParameter("id").isEmpty()){

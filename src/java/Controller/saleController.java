@@ -72,7 +72,6 @@ public class saleController extends HttpServlet {
         HttpSession s =req.getSession(true);
         //get userId and flightId from sessions that we save in login (userId) and selectFlight(flightId) ...
         // with session.setAtribute on the jsp pages
-        int id = 0; // we need a alfanumeric key for sale like NIK23A
         int userId = (int) s.getAttribute("userId");
         int flightId = (int) s.getAttribute("flightId");
         String place = (String)s.getAttribute("place");
@@ -85,11 +84,18 @@ public class saleController extends HttpServlet {
         flight = flightDAO.find(flightId);
         creditCard = creditCardDAO.find(creditCardId);
         
-        sale =  new Sale(id,flight,user,place,luggage,creditCard,price);
+        sale =  new Sale();
+        sale.setFlight(flight);
+        sale.setUser(user);
+        sale.setPlace(place);
+        sale.setNoLuggage(luggage);
+        sale.setCreditCard(creditCard);
+        sale.setPrice(price);
+        
         s.setAttribute("saleID", sale.getId());
         s.setAttribute("Origin", flight.getRoute().getOrigin().getName());
         s.setAttribute("Destination", flight.getRoute().getDestination().getName());
-        s.setAttribute("Departure_date", flight.getDate());
+        s.setAttribute("Departure_date", flight.getDeparture());
         success = saleDAO.insert(sale);
         if(success){
             s.setAttribute("success", true);

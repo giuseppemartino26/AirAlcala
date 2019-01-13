@@ -16,17 +16,10 @@ public class Flight {
     private int id;
     private String locator;
     private Route route;
-    private Date date;
-    private int interval;
-    private int seatsLeft;
+    private java.sql.Date departure;
+    private java.sql.Date arrival;
 
-    public Flight(int id, String locator, Route route, Date date, int interval, int seats_left) {
-        this.id = id;
-        this.locator = locator;
-        this.route = route;
-        this.date = date;
-        this.interval = interval;
-        this.seatsLeft = seats_left;
+    public Flight() {
     }
 
     public int getId() {
@@ -53,28 +46,19 @@ public class Flight {
         this.route = route;
     }
 
-    public Date getDate() {
-        return date;
+    public java.sql.Date getDeparture() {
+        return departure;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setDeparture(java.sql.Date departure) {
+        this.departure = departure;
     }
 
-    public int getInterval() {
-        return interval;
+    public java.sql.Date getArrival() {
+        return arrival;
     }
 
-    public void setInterval(int interval) {
-        this.interval = interval;
+    public void setArrival(java.sql.Date arrival) {
+        this.arrival = arrival;
     }
-
-    public int getSeatsLeft() {
-        return seatsLeft;
-    }
-
-    public void setSeatsLeft(int seatsLeft) {
-        this.seatsLeft = seatsLeft;
-    }
-
 }
