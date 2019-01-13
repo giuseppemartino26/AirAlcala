@@ -24,6 +24,12 @@ src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></scri
 </head>
 
 <body>
+    <%
+    //allow access only if session exists
+    if(session.getAttribute("sessionAdminId") == null){
+            response.sendRedirect("loginController");
+    }
+    %>
     <div id="wrapper">
     <header>
         <div class="container">

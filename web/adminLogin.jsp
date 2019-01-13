@@ -20,29 +20,24 @@
             <nav class="navbar navbar-default">
                 <div class="container-fluid">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="#">AirAlcal√°</a>
+                    <a class="navbar-brand" href="#">AirAlcal·</a>
                 </div>
                 <ul class="nav navbar-nav">
                     <li class="active"><a href="index.html">Inicio</a></li>
-                    <li class="active"><a href="salesController?operation=buy">Comprar Vuelos</a></li>
-                    <li class="active"><a href="salesController?operation=list?userId=">Mis Compras</a></li>
-                    <li class="active"><a href="userController?operation=view?userId=">Mi Cuenta</a></li>
-                    <li class="active"><a href="administratorController?operation=init">Administrador</a></li>        
-                </ul>
               </div>
             </nav>
             <br>
             <div class="container">
-            <h2>Login</h2>
+            <h2>Login de Administradores</h2>
             <br>
-            <form method="POST" action="loginController" class="form-container">
+            <form method="POST" action="adminloginController" class="form-container">
             <div class="row">
                 <div class="col-lg-6">
                 <label for="email"><b>Email</b></label>
                 <input placeholder="Email" name="email" id="email" type="email">
                 </div>
                 <div class="col-lg-6">
-                <label for="pass"><b>Contrase√±a</b></label>
+                <label for="pass"><b>ContraseÒa</b></label>
                 <input name="pass" id="pass" type="password">
                 </div>
             </div>   
@@ -59,12 +54,12 @@
                 <div class="row">
                     <div class="col-xs-6">
                         <p>
-                            AirAlcala - Alcal&aacute; de Henares, Madrid, Espa√±a
+                            AirAlcala - Alcal&aacute; de Henares, Madrid, EspaÒa
                         </p>
                     </div>
                     <div class="col-xs-6">
                         <ul class="list-inline text-right">
-                            <li><a href="adminloginController">Login Administrador</a></li>
+                            <li><a href="https://www.facebook.com/">Facebook</a></li>
                             <li><a href="https://twitter.com/">Twitter</a></li>
                             <li><a href="https://www.facebook.com/">Facebook</a></li>
                             <li>Contacto 900 900 411 <a href="mailto:ciu@uah.es">ciu@uah.es</a></li>

@@ -93,6 +93,32 @@ public class JDBCAdministratorDAO implements AdministratorDAO {
         }
         return adminList;
     }
+    
+    public Administrator findbyEmail(String email) {
+        Administrator admin = null;
+        String query = "SELECT * FROM administrators WHERE email = ?";
+        try {
+            connObj = dbConnect();
+            stmtObj = connObj.prepareStatement(query);
+            stmtObj.setString(1, email);
+            rsObj = stmtObj.executeQuery();
+            
+            if (rsObj.next()) {
+                admin = new Administrator();
+
+                admin.setId(rsObj.getInt("id"));
+                admin.setPname(rsObj.getString("prename"));
+                admin.setSname1(rsObj.getString("surname1"));
+                admin.setSname2(rsObj.getString("surname2"));
+                admin.setEmail(rsObj.getString("email"));
+                admin.setPass(rsObj.getString("pass"));
+              }
+            dbDisconnect();
+        } catch (SQLException e) {
+            System.out.println("Not inserted. " + e);
+        }
+        return admin;
+    }
 
     @Override
     public boolean insert(Administrator admin) {

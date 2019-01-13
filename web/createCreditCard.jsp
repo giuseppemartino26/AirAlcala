@@ -20,53 +20,8 @@
         <script
         src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <link rel="stylesheet" type="text/css" href="styles/styles.css">
+        <link rel="stylesheet" type="text/css" href="styles/styles.css">
 
-        <script>
-            /*validate visa*/
-            function visa_cardnumber() {
-                var cardno = /^(?:4[0-9]{12}(?:[0-9]{3})?)$/; /*visa format*/
-                if ($("#number_credit").val().match(cardno)) {
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-            ;
-            /*validate mastercard*/
-            function mc_cardnumber() {
-                var cardno = /^(?:5[1-5][0-9]{14})$/;/*mastercard format*/
-                if ($("#number_credit").val().match(cardno)) {
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-            ;
-            function check_credit_data() {
-                if ($("#name_credit").val() == "") {
-                    alert("Falta el titular");
-                    return false;
-                }
-                if ($("#number_credit").val() == "") {
-                    alert("Falta el numero de tarjeta de credito");
-                    return false;
-                }
-                if ($("#month").val() == "" || $("#year").val() == "") {
-                    alert("Falta el mes y/o año");
-                    return false;
-                }
-                if ($("#cvc").val() == "") {
-                    alert("Falta el numero cvc");
-                    return false;
-                }
-                if (!mc_cardnumber() && !visa_cardnumber()) {
-                    alert("Numero de tarjeta de credito no valido");
-                    return false;
-                }
-                return true;
-            }
-            ;
-        </script>
     </head>
 
     <body>
@@ -78,23 +33,20 @@
             </header>
             <nav class="navbar navbar-default">
                 <div class="container-fluid">
-                    <div class="navbar-header">
-                        <a class="navbar-brand" href="#">AirAlcalá</a>
-                    </div>
-                    <ul class="nav navbar-nav">
-                        <li class="active"><a href="index.html">Inicio</a></li>
-                        <li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Administrador
-                                <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="userController?operation=list">Usarios</a></li>
-                                <li><a href="#">Vuelos</a></li>
-                                <li><a href="#">Rutas</a></li>
-                                <li><a href="#">...</a></li>
-                            </ul>
-                        </li>         
-                    </ul>
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">AirAlcalá</a>
                 </div>
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="index.html">Inicio</a></li>
+                    <li class="active"><a href="userController?operation=list">Usarios</a></li>
+                    <li class="active"><a href="administratorController?operation=list">Administradores</a></li>
+                    <li class="active"><a href="airplaneController?operation=list">Aviones</a></li>
+                    <li class="active"><a href="airportController?operation=list">Aeropuertos</a></li>
+                    <li class="active"><a href="flightController?operation=list">Vuelos</a></li>        
+                    <li class="active"><a href="routeController?operation=list">Rutas</a></li>        
+                    <li class="active"><a href="saleController?operation=overview">Estadísticas</a></li>    <!-- aún no existe, hay que crearlo y calcular las estadísticas en el Controlador (GET) -->
+                </ul>
+              </div>
             </nav>
             <br>
             <div class="container">

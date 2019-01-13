@@ -37,38 +37,38 @@ public class userController extends HttpServlet {
     // Will be run at GET Events (e.g. hitting a link)
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session=request.getSession(false);  
         String forward="";
         String operation = request.getParameter("operation");
         boolean success = false;
         int userId;
-        System.err.print(operation);
-        
-        if (operation.equalsIgnoreCase("delete")){
-            userId = Integer.parseInt(request.getParameter("userId"));
-            success = userDAO.delete(userId);
-            forward = "listUsers.jsp";
-            request.setAttribute("users", userDAO.findAll());
-        } else if (operation.equalsIgnoreCase("add")){
-            forward = "createUser.jsp";
-            request.setAttribute("user", user);
-        } else if (operation.equalsIgnoreCase("edit")){
-            userId = Integer.parseInt(request.getParameter("userId"));
-            forward = "editUser.jsp";
-            User user = userDAO.find(userId);
-            request.setAttribute("user", user);
-        } else if (operation.equalsIgnoreCase("list")){
-            forward = "listUsers.jsp";
-            request.setAttribute("users", userDAO.findAll());
-        } else if (operation.equalsIgnoreCase("view")){
-            userId = Integer.parseInt(request.getParameter("userId"));
-            forward = "viewUser.jsp";
-            request.setAttribute("user", userDAO.find(userId));
-        } else {
-            forward = "listUsers.jsp";
-        }
-        
-        RequestDispatcher view = request.getRequestDispatcher(forward);
-        view.forward(request, response);
+          
+            if (operation.equalsIgnoreCase("delete")){
+                userId = Integer.parseInt(request.getParameter("userId"));
+                success = userDAO.delete(userId);
+                forward = "listUsers.jsp";
+                request.setAttribute("users", userDAO.findAll());
+            } else if (operation.equalsIgnoreCase("add")){
+                forward = "createUser.jsp";
+                request.setAttribute("user", user);
+            } else if (operation.equalsIgnoreCase("edit")){
+                userId = Integer.parseInt(request.getParameter("userId"));
+                forward = "editUser.jsp";
+                User user = userDAO.find(userId);
+                request.setAttribute("user", user);
+            } else if (operation.equalsIgnoreCase("list")){
+                forward = "listUsers.jsp";
+                request.setAttribute("users", userDAO.findAll());
+            } else if (operation.equalsIgnoreCase("view")){
+                userId = Integer.parseInt(request.getParameter("userId"));
+                forward = "viewUser.jsp";
+                request.setAttribute("user", userDAO.find(userId));
+            } else {
+                forward = "listUsers.jsp";
+            }
+
+            RequestDispatcher view = request.getRequestDispatcher(forward);
+            view.forward(request, response);
     }
     
     // Will be run at POST Events (e.g. sending a form)

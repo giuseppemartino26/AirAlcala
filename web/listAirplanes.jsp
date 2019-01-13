@@ -18,40 +18,8 @@
    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
    <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.1.min.js"></script>
    <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.0/jquery.dataTables.min.js"></script>
-   
-   <style>         
-        /*Styles for get nice header and a sticky footer at the bottom of the page*/
-            * {
-                margin: 0;
-                padding: 0;
-            }
-            html,body {
-                height:100%;
-            }
-            #wrapper {  /*wraps the body and the header to make the footer work*/
-                min-height:100%;
-            }
-            header{
-                background:#597ea2;
-                color:#fff;
-            }
-            footer {
-                position: relative;
-                height: 40px;
-                padding:5px 0px;
-                clear: both;
-                background: #8aa4bd;
-                text-align: center;
-                color: #fff;
-            }
-            
-            .topButton{
-                padding-top: 5px;
-                padding-right: 3px;
-                padding-bottom: 5px;
-                padding-left: 3px;
-            }
-    </style>
+   <link rel="stylesheet" type="text/css" href="styles/styles.css">
+
     
     <script>
     $(document).ready( function () {
@@ -66,23 +34,21 @@
             <h1>Air Alcala</h1>
         </div>
     </header>
+        
     <nav class="navbar navbar-default">
         <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="index.html">AirAlcalá</a>
+            <a class="navbar-brand" href="#">AirAlcalá</a>
         </div>
         <ul class="nav navbar-nav">
             <li class="active"><a href="index.html">Inicio</a></li>
-            <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Administrador
-                    <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                      <li><a href="airplaneController?operation=list">Aviones</a></li>
-                      <li><a href="#">Vuelos</a></li>
-                      <li><a href="#">Rutas</a></li>
-                      <li><a href="#">...</a></li>
-                    </ul>
-            </li>         
+            <li class="active"><a href="userController?operation=list">Usarios</a></li>
+            <li class="active"><a href="administratorController?operation=list">Administradores</a></li>
+            <li class="active"><a href="airplaneController?operation=list">Aviones</a></li>
+            <li class="active"><a href="airportController?operation=list">Aeropuertos</a></li>
+            <li class="active"><a href="flightController?operation=list">Vuelos</a></li>        
+            <li class="active"><a href="routeController?operation=list">Rutas</a></li>        
+            <li class="active"><a href="saleController?operation=overview">Estadísticas</a></li>    <!-- aún no existe, hay que crearlo y calcular las estadísticas en el Controlador (GET) -->
         </ul>
       </div>
     </nav>

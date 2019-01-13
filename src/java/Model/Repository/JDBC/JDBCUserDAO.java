@@ -79,6 +79,59 @@ public class JDBCUserDAO implements UserDAO {
         return user;
     }
     
+    @Override
+    public boolean exists(int id) {
+        boolean success = false;
+        if(id>=0){
+            String query = "SELECT * FROM users WHERE id = ?";
+            try {
+                connObj = dbConnect();
+                stmtObj = connObj.prepareStatement(query);
+                stmtObj.setInt(1, id);
+                rsObj = stmtObj.executeQuery();
+
+                if (rsObj.next()) {
+                    success = true;
+                }
+                dbDisconnect();
+            } catch (SQLException e) {
+                System.out.println("Not inserted. " + e);
+            }
+        }
+        return success;
+    }
+    
+        public User findbyEmail(String email) {
+        User user = null;
+        String query = "SELECT * FROM users WHERE email = ?";
+        try {
+            connObj = dbConnect();
+            stmtObj = connObj.prepareStatement(query);
+            stmtObj.setString(1, email);
+            rsObj = stmtObj.executeQuery();
+            
+            if (rsObj.next()) {
+                user = new User();
+
+                user.setId(rsObj.getInt("id"));
+                user.setPname(rsObj.getString("prename"));
+                user.setSname1(rsObj.getString("surname1"));
+                user.setSname2(rsObj.getString("surname2"));
+                user.setEmail(rsObj.getString("email"));
+                user.setPass(rsObj.getString("pass"));
+                user.setBday(rsObj.getDate("birthday"));
+                user.setAddress(rsObj.getString("address"));
+                user.setPcode(rsObj.getString("postalcode"));
+                user.setCity(rsObj.getString("city"));
+                user.setCountry(rsObj.getString("country"));
+            }
+            dbDisconnect();
+        } catch (SQLException e) {
+            System.out.println("Not inserted. " + e);
+        }
+        return user;
+    }
+    
     public ArrayList<User> findAll(){
         ArrayList<User> userList = new ArrayList<User>();
         String query = "SELECT * FROM users";
@@ -230,50 +283,5 @@ public class JDBCUserDAO implements UserDAO {
             deleted = true;
         }
         return deleted;
-    }
-    
-    @Override
-    public int login(String email, String pass){
-         User user = null;
-         int user_id = 0;
-         String query = "SELECT * FROM users WHERE email = ?;";
-         
-         try {
-            connObj = dbConnect();
-            stmtObj = connObj.prepareStatement(query);
-            stmtObj.setString(1, email);
-            rsObj = stmtObj.executeQuery();
-            
-            if(rsObj.next()){
-                user = new User();          
-                user.setId(rsObj.getInt("id"));
-                user.setPname(rsObj.getString("prename"));
-                user.setSname1(rsObj.getString("surname1"));
-                user.setSname2(rsObj.getString("surname2"));
-                user.setEmail(rsObj.getString("email"));
-                user.setPass(rsObj.getString("pass"));
-                user.setBday(rsObj.getDate("birthday"));
-                user.setAddress(rsObj.getString("address"));
-                user.setPcode(rsObj.getString("postalcode"));
-                user.setCity(rsObj.getString("city"));
-                user.setCountry(rsObj.getString("country"));
-                
-                user_id = user.getId();
-            }
-            dbDisconnect();
-        } catch (SQLException e) {
-            System.out.println("Not inserted. " + e);
-        }
-         
-        SecurePasswordHelper sec = new SecurePasswordHelper();
-        try {
-            if(sec.validatePassword(pass, user.getPass())){
-                return user_id;
-            }
-        } catch (NoSuchAlgorithmException | InvalidKeySpecException ex) {
-            Logger.getLogger(JDBCUserDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        return 0; 
     }
 }

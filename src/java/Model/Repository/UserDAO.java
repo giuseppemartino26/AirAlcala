@@ -24,7 +24,8 @@ public interface UserDAO {
     
     public ArrayList<User> findAll();
     
-    public int login(String email, String pass);
-
+    public boolean exists(int id);
+    
+    public User findbyEmail(String email);
 
 }

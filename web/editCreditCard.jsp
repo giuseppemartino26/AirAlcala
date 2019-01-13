@@ -77,23 +77,20 @@
             </header>
             <nav class="navbar navbar-default">
                 <div class="container-fluid">
-                    <div class="navbar-header">
-                        <a class="navbar-brand" href="#">AirAlcalá</a>
-                    </div>
-                    <ul class="nav navbar-nav">
-                        <li class="active"><a href="index.html">Inicio</a></li>
-                        <li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Administrador
-                                <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="userController?operation=list">Usarios</a></li>
-                                <li><a href="#">Vuelos</a></li>
-                                <li><a href="#">Rutas</a></li>
-                                <li><a href="#">...</a></li>
-                            </ul>
-                        </li>         
-                    </ul>
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">AirAlcalá</a>
                 </div>
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="index.html">Inicio</a></li>
+                    <li class="active"><a href="userController?operation=list">Usarios</a></li>
+                    <li class="active"><a href="administratorController?operation=list">Administradores</a></li>
+                    <li class="active"><a href="airplaneController?operation=list">Aviones</a></li>
+                    <li class="active"><a href="airportController?operation=list">Aeropuertos</a></li>
+                    <li class="active"><a href="flightController?operation=list">Vuelos</a></li>        
+                    <li class="active"><a href="routeController?operation=list">Rutas</a></li>        
+                    <li class="active"><a href="saleController?operation=overview">Estadísticas</a></li>    <!-- aún no existe, hay que crearlo y calcular las estadísticas en el Controlador (GET) -->
+                </ul>
+              </div>
             </nav>
             <br>
             <div class="container">

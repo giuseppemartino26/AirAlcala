@@ -6,9 +6,9 @@
 package Controller;
 
 import Helpers.SecurePasswordHelper;
-import Model.Repository.JDBC.JDBCUserDAO;
-import Model.Repository.UserDAO;
-import Model.User;
+import Model.Repository.JDBC.JDBCAdministratorDAO;
+import Model.Repository.AdministratorDAO;
+import Model.Administrator;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.security.NoSuchAlgorithmException;
@@ -26,18 +26,18 @@ import javax.servlet.http.HttpSession;
  *
  * @author marti
  */
-public class loginController extends HttpServlet {
-    private User user;
-    private UserDAO userDAO;
+public class adminloginController extends HttpServlet {
+    private Administrator admin;
+    private AdministratorDAO adminDAO;
     
-    public loginController() {
+    public adminloginController() {
         super();
-        userDAO = new JDBCUserDAO();
+        adminDAO = new JDBCAdministratorDAO();
     }
     
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher view = request.getRequestDispatcher("index.html");
+        RequestDispatcher view = request.getRequestDispatcher("adminLogin.jsp");
          view.forward(request, response);
     }
     
@@ -53,25 +53,25 @@ public class loginController extends HttpServlet {
         System.out.println("Test");
 
         
-        User user = new User();
-        UserDAO userDAO = new JDBCUserDAO();
-        user = userDAO.findbyEmail(email);
+        Administrator admin = new Administrator();
+        AdministratorDAO adminDAO = new JDBCAdministratorDAO();
+        admin = adminDAO.findbyEmail(email);
         
-        if(user != null) {
+        if(admin != null) {
             // Check typed in password with stored hash in Database
             try {
-                success = sec.validatePassword(clearPass, user.getPass());
+                success = sec.validatePassword(clearPass, admin.getPass());
             }catch (NoSuchAlgorithmException | InvalidKeySpecException ex) {
                 Logger.getLogger(loginController.class.getName()).log(Level.SEVERE, null, ex);
             }
             if(success){
                 HttpSession s = req.getSession(true);
-                s.setAttribute("sessionUserId", user.getId());
-                s.setAttribute("sessionUserPname", user.getPname());                
+                s.setAttribute("sessionAdminId", admin.getId());
+                s.setAttribute("sessionAdminPname", admin.getPname());                
                         
-                res.sendRedirect("flightController?operation=search");
+                res.sendRedirect("userController?operation=list");
             } else {
-                res.sendRedirect("loginController");
+                res.sendRedirect("adminloginController");
             }
         }else {
                 RequestDispatcher view = req.getRequestDispatcher("index.html");

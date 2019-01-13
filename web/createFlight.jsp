@@ -37,16 +37,13 @@ src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></scri
                 </div>
                 <ul class="nav navbar-nav">
                     <li class="active"><a href="index.html">Inicio</a></li>
-                    <li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Administrador
-                            <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                              <li><a href="userController?operation=list">Aeropuertos></li>
-                              <li><a href="#">Vuelos</a></li>
-                              <li><a href="#">Rutas</a></li>
-                              <li><a href="#">...</a></li>
-                            </ul>
-                    </li>         
+                    <li class="active"><a href="userController?operation=list">Usarios</a></li>
+                    <li class="active"><a href="administratorController?operation=list">Administradores</a></li>
+                    <li class="active"><a href="airplaneController?operation=list">Aviones</a></li>
+                    <li class="active"><a href="airportController?operation=list">Aeropuertos</a></li>
+                    <li class="active"><a href="flightController?operation=list">Vuelos</a></li>        
+                    <li class="active"><a href="routeController?operation=list">Rutas</a></li>        
+                    <li class="active"><a href="saleController?operation=overview">Estadísticas</a></li>    <!-- aún no existe, hay que crearlo y calcular las estadísticas en el Controlador (GET) -->
                 </ul>
               </div>
             </nav>
@@ -61,12 +58,12 @@ src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></scri
             <div class="row">
                 <div class="col-lg-6">
                 <label for="name"><b>Localizador</b></label>
-                <input placeholder="Nombre" name="name" id="name" type="text">
+                <input placeholder="AB123" name="localizador" id="localizador" type="text">
                 </div>
                 
                 <div class="col-lg-6">              
-                <label for="country"><b>Ruta: </b></label>
-                <select name="country" id="country">
+                <label for="route"><b>Ruta: </b></label>
+                <select name="route" id="route">
                     <c:forEach items="${routes}" var="route">
                         <option value="${route.id}">${route.origin} => ${route.destination}</option>
                     </c:forEach>
@@ -76,7 +73,7 @@ src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></scri
             <div class="row">
                 <div class="col-lg-6">
                 <label for="tax"><b>Fecha de Salida: </b></label>
-                <input name="arrival" id="arrival" type="date">
+                <input name="departure" id="departure" type="date">
                 </div>
                 
                 <div class="col-lg-6">

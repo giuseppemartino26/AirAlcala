@@ -22,6 +22,8 @@ public interface AdministratorDAO {
 
     public boolean delete(int id);
     
+    public Administrator findbyEmail(String email);
+    
     public ArrayList<Administrator> findAll();
 
     

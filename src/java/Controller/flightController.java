@@ -68,6 +68,9 @@ public class flightController extends HttpServlet {
             forward = "createFlights.jsp";
             request.setAttribute("flight", flight);
             request.setAttribute("routes", routeList);
+        } else if (operation.equalsIgnoreCase("search")){
+            forward = "searchFlights.jsp";
+            request.setAttribute("routes", routeList);
         } else if (operation.equalsIgnoreCase("edit")){
             flightId = Integer.parseInt(request.getParameter("flightId"));
             forward = "editFlight.jsp";

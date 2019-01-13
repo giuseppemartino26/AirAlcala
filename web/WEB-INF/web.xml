@@ -24,6 +24,22 @@
         <servlet-name>saleController</servlet-name>
         <servlet-class>Controller.saleController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>logoutController</servlet-name>
+        <servlet-class>Controller.logoutController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>adminLoginController</servlet-name>
+        <servlet-class>Controller.adminLoginController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>adminloginController</servlet-name>
+        <servlet-class>Controller.adminloginController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>adminlogoutController</servlet-name>
+        <servlet-class>Controller.adminlogoutController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>flightController</servlet-name>
         <url-pattern>/flightController</url-pattern>
@@ -47,6 +63,18 @@
     <servlet-mapping>
         <servlet-name>saleController</servlet-name>
         <url-pattern>/saleController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>logoutController</servlet-name>
+        <url-pattern>/logoutController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>adminloginController</servlet-name>
+        <url-pattern>/adminloginController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>adminlogoutController</servlet-name>
+        <url-pattern>/adminlogoutController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
