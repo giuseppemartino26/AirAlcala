@@ -27,6 +27,7 @@ import javax.servlet.http.HttpSession;
  * @author pablo
  */
 public class crediCardController extends HttpServlet {
+
     private CreditCard creditCard;
     private User user;
     private CreditCardDAO creditCardDAO;
@@ -37,33 +38,33 @@ public class crediCardController extends HttpServlet {
         creditCardDAO = new JDBCCreditCardDAO();
         userDAO = new JDBCUserDAO();
     }
-    
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-       String forward="";
-       String operation = request.getParameter("operation");
-       boolean success = false;
-       int creditCardId;
+        String forward = "";
+        String operation = request.getParameter("operation");
+        boolean success = false;
+        int creditCardId, userId;
         System.err.print(operation);
-        
-        if(operation.equalsIgnoreCase("delete")){
+
+        if (operation.equalsIgnoreCase("delete")) {
             creditCardId = Integer.parseInt(request.getParameter("creditCardId"));
             success = creditCardDAO.delete(creditCardId);
             //Only permit 1 creditCard for user so when this one is delete we need to create other
             forward = "createCreditCard.jsp";
             request.setAttribute("creditCard", creditCard);
-        }else if (operation.equalsIgnoreCase("add")){
+        } else if (operation.equalsIgnoreCase("add")) {
             forward = "createCreditCard.jsp";
             request.setAttribute("creditCard", creditCard);
-        }else if(operation.equalsIgnoreCase("edit")){
+        } else if (operation.equalsIgnoreCase("edit")) {
             creditCardId = Integer.parseInt(request.getParameter("creditCardId"));
             forward = "editCreditCard.jsp";
             CreditCard cc = creditCardDAO.find(creditCardId);
             request.setAttribute("creditCard", cc);
-        }else if(operation.equalsIgnoreCase("view")){
-             creditCardId = Integer.parseInt(request.getParameter("creditCardId"));
+        } else if (operation.equalsIgnoreCase("view")) {
+            userId = Integer.parseInt(request.getParameter("userId"));
             forward = "viewCreditCard.jsp";
-            request.setAttribute("creditCard", creditCardDAO.find(creditCardId));
+            request.setAttribute("creditCard", creditCardDAO.findByUserId(userId));
         }
         RequestDispatcher view = request.getRequestDispatcher(forward);
         view.forward(request, response);
@@ -79,29 +80,28 @@ public class crediCardController extends HttpServlet {
         int userId = (int) s.getAttribute("userId");
         user = userDAO.find(userId);
         int number = Integer.parseInt(req.getParameter("number"));
-        expiration = java.sql.Date.valueOf(req.getParameter("year")+"-"+req.getParameter("month"));
+        expiration = java.sql.Date.valueOf(req.getParameter("year") + "-" + req.getParameter("month"));
         int cvc = Integer.parseInt(req.getParameter("cvc"));
-        creditCard = new CreditCard(0,user,number,expiration,cvc);
-        
+        creditCard = new CreditCard(0, user, number, expiration, cvc);
+
         //This is the "add cc" case
-        if(req.getParameter("id") == null || req.getParameter("id").isEmpty()){
+        if (req.getParameter("id") == null || req.getParameter("id").isEmpty()) {
             success = creditCardDAO.insert(creditCard);
             req.setAttribute("success", success);
             s.setAttribute("creditCardId", creditCard.getId());
-            if(success){
+            if (success) {
                 RequestDispatcher view = req.getRequestDispatcher("viewCreditCard.jsp");
                 req.setAttribute("credtiCard", creditCard);
                 view.forward(req, resp);
                 resp.sendRedirect(resp.encodeRedirectURL("viewCreditCard.jsp"));
             }
-        }
-        //This is the "edit cc" case
-        else{
+        } //This is the "edit cc" case
+        else {
             creditCard.setId(Integer.parseInt(req.getParameter("id")));
             success = creditCardDAO.update(creditCard);
             req.setAttribute("success", success);
             s.setAttribute("creditCardId", creditCard.getId());
-            if(success){
+            if (success) {
                 RequestDispatcher view = req.getRequestDispatcher("viewCreditCard.jsp");
                 req.setAttribute("credtiCard", creditCard);
                 view.forward(req, resp);
@@ -109,8 +109,5 @@ public class crediCardController extends HttpServlet {
             }
         }
     }
-    
-    
-    
-    
+
 }

@@ -79,6 +79,30 @@ public class JDBCCreditCardDAO implements CreditCardDAO {
         return cc;
     }
 
+    public CreditCard findByUserId(int userId) {
+        CreditCard cc = null;
+        userDAO = new JDBCUserDAO();
+        String query="SELECT * FROM creditcard WHERE user_id = ?";
+        try {
+            connObj = dbConnect();
+            stmtObj = connObj.prepareStatement(query);
+            stmtObj.setInt(1, userId);
+            rsObj = stmtObj.executeQuery();
+
+            if (rsObj.next()) {
+                int cc_id = rsObj.getInt("id");
+                user = userDAO.find(userId);
+                int number = rsObj.getInt("number");
+                Date expiration = rsObj.getDate("expiration");
+                int cvc = rsObj.getInt("securitycode");
+                cc = new CreditCard(cc_id, user, number, expiration, cvc);
+
+            }
+        } catch (SQLException e) {
+            System.out.println("Not inserted. " + e);
+        }
+        return cc;
+    }
     @Override
     public boolean insert(CreditCard creditCard) {
         boolean inserted = false;
