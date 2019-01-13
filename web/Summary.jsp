@@ -68,19 +68,19 @@
         <table class="table table-striped">
             <tr>
                 <td>ID Compra</td>
-                <td>Sales ID</td><!--<%=session.getAttribute("ID_sale")%>-->
+                <td><%=session.getAttribute("saleID")%></td>
             </tr>
             <tr>
                 <td>Origen</td>
-                <td>Origin</td><!--<%=session.getAttribute("Origin")%>-->
+                <td><%=session.getAttribute("Origin")%></td><!---->
             </tr>
             <tr>
                 <td>Destino</td>
-                <td>Destination</td><!--<%=session.getAttribute("Destination")%>-->
+                <td><%=session.getAttribute("Destination")%></td><!---->
             </tr>
             <tr>
                 <td>Fecha Ida</td>
-                <td>departure date</td><!--<%=session.getAttribute("Departure_date")%>-->
+                <td><%=session.getAttribute("Departure_date")%></td><!---->
             </tr>
             <tr style="display:none" id="departure_2">
                 <td>Fecha Vuelta</td>
@@ -92,7 +92,7 @@
             </tr>
             <tr>
                 <td>Precio</td>
-                <td>Price</td><!--<%=session.getAttribute("Price")%>-->
+                <td><%=session.getAttribute("Price")%></td><!---->
             </tr>
         </table>
     </div>

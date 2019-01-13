@@ -18,14 +18,16 @@ public class Sale {
     private String place;
     private int noLuggage;
     private CreditCard creditCard;
+    private double price;
 
-    public Sale(int id, Flight flight, User user, String place, int noLuggage, CreditCard creditCard) {
+    public Sale(int id, Flight flight, User user, String place, int noLuggage, CreditCard creditCard, double price) {
         this.id = id;
         this.flight = flight;
         this.user = user;
         this.place = place;
         this.noLuggage = noLuggage;
         this.creditCard = creditCard;
+        this.price = price;
     }
 
     public int getId() {
@@ -75,5 +77,15 @@ public class Sale {
     public void setCreditCard(CreditCard creditCard) {
         this.creditCard = creditCard;
     }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+    
+    
 
 }

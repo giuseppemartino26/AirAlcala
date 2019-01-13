@@ -16,6 +16,14 @@
         <servlet-name>administratorController</servlet-name>
         <servlet-class>Controller.administratorController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>creditCardConstroller</servlet-name>
+        <servlet-class>Controller.crediCardController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>saleController</servlet-name>
+        <servlet-class>Controller.saleController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>flightController</servlet-name>
         <url-pattern>/flightController</url-pattern>
@@ -31,6 +39,14 @@
     <servlet-mapping>
         <servlet-name>administratorController</servlet-name>
         <url-pattern>/administratorController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>credit_cardConstroller</servlet-name>
+        <url-pattern>/credit_cardConstroller</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>saleController</servlet-name>
+        <url-pattern>/saleController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

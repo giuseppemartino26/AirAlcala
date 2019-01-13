@@ -39,32 +39,6 @@
         }
     </style>
     <script>
-        /*validate visa*/
-        function visa_cardnumber(){
-            var cardno = /^(?:4[0-9]{12}(?:[0-9]{3})?)$/; /*visa format*/
-            if($("#number_credit").val().match(cardno)){
-                    return true;
-            }else{
-                    return false;
-            }
-        };
-        /*validate mastercard*/
-        function mc_cardnumber(){
-            var cardno = /^(?:5[1-5][0-9]{14})$/;/*mastercard format*/
-            if($("#number_credit").val().match(cardno)){
-                    return true;
-            }else{
-                    return false;
-            }
-        };
-        $(document).ready(function () {
-            $("#button_pay").on("click",function(){
-                if( check_first_data()){
-                    $("#modal-credit-card").modal();/*run modal*/
-                    /*https://getbootstrap.com/docs/4.0/components/modal/*/
-                };  
-            });
-        });
         /*first form*/
         function check_first_data(){
             if($("#name").val()==""){
@@ -90,29 +64,7 @@
             return true;
         };
         /*second form*/
-        function check_credit_data(){
-            if($("#name_credit").val()==""){
-                alert("Falta el titular");
-                return false;
-            }
-            if($("#number_credit").val()==""){
-                alert("Falta el numero de tarjeta de credito");
-                return false;
-            }
-            if($("#month").val()==""||$("#year").val()==""){
-                alert("Falta el mes y/o año");
-                return false;
-            }
-            if($("#cvc").val()==""){
-                alert("Falta el numero cvc");
-                return false;
-            }
-            if(!mc_cardnumber() && !visa_cardnumber()){
-                alert("Numero de tarjeta de credito no valido");
-                return false;
-            }
-            return true;
-        };
+        
     </script>
 </head>
 <body>
@@ -129,7 +81,7 @@
     </div>
     <br>
     <div class="container">
-            <form action="" onsubmit="return check_credit_data()">
+            <form action="" onsubmit="return check_first_data()">
                 <p>Cantidad a Pagar: <%=session.getAttribute("Price")%></p>
                 <p>Datos de Pago</p>
                 <fieldset>
@@ -154,46 +106,8 @@
                             <input type="text" id="country" class="form-control">
                     </div>    
                         <!--check the first data of this form-->
-                        <button type="button" class="btn btn-primary" id="button_pay" onclick="return check_first_data()">Pagar</button>
+                        <button type="submit" class="btn btn-primary" id="button_pay">Pagar</button>
                 </fieldset>  
-                <!-- /.modal -->
-                <div class="modal fade" id="modal-credit-card" tabindex="-1" role="dialog">
-                        <!-- /.modal-dialog -->
-                        <div class="modal-dialog" role="document">
-                          <!-- /.modal-content -->
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                              <h4 class="modal-title">Tarjeta de Cr&eacute;dito (Visa o Mastercard)</h4>
-                            </div>
-                            <!--Second form   validate credit card-->
-                            <div class="modal-body">
-                                <div class="form-group">
-                                        <label for="name_credit">Nombre del titular</label>
-                                        <input type="text" id="name_credit" class="form-control">
-                                </div>
-                                <div class="form-group">
-                                        <input type="number" id="number_credit" class="form-control" placeholder="Numeros de tarjeta de crédito">
-                                </div>    
-                                <div class="form-group col-xs-2">
-                                        <input type="number" id="month" class="form-control" placeholder="mm" min="1" max="12">
-                                        <!--1-12 Range-->
-                                        <br>
-                                        <input type="number" id="year" class="form-control" placeholder="yy" min="19" >
-                                        <!--+19 Range-->
-                                </div>    
-                                <div class="form-group" >
-                                        <input type="number" id="cvc" class="form-control" placeholder="cvc" min="1" max="999">
-                                        <!--3 digits Range-->
-                                </div>            
-                            </div>
-                            <div class="modal-footer">
-                              <button type="submit" class="btn btn-primary">Pagar</button>
-                              <!--submit of all form-->
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </form>
         </div>
 </div>

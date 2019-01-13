@@ -70,7 +70,7 @@ public class JDBCSaleDAO implements SaleDAO {
             
             sale = new Sale(rsObj.getInt("id"), flight ,
             user,rsObj.getString("place"), rsObj.getInt("number_luggages"),
-            cc);
+            cc, rsObj.getDouble("price"));
             
             dbDisconnect();
         } catch (SQLException e) {
@@ -99,7 +99,7 @@ public class JDBCSaleDAO implements SaleDAO {
                 CreditCard cc = ccDAO.find(rsObj.getInt("credit_card"));
                 
                 Sale sale = new Sale(rsObj.getInt("id"),flight,user,rsObj.getString("place"),
-                rsObj.getInt("number_luggages"),cc);
+                rsObj.getInt("number_luggages"),cc, rsObj.getDouble("price"));
                 
                 saleList.add(sale);
             }
