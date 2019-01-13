@@ -24,45 +24,60 @@ src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></scri
 </head>
 
 <body>
-    <%
-    //allow access only if session exists
-    if(session.getAttribute("sessionAdminId") == null){
-            response.sendRedirect("loginController");
-    }
-    %>
     <div id="wrapper">
     <header>
         <div class="container">
             <h1>Air Alcala</h1>
         </div>
     </header>
-            <nav class="navbar navbar-default">
-                <div class="container-fluid">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="#">AirAlcalá</a>
-                </div>
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="index.html">Inicio</a></li>
-                    <li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Administrador
-                            <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                              <li><a href="userController?operation=list">Usarios</a></li>
-                              <li><a href="#">Vuelos</a></li>
-                              <li><a href="#">Rutas</a></li>
-                              <li><a href="#">...</a></li>
-                            </ul>
-                    </li>         
-                </ul>
-              </div>
-            </nav>
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">AirAlcalá</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <%if(session.getAttribute("sessionAdminId") != null || (session.getAttribute("sessionUserId") != null && session.getAttribute("sessionAdminId") != null)){ %>
+                <li class="active"><a href="userController?operation=list">Usarios</a></li>
+                <li class="active"><a href="administratorController?operation=list">Administradores</a></li>
+                <li class="active"><a href="airplaneController?operation=list">Aviones</a></li>
+                <li class="active"><a href="airportController?operation=list">Aeropuertos</a></li>
+                <li class="active"><a href="flightController?operation=list">Vuelos</a></li>        
+                <li class="active"><a href="routeController?operation=list">Rutas</a></li>        
+                <li class="active"><a href="saleController?operation=overview">Estadísticas</a></li>    <!-- aún no existe, hay que crearlo y calcular las estadísticas en el Controlador (GET) -->
+            <%} if(session.getAttribute("sessionUserId") != null && !(session.getAttribute("sessionUserId") != null && session.getAttribute("sessionAdminId") != null)){%>
+                <li class="active"><a href="flightController?operation=search">Buscar Vuelos</a></li>
+                <li class="active"><a href="salesController?operation=list&userId=<%=session.getAttribute("sessionUserId")%>">Mirar Compras</a></li>
+                <li class="active"><a href="creditcardController?operation=list">Editar Medios de Pago</a></li>
+            <%} if(session.getAttribute("sessionUserId") == null && session.getAttribute("sessionAdminId") == null){ %>
+                <li class="active"><a href="index.html">Inicio</a></li>
+                <li class="active"><a href="userController?operation=add">Crear Cuenta</a></li>
+            <%}%>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <%if(session.getAttribute("sessionAdminId") != null || (session.getAttribute("sessionUserId") != null && session.getAttribute("sessionAdminId") != null)){ %>
+                <li><a href="administratorController?operation=view&adminId=<%=session.getAttribute("sessionAdminId")%>">
+                        <span class="glyphicon glyphicon-user"></span><%=session.getAttribute("sessionAdminPname")%></a></li>
+                <li><a href="adminlogoutController"><span class="glyphicon glyphicon-log-out"></span>Admin Logout</a></li>
+            <%} if(session.getAttribute("sessionUserId") != null && !(session.getAttribute("sessionUserId") != null && session.getAttribute("sessionAdminId") != null)){%>
+                <li><a href="userController?operation=view&userId=<%=session.getAttribute("sessionUserId")%>">
+                        <span class="glyphicon glyphicon-user"></span><%=session.getAttribute("sessionUserPname")%></a></li>
+                <li><a href="logoutController"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+            <%} if(session.getAttribute("sessionUserId") == null && session.getAttribute("sessionAdminId") == null){%>
+                <li><a href="loginController"><span class="glyphicon glyphicon-log-out">
+                    </span>Login</a></li>
+            <% } %>
+        </ul>
+      </div>
+    </nav>
             <br>
             <div class="container">
             <h2>Crear Cuenta de Usario</h2>
             <br>
+         <% if(session.getAttribute("sessionUserId") != null || session.getAttribute("sessionAdminId") != null){ %>
         <div class="btn-group topButton" role="group" aria-label="Basic example">
             <a href="userController?operation=list" class="btn btn-primary" role="button">Volver a Lista</a>
         </div>
+        <% } %>
             <form method="POST" action="userController" class="form-container" onsubmit="showResponse()">
             <div class="row">
                 <div class="col-lg-4">

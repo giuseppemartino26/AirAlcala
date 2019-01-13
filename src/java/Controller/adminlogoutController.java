@@ -26,7 +26,6 @@ public class adminlogoutController extends HttpServlet {
     
     public adminlogoutController() {
         super();
-        userDAO = new JDBCUserDAO();
     }
     
     @Override
@@ -35,9 +34,10 @@ public class adminlogoutController extends HttpServlet {
          view.forward(request, response);
     	//invalidate the session if exists
     	HttpSession session = request.getSession(false);
+        System.out.println("User="+session.getAttribute("sessionAdminPname"));
     	if(session != null){
     		session.invalidate();
     	}
-    	response.sendRedirect("loginController");         
+    	response.sendRedirect("adminloginController");         
     }
 }
