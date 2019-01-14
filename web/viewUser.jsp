@@ -16,8 +16,8 @@
    <link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.0/css/jquery.dataTables.css">
    <link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.0/css/jquery.dataTables_themeroller.css">
    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-   <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.1.min.js"></script>
-   <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.0/jquery.dataTables.min.js"></script>
+   <script type="text/javascript" charset="utf-8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.1.min.js"></script>
+   <script type="text/javascript" charset="utf-8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.0/jquery.dataTables.min.js"></script>
     <link rel="stylesheet" type="text/css" href="styles/styles.css">    
     
     <script>
@@ -96,19 +96,19 @@
         <br>
         <table class="table table-striped" style="width:100%">
             <tr>
-                <th>Id</td> 
+                <th>Id</th> 
                     <td>${user.id}</td>
             </tr>
             <tr>
-                <th>Nombre</td>
+                <th>Nombre</th>
                     <td>${user.pname}</td>
             </tr>
             <tr>
-                <th>Primer Apelido</td>
+                <th>Primer Apelido</th>
                     <td>${user.sname1}</td>
             </tr>
-            <ttr>
-                <th>Segundo Apelido</td>
+            <tr>
+                <th>Segundo Apelido</th>
                     <td>${user.sname2}</td>
             </tr>
             <tr>
