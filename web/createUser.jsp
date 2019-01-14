@@ -38,10 +38,28 @@ src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></scri
                     alert('Introduzca su fecha de nacimiento');
                     return false;
                     }
-                if(document.getElementById('pass1').value == '' or document.getElementById('pass2').value == '' or ) {
-                    alert('Introduzca una contraseña');
+                if(document.getElementById('pass1').value == '' or document.getElementById('pass2').value == '') {
+                    alert('Introduzca una contraseña válida');
+                    return false;
+                    if (document.getElementById('pass1').value.equals(document.getElementById('pass2').value))
                     return false;
                     }
+                if(document.getElementById('addr').value == '') {
+                    alert('Introduzca su dirección');
+                    return false;
+                    }
+                if(document.getElementById('pcode').value == '') {
+                    alert('Introduzca un código postal');
+                    return false;
+                    }
+                if(document.getElementById('city').value == '') {
+                    alert('Introduzca una ciudad');
+                    return false;
+                    }
+                if(document.getElementById('country').value == '') {
+                    alert('Introduzca un país');
+                    return false;
+                    } 
                     return true;
                 }
         </script>
@@ -156,7 +174,7 @@ src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></scri
                 
                 <div class="col-lg-3">    
                 <label for="pcode"><b>Ciudad</b></label>
-                <input placeholder="Alcalá de Henares" name="city" id="city" type="text">
+                <input placeholder="city" name="city" id="city" type="text">
                 </div>
                 
                 <div class="col-lg-3">
