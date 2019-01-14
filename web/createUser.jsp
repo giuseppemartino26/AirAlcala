@@ -20,7 +20,31 @@ src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script
 src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <link rel="stylesheet" type="text/css" href="styles/styles.css">
-
+        <script>
+            function validation() {
+                if(document.getElementById('pname').value == ''){
+                    alert('Introduzca un nombre');
+                    return false;
+                    }
+                if(document.getElementById('sname1').value == '') {
+                    alert('Introduzca un apellido');
+                    return false;
+                    }
+                if(document.getElementById('email').value == '') {
+                    alert('Introduzca un email');
+                    return false;
+                    }
+                if(document.getElementById('bday').value == '') {
+                    alert('Introduzca su fecha de nacimiento');
+                    return false;
+                    }
+                if(document.getElementById('pass1').value == '' or document.getElementById('pass2').value == '' or ) {
+                    alert('Introduzca una contraseña');
+                    return false;
+                    }
+                    return true;
+                }
+        </script>
 </head>
 
 <body>
