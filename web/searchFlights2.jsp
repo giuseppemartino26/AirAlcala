@@ -140,13 +140,7 @@
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                            <label class="form-check-label" for="defaultCheck1">
-                                Ida y Vuelta
-                            </label>
-                        </div>
+                   
 
 
                     </div>
