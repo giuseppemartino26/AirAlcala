@@ -179,7 +179,7 @@ src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></scri
                 
                 <div class="col-lg-3">
                 <label for="sname2"><b>País</b></label>
-                <input placeholder="España" name="country" id="country" type="text">
+                <input placeholder="country" name="country" id="country" type="text">
                  </div>               
             </div>
                 
