@@ -56,6 +56,14 @@
         </script>
     </head>
     <body>
+    
+    <%
+    //allow access only if session exists
+    if(session.getAttribute("sessionUserId") == null){
+            response.sendRedirect("loginController");
+    }
+    %>
+
 
         <div id="wrapper">
             <header>
