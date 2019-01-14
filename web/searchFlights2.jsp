@@ -66,7 +66,7 @@
             <nav class="navbar navbar-default">
                 <div class="container-fluid">
                     <div class="navbar-header">
-                        <a class="navbar-brand" href="#">AirAlcalá</a>
+                        <a class="navbar-brand" href="#">AirAlcal</a>
                     </div>
                     <ul class="nav navbar-nav">
                         <%if (session.getAttribute("sessionAdminId") != null || (session.getAttribute("sessionUserId") != null && session.getAttribute("sessionAdminId") != null)) { %>
@@ -76,7 +76,7 @@
                         <li class="active"><a href="airportController?operation=list">Aeropuertos</a></li>
                         <li class="active"><a href="flightController?operation=list">Vuelos</a></li>        
                         <li class="active"><a href="routeController?operation=list">Rutas</a></li>        
-                        <li class="active"><a href="saleController?operation=overview">Estadísticas</a></li>    <!-- aún no existe, hay que crearlo y calcular las estadísticas en el Controlador (GET) -->
+                        <li class="active"><a href="saleController?operation=overview">Estadsticas</a></li>    <!-- an no existe, hay que crearlo y calcular las estadsticas en el Controlador (GET) -->
                             <%}
                 if (session.getAttribute("sessionUserId") != null && !(session.getAttribute("sessionUserId") != null && session.getAttribute("sessionAdminId") != null)) {%>
                         <li class="active"><a href="flightController?operation=search">Buscar Vuelos</a></li>
@@ -108,7 +108,7 @@
             </nav>
             <br>
             <div class="container">
-                <h2>Hola <%=session.getAttribute("sessionUserPname")%>! Búscate un Vuelo...</h2>
+                <h2>Hola <%=session.getAttribute("sessionUserPname")%>! Bscate un Vuelo...</h2>
                 <br>
                 <form method="POST" action="loginController" class="form-container">
                     <div class="row">
@@ -117,10 +117,9 @@
                             <input placeholder="Aeropuerto de salida" name="departure" id="departure" type="text">
                         </div>
                         <div class="col-lg-6">
-                            <label for="destination"><b>Destino</b></label>
-                            <select name="destination" id="destination" type="text">
-                            </select>
-                        </div>
+                <label for="destination"><b>Destino</b></label>
+                <input placeholder="Aeropuerto de destino" name="destination" id="destination" type="text">
+                </div>
                     </div> 
                     <div class="row">
                         <div class="col-lg-6">
@@ -153,7 +152,7 @@
                 <div class="row">
                     <div class="col-xs-6">
                         <p>
-                            AirAlcala - Alcal&aacute; de Henares, Madrid, España
+                            AirAlcala - Alcal&aacute; de Henares, Madrid, Espaa
                         </p>
                     </div>
                     <div class="col-xs-6">
