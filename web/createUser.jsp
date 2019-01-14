@@ -38,7 +38,7 @@ src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></scri
                     alert('Introduzca su fecha de nacimiento');
                     return false;
                     }
-                if(document.getElementById('pass1').value == '' or document.getElementById('pass2').value == '') {
+                if(document.getElementById('pass1').value == '' && (document.getElementById('pass2').value == '') {
                     alert('Introduzca una contraseña válida');
                     return false;
                     if (document.getElementById('pass1').value.equals(document.getElementById('pass2').value))
@@ -169,7 +169,7 @@ src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></scri
                 
                 <div class="col-lg-2">    
                 <label for="pcode"><b>Código Postal</b></label>
-                <input placeholder="12345" name="pcode" id="pcode" type="text">
+                <input placeholder="CP" name="pcode" id="pcode" type="text">
                 </div>
                 
                 <div class="col-lg-3">    

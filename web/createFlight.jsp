@@ -20,7 +20,27 @@ src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script
 src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <link rel="stylesheet" type="text/css" href="styles/styles.css">
-
+        <script>
+            function validation() {
+                if(document.getElementById('localizador').value == ''){
+                    alert('Introduzca un localizador');
+                    return false;
+                    }
+                if(document.getElementById('route').value == '') {
+                    alert('Introduzca una ruta');
+                    return false;
+                    }
+                if(document.getElementById('departure').value == '') {
+                    alert('Introduzca una fecha de salida');
+                    return false;
+                    }
+                if(document.getElementById('arrival').value == '') {
+                    alert('Introduzca una fecha de llegada');
+                    return false;
+                    }
+                    return true;
+                }
+        </script>
 </head>
 
 <body>
