@@ -15,6 +15,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -22,10 +24,10 @@ import java.util.ArrayList;
  */
 public class JDBCFlightDAO implements FlightDAO {
 
-     private static Connection connObj;
+    private static Connection connObj;
     private static PreparedStatement stmtObj;
     private static ResultSet rsObj;
-    
+
     private Connection dbConnect() {
         try {
             Class.forName("org.apache.derby.jdbc.ClientDriver");
@@ -37,15 +39,15 @@ public class JDBCFlightDAO implements FlightDAO {
         }
         return connObj;
     }
-    
+
     public static void dbDisconnect() {
-	try {
+        try {
             rsObj.close();
             stmtObj.close();
             connObj.close();
-	} catch (Exception exObj) {
+        } catch (Exception exObj) {
             exObj.printStackTrace();
-        }		
+        }
     }
 
     @Override
@@ -58,16 +60,16 @@ public class JDBCFlightDAO implements FlightDAO {
             stmtObj = connObj.prepareStatement(query);
             stmtObj.setInt(1, id);
             rsObj = stmtObj.executeQuery();
-            
+
             RouteDAO routeDAO = new JDBCRouteDAO();
             route = routeDAO.find(rsObj.getInt("route_id"));
-           
+
             flight.setId(rsObj.getInt("id"));
             flight.setLocator(rsObj.getString("locator"));
             flight.setRoute(route);
             flight.setDeparture(rsObj.getDate("departure"));
             flight.setArrival(rsObj.getDate("arrival"));
-            
+
             dbDisconnect();
         } catch (SQLException e) {
             System.out.println("Not inserted. " + e);
@@ -81,17 +83,17 @@ public class JDBCFlightDAO implements FlightDAO {
         int insertedId = 0;
         String query = "INSERT INTO flights (locator, route_id, departure, arrival) "
                 + "VALUES (?,?,?,?)";
-        
+
         try {
             connObj = dbConnect();
             stmtObj = connObj.prepareStatement(query);
-            stmtObj.setString(1, flight.getLocator() );
+            stmtObj.setString(1, flight.getLocator());
             stmtObj.setInt(2, flight.getRoute().getId());
             stmtObj.setDate(3, flight.getDeparture());
             stmtObj.setDate(4, flight.getArrival());
-            
+
             insertedId = stmtObj.executeUpdate();
-            
+
             dbDisconnect();
         } catch (SQLException e) {
             System.out.println("Not inserted. " + e);
@@ -112,16 +114,16 @@ public class JDBCFlightDAO implements FlightDAO {
         try {
             connObj = dbConnect();
             stmtObj = connObj.prepareStatement(query);
-           
+
             stmtObj = connObj.prepareStatement(query);
-            stmtObj.setString(1, flight.getLocator() );
+            stmtObj.setString(1, flight.getLocator());
             stmtObj.setInt(2, flight.getRoute().getId());
             stmtObj.setDate(3, flight.getDeparture());
             stmtObj.setDate(4, flight.getArrival());
             stmtObj.setInt(5, flight.getId());
-            
+
             updatedId = stmtObj.executeUpdate();
-            
+
             dbDisconnect();
         } catch (SQLException e) {
             System.out.println("Not inserted. " + e);
@@ -129,7 +131,7 @@ public class JDBCFlightDAO implements FlightDAO {
         if (updatedId > 0) {
             updated = true;
         }
-        return updated;    
+        return updated;
     }
 
     @Override
@@ -140,10 +142,10 @@ public class JDBCFlightDAO implements FlightDAO {
         try {
             connObj = dbConnect();
             stmtObj = connObj.prepareStatement(query);
-            stmtObj.setInt(1,id);
+            stmtObj.setInt(1, id);
 
             deletedId = stmtObj.executeUpdate();
-            
+
             dbDisconnect();
         } catch (SQLException e) {
             System.out.println("Not inserted. " + e);
@@ -153,18 +155,18 @@ public class JDBCFlightDAO implements FlightDAO {
         }
         return deleted;
     }
-    
+
     @Override
-        public ArrayList<Flight> findAll(){
+    public ArrayList<Flight> findAll() {
         ArrayList<Flight> flightList = new ArrayList<Flight>();
         String query = "SELECT * FROM flights";
-        
-        try{
+
+        try {
             connObj = dbConnect();
             stmtObj = connObj.prepareStatement(query);
             rsObj = stmtObj.executeQuery();
-            
-            while(rsObj.next()){
+
+            while (rsObj.next()) {
                 Flight flight = new Flight();
                 RouteDAO routeDAO = new JDBCRouteDAO();
                 Route route = routeDAO.find(rsObj.getInt("route_id"));
@@ -174,14 +176,46 @@ public class JDBCFlightDAO implements FlightDAO {
                 flight.setRoute(route);
                 flight.setDeparture(rsObj.getDate("departure"));
                 flight.setArrival(rsObj.getDate("arrival"));
-                
+
                 flightList.add(flight);
             }
             dbDisconnect();
 
-        } catch(SQLException e){
+        } catch (SQLException e) {
             System.out.println("Error Retrieving Data. " + e);
         }
         return flightList;
     }
+
+    @Override
+    public ArrayList<Flight> findFlights(int routeId) {
+        ArrayList<Flight> flightList = new ArrayList<>();
+        String query = "SELECT * FROM flights WHERE route_id = ?";
+        try {
+            connObj = dbConnect();
+            stmtObj = connObj.prepareStatement(query);
+            stmtObj.setInt(1, routeId);
+            rsObj = stmtObj.executeQuery();
+            
+
+            while (rsObj.next()) {
+                Flight flight = new Flight();
+                RouteDAO routeDAO = new JDBCRouteDAO();
+                Route route = routeDAO.find(rsObj.getInt("route_id"));
+
+                flight.setId(rsObj.getInt("id"));
+                flight.setLocator(rsObj.getString("locator"));
+                flight.setRoute(route);
+                flight.setDeparture(rsObj.getDate("departure"));
+                flight.setArrival(rsObj.getDate("arrival"));
+
+                flightList.add(flight);
+            }
+            dbDisconnect();
+        } catch (SQLException e) {
+            System.out.println("Error Retrieving Data. " + e);
+        }
+        return flightList;
+    }
+
 }

@@ -100,7 +100,7 @@ public class JDBCAdministratorDAO implements AdministratorDAO {
         try {
             connObj = dbConnect();
             stmtObj = connObj.prepareStatement(query);
-            stmtObj.setString(1, email);
+            stmtObj.setString(1, "'"+email+"'"); //whit string only works qith ''
             rsObj = stmtObj.executeQuery();
             
             if (rsObj.next()) {

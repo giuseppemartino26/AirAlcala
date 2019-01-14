@@ -37,6 +37,9 @@ public class loginController extends HttpServlet {
     
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession s = request.getSession(true);
+        String flightId = request.getParameter("flightId");
+        s.setAttribute("flightId", flightId);
         RequestDispatcher view = request.getRequestDispatcher("index.jsp");
          view.forward(request, response);
     }

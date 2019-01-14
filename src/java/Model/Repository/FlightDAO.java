@@ -23,5 +23,7 @@ public interface FlightDAO {
     public boolean update(Flight flight);
 
     public boolean delete(int id);
+    
+    public ArrayList<Flight> findFlights(int routeId);
 
 }

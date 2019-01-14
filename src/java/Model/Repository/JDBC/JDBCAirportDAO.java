@@ -19,8 +19,8 @@ import java.util.logging.Logger;
  *
  * @author fabri
  */
-public class JDBCAirportDAO implements AirportDAO{
-    
+public class JDBCAirportDAO implements AirportDAO {
+
     private static Connection connObj;
     private static PreparedStatement stmtObj;
     private static ResultSet rsObj;
@@ -31,22 +31,22 @@ public class JDBCAirportDAO implements AirportDAO{
             connObj = DriverManager.getConnection("jdbc:derby://localhost:1527/airAlcala", "root", "root");
             System.out.println("Connected.");
         } catch (ClassNotFoundException | SQLException e) {
-            System.out.println("Not Connected. "+e);
+            System.out.println("Not Connected. " + e);
         }
         return connObj;
     }
-    
-        public void dbDisconnect() {
-	try {
+
+    public void dbDisconnect() {
+        try {
             rsObj.close();
             stmtObj.close();
             connObj.close();
-	} catch (Exception exObj) {
+        } catch (Exception exObj) {
             exObj.printStackTrace();
-        }		
+        }
     }
 
-        @Override
+    @Override
     public Airport find(int id) {
         Airport airport = null;
         String query = "SELECT * FROM airports WHERE id = ?";
@@ -55,7 +55,7 @@ public class JDBCAirportDAO implements AirportDAO{
             stmtObj = connObj.prepareStatement(query);
             stmtObj.setInt(1, id);
             rsObj = stmtObj.executeQuery();
-            
+
             if (rsObj.next()) {
                 airport = new Airport();
 
@@ -70,17 +70,17 @@ public class JDBCAirportDAO implements AirportDAO{
         }
         return airport;
     }
-    
-        public ArrayList<Airport> findAll(){
+
+    public ArrayList<Airport> findAll() {
         ArrayList<Airport> airportList = new ArrayList<Airport>();
         String query = "SELECT * FROM airports";
-        
-        try{
+
+        try {
             connObj = dbConnect();
             stmtObj = connObj.prepareStatement(query);
             rsObj = stmtObj.executeQuery();
-            
-            while(rsObj.next()){
+
+            while (rsObj.next()) {
                 Airport airport = new Airport();
                 airport.setId(rsObj.getInt("id"));
                 airport.setName(rsObj.getString("name"));
@@ -88,60 +88,58 @@ public class JDBCAirportDAO implements AirportDAO{
                 airport.setTax(rsObj.getInt("tax"));
             }
             dbDisconnect();
-        } catch(SQLException e){
+        } catch (SQLException e) {
             System.out.println("Error Retrieving Data. " + e);
         }
         return airportList;
     }
-        
+
     @Override
     public boolean insert(Airport airport) {
         boolean inserted = false;
         int insertedId = 0;
-        
-        if (airport.getName().equals("")){
-             String query = "INSERT INTO airports (name, country, tax)"
-                + "VALUES (?,?,?)";
-             
+
+        if (airport.getName().equals("")) {
+            String query = "INSERT INTO airports (name, country, tax)"
+                    + "VALUES (?,?,?)";
+
             try {
                 connObj = dbConnect();
                 stmtObj = connObj.prepareStatement(query);
                 stmtObj.setString(1, airport.getName());
-                stmtObj.setString(2,airport.getCountry());
-                stmtObj.setInt(3,airport.getTax());
-                
+                stmtObj.setString(2, airport.getCountry());
+                stmtObj.setInt(3, airport.getTax());
+
                 insertedId = stmtObj.executeUpdate();
 
                 dbDisconnect();
             } catch (SQLException e) {
                 System.out.println("Not inserted. " + e);
             }
-        } else{
+        } else {
             String query = "INSERT INTO airports (name, country, tax)"
-                + "VALUES (?,?,?)";
-             
+                    + "VALUES (?,?,?)";
+
             try {
                 connObj = dbConnect();
                 stmtObj = connObj.prepareStatement(query);
                 stmtObj.setString(1, airport.getName());
-                stmtObj.setString(2,airport.getCountry());
-                stmtObj.setInt(3,airport.getTax());
+                stmtObj.setString(2, airport.getCountry());
+                stmtObj.setInt(3, airport.getTax());
 
-            insertedId = stmtObj.executeUpdate();
+                insertedId = stmtObj.executeUpdate();
 
-            dbDisconnect();
+                dbDisconnect();
             } catch (SQLException e) {
                 System.out.println("Not inserted. " + e);
-            }            
-        }    
-        
+            }
+        }
 
         if (insertedId > 0) {
             inserted = true;
         }
         return inserted;
-        }
-
+    }
 
     @Override
     public boolean update(Airport airport) {
@@ -152,14 +150,13 @@ public class JDBCAirportDAO implements AirportDAO{
         try {
             connObj = dbConnect();
             stmtObj = connObj.prepareStatement(query);
-            
-            stmtObj.setString(1, airport.getName());
-            stmtObj.setString(2,airport.getCountry());
-            stmtObj.setInt(3,airport.getTax());
 
-            
+            stmtObj.setString(1, airport.getName());
+            stmtObj.setString(2, airport.getCountry());
+            stmtObj.setInt(3, airport.getTax());
+
             updatedId = stmtObj.executeUpdate();
-            
+
             dbDisconnect();
         } catch (SQLException e) {
             System.out.println("Not inserted. " + e);
@@ -169,7 +166,7 @@ public class JDBCAirportDAO implements AirportDAO{
         }
         return updated;
     }
-    
+
     @Override
     public boolean delete(int id) {
         boolean deleted = false;
@@ -178,10 +175,10 @@ public class JDBCAirportDAO implements AirportDAO{
         try {
             connObj = dbConnect();
             stmtObj = connObj.prepareStatement(query);
-            stmtObj.setInt(1,id);
+            stmtObj.setInt(1, id);
 
             deletedId = stmtObj.executeUpdate();
-            
+
             dbDisconnect();
         } catch (SQLException e) {
             System.out.println("Not inserted. " + e);
@@ -191,5 +188,29 @@ public class JDBCAirportDAO implements AirportDAO{
         }
         return deleted;
     }
-    
+
+    @Override
+    public Airport findName(String name) {
+        Airport airport = null;
+        String query = "SELECT * FROM airports WHERE name = ?";
+        try {
+            connObj = dbConnect();
+            stmtObj = connObj.prepareStatement(query);
+            stmtObj.setString(1, "'" + name + "'");
+            rsObj = stmtObj.executeQuery();
+
+            if (rsObj.next()) {
+                airport = new Airport();
+
+                airport.setId(rsObj.getInt("id"));
+                airport.setName(rsObj.getString("name"));
+                airport.setCountry(rsObj.getString("country"));
+                airport.setTax(rsObj.getInt("tax"));
+            }
+            dbDisconnect();
+        } catch (SQLException e) {
+            System.out.println("Not inserted. " + e);
+        }
+        return airport;
+    }
 }

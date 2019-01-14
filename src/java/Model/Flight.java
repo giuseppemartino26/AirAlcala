@@ -5,8 +5,6 @@
  */
 package Model;
 
-import java.util.Date;
-
 /**
  *
  * @author fabri
@@ -44,6 +42,7 @@ public class Flight {
 
     public void setRoute(Route route) {
         this.route = route;
+        
     }
 
     public java.sql.Date getDeparture() {

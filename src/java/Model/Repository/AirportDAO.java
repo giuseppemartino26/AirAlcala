@@ -19,6 +19,9 @@ import java.util.ArrayList;
 public interface AirportDAO {
 
     public Airport find(int id);
+    
+    public Airport findName(String name);
+    
 
     public boolean insert(Airport airport);
     

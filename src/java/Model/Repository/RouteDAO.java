@@ -23,5 +23,7 @@ public interface RouteDAO {
     public boolean delete(int id);
 
     public ArrayList<Route> findAll();
+    
+    public ArrayList<Route> findRoute(String origin, String destination, int passengers);
 
 }

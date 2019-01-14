@@ -76,11 +76,11 @@ public class userController extends HttpServlet {
     public void doPost(HttpServletRequest req,
     HttpServletResponse res) throws ServletException, IOException{
         HttpSession s = req.getSession(true);
-        DateFormat format = new SimpleDateFormat("yyyy-mm-dd");
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         java.sql.Date userBday;
         Boolean success = false;
         String securePass = "";
-
+       
         userBday = java.sql.Date.valueOf(req.getParameter("bday"));
         
         String clearPass = req.getParameter("pass1");
