@@ -113,7 +113,7 @@ public class userController extends HttpServlet {
                 RequestDispatcher view = req.getRequestDispatcher("viewUser.jsp");
                 req.setAttribute("user", user);
                 view.forward(req, res);
-                res.sendRedirect(res.encodeRedirectURL("viewUser.jsp"));
+                //res.sendRedirect(res.encodeRedirectURL("viewUser.jsp"));
             }
         }
         // This is the "edit user" case
@@ -125,7 +125,7 @@ public class userController extends HttpServlet {
                 RequestDispatcher view = req.getRequestDispatcher("viewUser.jsp");
                 req.setAttribute("user", user);
                 view.forward(req, res);
-                res.sendRedirect(res.encodeRedirectURL("viewUser.jsp"));
+                //res.sendRedirect(res.encodeRedirectURL("viewUser.jsp"));
             }
         }
     }
