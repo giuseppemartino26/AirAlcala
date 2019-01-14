@@ -20,7 +20,54 @@ src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script
 src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <link rel="stylesheet" type="text/css" href="styles/styles.css">
-
+<script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+<script>
+                function validacion() {
+                    opciones = document.getElementsByName("email");
+                    if(opciones[5].checked){
+                        valor = parseInt(document.getElementById("otro_g_coche").value);
+                        if($("#email").val().length < 1){
+                            alert('[ERROR] El campo email no debe estar vacio');
+                        return false;
+                        }
+                        if($("#otro_n_coche").val().length < 1){
+                            alert('[ERROR] El campo nombre no debe estar vacio');
+                            return false;
+                        }
+                    }
+                    opciones = document.getElementsByName("circuito");
+                    if(opciones[5].checked){
+                        valor = parseInt(document.getElementById("otro_n_c_circuito").value);
+                        if(valor<6 || valor>20){
+                            alert('[ERROR] El campo curvas por vuelta debe tener un valor entre 6 y 20');
+                            return false;
+                        }
+                        valor = parseInt(document.getElementById("otro_l_circuito").value);
+                        if(valor<3000 || valor>9000){
+                            alert('[ERROR] El campo longitud por vuelta debe tener un valor entre 3.000 m y 9.000 m');
+                            return false;
+                        }
+                        valor = parseInt(document.getElementById("otro_n_v_circuito").value);
+                        if(valor<40 || valor>80){
+                            alert('[ERROR] El campo numero de vueltas debe tener un valor entre 40 y 80');
+                            return false;
+                        }
+                        if($("#otro_n_circuito").val().length < 1){
+                            alert('[ERROR] El campo nombre del circuito no debe estar vacio');
+                            return false;
+                        }
+                        if($("#otro_c_circuito").val().length < 1){
+                            alert('[ERROR] El campo ciudad del circuito no debe estar vacio');
+                            return false;
+                        }
+                        if($("#otro_p_circuito").val().length < 1){
+                            alert('[ERROR] El campo pais del circuito no debe estar vacio');
+                            return false;
+                        }
+                    }
+                    return true;
+                }
+</script>
 </head>
 
 <body>
@@ -39,7 +86,7 @@ src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></scri
       <nav class="navbar navbar-default">
         <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">AirAlcalá</a>
+            <a class="navbar-brand" href="#">AirAlcala</a>
         </div>
         <ul class="nav navbar-nav">
             <%if(session.getAttribute("sessionAdminId") != null || (session.getAttribute("sessionUserId") != null && session.getAttribute("sessionAdminId") != null)){ %>

@@ -9,6 +9,19 @@
        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <link rel="stylesheet" type="text/css" href="styles/styles.css">
+                   <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+            <script>
+                function validation() {
+                    if(document.getElementById('email').value == ''){
+                        alert('Introduzca un email');
+                        return false;
+                    }
+                    if(document.getElementById('pass').value == '') {
+                        alert('Introduzca una contraseña');
+                        return false;
+                    }return true;
+                }
+            </script>
     </head>
     <body>
 <%
@@ -40,7 +53,7 @@
             <div class="container">
             <h2>Login</h2>
             <br>
-            <form method="POST" action="loginController" class="form-container">
+            <form method="POST" action="loginController" class="form-container" onsubmit="return validation()">
             <div class="row">
                 <div class="col-lg-6">
                 <label for="email"><b>Email</b></label>
