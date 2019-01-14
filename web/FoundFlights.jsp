@@ -21,6 +21,14 @@
     </script>
 </head>
 <body>
+
+<%
+    //allow access only if session exists
+    if(session.getAttribute("sessionUserId") == null){
+            response.sendRedirect("loginController");
+    }
+    %>
+
    
     <div id="wrapper">
     <header>
@@ -31,7 +39,7 @@
       <nav class="navbar navbar-default">
         <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">AirAlcalá</a>
+            <a class="navbar-brand" href="#">AirAlcal</a>
         </div>
         <ul class="nav navbar-nav">
             <%if(session.getAttribute("sessionAdminId") != null || (session.getAttribute("sessionUserId") != null && session.getAttribute("sessionAdminId") != null)){ %>
@@ -41,7 +49,7 @@
                 <li class="active"><a href="airportController?operation=list">Aeropuertos</a></li>
                 <li class="active"><a href="flightController?operation=list">Vuelos</a></li>        
                 <li class="active"><a href="routeController?operation=list">Rutas</a></li>        
-                <li class="active"><a href="saleController?operation=overview">Estadísticas</a></li>    <!-- aún no existe, hay que crearlo y calcular las estadísticas en el Controlador (GET) -->
+                <li class="active"><a href="saleController?operation=overview">Estadsticas</a></li>    <!-- an no existe, hay que crearlo y calcular las estadsticas en el Controlador (GET) -->
             <%} if(session.getAttribute("sessionUserId") != null && !(session.getAttribute("sessionUserId") != null && session.getAttribute("sessionAdminId") != null)){%>
                 <li class="active"><a href="flightController?operation=search">Buscar Vuelos</a></li>
                 <li class="active"><a href="salesController?operation=list&userId=<%=session.getAttribute("sessionUserId")%>">Mirar Compras</a></li>
@@ -117,7 +125,7 @@
                 <div class="row">
                     <div class="col-xs-6">
                         <p>
-                            AirAlcala - Alcal&aacute; de Henares, Madrid, España
+                            AirAlcala - Alcal&aacute; de Henares, Madrid, Espaa
                         </p>
                     </div>
                     <div class="col-xs-6">
