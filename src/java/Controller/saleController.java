@@ -53,16 +53,36 @@ public class saleController extends HttpServlet {
     /*We only need a list of sales because the sales dont edit or delete only  
         we just need to see them*/
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse resp) throws ServletException, IOException {
+HttpSession session = request.getSession(false);
+        String forward = "";
+        String operation = request.getParameter("operation");
+        boolean success = false;
+        int userId;
 
-        ArrayList<Sale> saleList;
+        if (operation.equalsIgnoreCase("list")) {
+            userId=Integer.parseInt(request.getParameter("userId"));
+            forward = "listSales.jsp";
+            System.out.println(saleDAO.findByUserId(userId).toString());
+            request.setAttribute("sales", saleDAO.findByUserId(userId));
+        } else if (operation.equalsIgnoreCase("view")) {
+            String saleId = request.getParameter("saleId");
+            forward = "viewSale.jsp";
+            request.setAttribute("sale", saleDAO.find(saleId));
+        } else {
+            forward = "listUsers.jsp";
+        }
+
+        RequestDispatcher view = request.getRequestDispatcher(forward);
+        view.forward(request, resp);
+       /* ArrayList<Sale> saleList;
 
         saleList = saleDAO.findAll();
 
         req.setAttribute("saleList", saleList);
 
         RequestDispatcher view = req.getRequestDispatcher("Web Pages/listSales.jsp");
-        view.forward(req, resp);
+        view.forward(req, resp);*/
     }
 
     /*only use the doPost with pay_data.jsp for create a sale and we are forced to have de information of

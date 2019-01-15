@@ -105,9 +105,9 @@
                         <td><c:out value="${airport.name}" /></td>
                         <td><c:out value="${airport.country}" /></td>
                         <td><c:out value="${airport.tax}" /></td>
-                        <td><a href="airportController?operation=view&userId=<c:out value="${airport.id}"/>">mirar</a></td>
-                        <td><a href="airportController?operation=edit&userId=<c:out value="${airport.id}"/>">actualizar</a></td>
-                        <td><a href="airportController?operation=delete&userId=<c:out value="${airport.id}"/>">borrar</a></td>
+                        <td><a href="airportController?operation=view&airportId=<c:out value="${airport.id}"/>">mirar</a></td>
+                        <td><a href="airportController?operation=edit&airportId=<c:out value="${airport.id}"/>">actualizar</a></td>
+                        <td><a href="airportController?operation=delete&airportId=<c:out value="${airport.id}"/>">borrar</a></td>
                     </tr>
                 </c:forEach>
             </tbody>

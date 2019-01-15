@@ -42,35 +42,34 @@ public class creditcardController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
-        String forward = "";
+        String forward="";
         String operation = request.getParameter("operation");
-        System.out.println(operation);
-        boolean success = false;
-        int creditCardId, userId;
-
-        if (operation.equalsIgnoreCase("delete")) {
-            creditCardId = Integer.parseInt(request.getParameter("creditCardId"));
-            success = creditCardDAO.delete(creditCardId);
-            //Only permit 1 creditCard for user so when this one is delete we need to create other
+        boolean sucess=false;
+        int userId;
+        int creditCard_Id;
+        
+        if(operation.equalsIgnoreCase("delete")){
+            userId=Integer.parseInt(request.getParameter("userId"));
+            creditCard_Id = creditCardDAO.findByUserId(userId).getId();
+            sucess=creditCardDAO.delete(creditCard_Id);
             forward = "createCreditCard.jsp";
-            request.setAttribute("creditCard", creditCard);
-        } else if (operation.equalsIgnoreCase("add")) {
+        }else if(operation.equalsIgnoreCase("add")){
             forward = "createCreditCard.jsp";
-            request.setAttribute("creditCard", creditCard);
-        } else if (operation.equalsIgnoreCase("edit")) {
-            creditCardId = Integer.parseInt(request.getParameter("creditCardId"));
-            forward = "editCreditCard.jsp";
-            CreditCard cc = creditCardDAO.find(creditCardId);
+        }else if(operation.equals("edit")){
+            userId=Integer.parseInt(request.getParameter("userId"));
+            creditCard_Id = creditCardDAO.findByUserId(userId).getId();
+            System.out.println(creditCard_Id);
+            forward="editCreditCard.jsp";
+            CreditCard cc = creditCardDAO.find(creditCard_Id);
             request.setAttribute("creditCard", cc);
-        } else if (operation.equalsIgnoreCase("view")) {
-            System.out.println("text");
-            userId = Integer.parseInt(request.getParameter("userId"));
-            
-            forward = "viewCreditCard.jsp";
-            request.setAttribute("creditCard", creditCardDAO.findByUserId(userId));
-        }
-        else{
-            forward = "Summary.jsp";
+        }else if(operation.equalsIgnoreCase("view")){
+            userId=Integer.parseInt(request.getParameter("userId"));
+            creditCard_Id = creditCardDAO.findByUserId(userId).getId();
+            forward="viewCreditCard.jsp";
+            CreditCard cc = creditCardDAO.find(creditCard_Id);
+            request.setAttribute("creditCard", cc);
+        }else{
+            forward="paginauser.jsp";
         }
         RequestDispatcher view = request.getRequestDispatcher(forward);
         view.forward(request, response);

@@ -62,8 +62,10 @@ public class JDBCFlightDAO implements FlightDAO {
             rsObj = stmtObj.executeQuery();
             if (rsObj.next()) {
                 RouteDAO routeDAO = new JDBCRouteDAO();
+                System.out.println(rsObj.getInt("route_id"));
                 route = routeDAO.find(rsObj.getInt("route_id"));
 
+                System.out.println(route.getId());
                 flight.setId(rsObj.getInt("id"));
                 flight.setLocator(rsObj.getString("locator"));
                 flight.setRoute(route);
@@ -139,7 +141,7 @@ public class JDBCFlightDAO implements FlightDAO {
     public boolean delete(int id) {
         boolean deleted = false;
         int deletedId = 0;
-        String query = "DELETE FROM flights WHERE id= ?;";
+        String query = "DELETE FROM flights WHERE id= ?";
         try {
             connObj = dbConnect();
             stmtObj = connObj.prepareStatement(query);

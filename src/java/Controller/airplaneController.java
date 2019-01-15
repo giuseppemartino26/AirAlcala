@@ -56,9 +56,10 @@ public class airplaneController extends HttpServlet {
             forward = "editAirplane.jsp";
             Airplane airplane = airplaneDAO.find(airplaneId);
             request.setAttribute("airplanes", airplane);
-        } else if (operation.equalsIgnoreCase("airplane")){
+        } else if (operation.equalsIgnoreCase("list")){
             forward = "listAirplanes.jsp";
-            request.setAttribute("airplane", airplaneDAO.findAll());
+            request.setAttribute("airplanes", airplaneDAO.findAll());
+            System.out.println(airplaneDAO.findAll().toString());
         } else if (operation.equalsIgnoreCase("view")){
             airplaneId = Integer.parseInt(request.getParameter("airplaneId"));
             forward = "viewAirplane.jsp";

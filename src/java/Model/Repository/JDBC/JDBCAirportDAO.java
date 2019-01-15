@@ -87,6 +87,7 @@ public class JDBCAirportDAO implements AirportDAO {
                 airport.setName(rsObj.getString("name"));
                 airport.setCountry(rsObj.getString("country"));
                 airport.setTax(rsObj.getInt("tax"));
+                airportList.add(airport);
             }
             rsObj.close();
             dbDisconnect();

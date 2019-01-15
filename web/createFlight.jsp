@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@page import="java.sql.*;" %>
 <!DOCTYPE html>
 
@@ -100,20 +101,20 @@ src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></scri
             <h2>Crear Vuelo</h2>
             <br>
         <div class="btn-group topButton" role="group" aria-label="Basic example">
-            <a href="airportController?operation=list" class="btn btn-primary" role="button">Volver a Lista</a>
+            <a href="flightController?operation=list" class="btn btn-primary" role="button">Volver a Lista</a>
         </div>
-            <form method="POST" action="airportController" class="form-container" onsubmit="showResponse()">
+            <form method="POST" action="flightController" class="form-container" onsubmit="showResponse()">
             <div class="row">
                 <div class="col-lg-6">
                 <label for="name"><b>Localizador</b></label>
-                <input placeholder="AB123" name="localizador" id="localizador" type="text">
+                <input placeholder="AB123" name="locator" id="localizador" type="text">
                 </div>
                 
                 <div class="col-lg-6">              
                 <label for="route"><b>Ruta: </b></label>
                 <select name="route" id="route">
                     <c:forEach items="${routes}" var="route">
-                        <option value="${route.id}">${route.origin} => ${route.destination}</option>
+                        <option value="${route.id}"> ${route.origin.name} - ${route.destination.name}- ${route.id}</option>
                     </c:forEach>
                 </select>
                 </div>

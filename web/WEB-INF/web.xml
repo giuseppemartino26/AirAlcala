@@ -20,10 +20,6 @@
         <servlet-class>Controller.administratorController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>creditCardController</servlet-name>
-        <servlet-class>Controller.creditcardController</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>saleController</servlet-name>
         <servlet-class>Controller.saleController</servlet-class>
     </servlet>
@@ -51,6 +47,18 @@
         <servlet-name>searchController</servlet-name>
         <servlet-class>Controller.searchController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>creditcardController</servlet-name>
+        <servlet-class>Controller.creditcardController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>airportController</servlet-name>
+        <servlet-class>Controller.airportController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>routeController</servlet-name>
+        <servlet-class>Controller.routeController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>flightController</servlet-name>
         <url-pattern>/flightController</url-pattern>
@@ -68,8 +76,8 @@
         <url-pattern>/administratorController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>creditCardController</servlet-name>
-        <url-pattern>/creditCardController</url-pattern>
+        <servlet-name>creditcardController</servlet-name>
+        <url-pattern>/creditcardController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>saleController</servlet-name>
@@ -94,6 +102,18 @@
     <servlet-mapping>
         <servlet-name>searchController</servlet-name>
         <url-pattern>/searchController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>creditcardController</servlet-name>
+        <url-pattern>/creditcardController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>airportController</servlet-name>
+        <url-pattern>/airportController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>routeController</servlet-name>
+        <url-pattern>/routeController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -1,14 +1,12 @@
 <%-- 
-    Document   : Summary
-    Created on : 28-dic-2018, 18:57:48
-    Author     : pablo
---%>
-
-<%--
-    I don't know if we use sessions or we use sql
+    Document   : ListUsers
+    Created on : 09-ene-2019, 13:12:03
+    Author     : Martin
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!doctype html>
 <html lang="es">
 <head>
@@ -18,17 +16,21 @@
    <link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.0/css/jquery.dataTables.css">
    <link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.0/css/jquery.dataTables_themeroller.css">
    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-   <script type="text/javascript" charset="utf-8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.1.min.js"></script>
-   <script type="text/javascript" charset="utf-8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.0/jquery.dataTables.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="styles/styles.css">    
+   <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.1.min.js"></script>
+   <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.0/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="styles/styles.css">
     
-    
+    <script>
+    $(document).ready( function () {
+        $('#datatable').DataTable();
+    } );
+    </script>
 </head>
 <body>
-     <%
+    <%
     //allow access only if session exists
     if(session.getAttribute("sessionUserId") == null){
-            response.sendRedirect("loginController");
+            response.sendRedirect("paginauser.jsp");
     }
     %>
     <div id="wrapper">
@@ -80,36 +82,42 @@
     <br>
     <br>
     <div class="container">
-        <h4>Resumen de la compra</h4>
-        <table class="table table-striped">
+        <h4>Lista de Compras </h4>
+        
+        <br>
+        <table id="datatable" class="display" style="width:100%">
+            <thead>
             <tr>
-                <td>ID Compra</td>
-                <td><%=session.getAttribute("saleID")%></td>
+                <th>Id</td>
+                <th>Id_vuelo</td>
+                <th>Lugar de Salida</td>
+                <th>Pasajeros</td>
+                <th>Precio</td>
+                <th></th>
             </tr>
+            </thead>
+            <tbody>
+                <c:forEach items="${sales}" var="sale">
+                    <tr>
+                        <td><c:out value="${sale.id}" /></td>
+                        <td><c:out value="${sale.flight.locator}" /></td>
+                        <td><c:out value="${sale.place}" /></td>
+                        <td><c:out value="${sale.passengers}" /></td>
+                        <td><c:out value="${sale.price}" /></td>
+                        <td><a href="saleController?operation=view&saleId=<c:out value="${sale.id}"/>">mirar</a></td>
+                    </tr>
+                </c:forEach>
+            </tbody>
+            <tfoot>
             <tr>
-                <td>Origen</td>
-                <td><%=session.getAttribute("origin")%></td><!---->
-            </tr>
-            <tr>
-                <td>Destino</td>
-                <td><%=session.getAttribute("destination")%></td><!---->
-            </tr>
-            <tr>
-                <td>Fecha Ida</td>
-                <td><%=session.getAttribute("Departure_date")%></td><!---->
-            </tr>
-            <!--<tr style="display:none" id="departure_2">
-                <td>Fecha Vuelta</td>
-                <td>Departure 2</td><%=session.getAttribute("Departure_2")%>
-            </tr>-->
-            <tr>
-                <td>N&uacute;mero de pasajeros</td>
-                <td><%=session.getAttribute("passengers")%></td><!---->
-            </tr>
-            <tr>
-                <td>Precio</td>
-                <td><%=session.getAttribute("price")%></td><!---->
-            </tr>
+                <th>Id</td>
+                <th>Id_vuelo</td>
+                <th>Lugar de Salida</td>
+                <th>Pasajeros</td>
+                <th>Precio</td>
+                <th></th>
+            </tr> 
+            </tfoot>
         </table>
     </div>
 </div>

@@ -84,8 +84,9 @@ public class JDBCAirplaneDAO implements AirplaneDAO {
             while (rsObj.next()) {
                 Airplane airplane = new Airplane();
                 airplane.setId(rsObj.getInt("id"));
-                airplane.setName(rsObj.getString("name"));
+                airplane.setName(rsObj.getString("code"));
                 airplane.setPlaces(rsObj.getInt("places"));
+                airplaneList.add(airplane);
             }
             rsObj.close();
             dbDisconnect();

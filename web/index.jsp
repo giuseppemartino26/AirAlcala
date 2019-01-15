@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <html lang="es">
     <head>
        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
@@ -16,7 +16,7 @@
                         return false;
                     }
                     if(document.getElementById('pass').value == '') {
-                        alert('Introduzca una contraseña');
+                        alert('Introduzca una contraseÃ±a');
                         return false;
                     }return true;
                 }
@@ -28,7 +28,11 @@
         response.sendRedirect("userController?operation=list");
     }
     if(session.getAttribute("sessionUserId") != null && !(session.getAttribute("sessionUserId") != null && session.getAttribute("sessionAdminId") != null)){
-         response.sendRedirect("Pay_data.jsp");
+        if(session.getAttribute("proceso").equals("ventaFlight")){
+           response.sendRedirect("loginController?operation=alreadylogin"); 
+        }else{
+            response.sendRedirect("paginauser.jsp");
+        }   
     }
 %>
         <div id="wrapper">
@@ -40,7 +44,7 @@
             <nav class="navbar navbar-default">
                 <div class="container-fluid">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="#">AirAlcalá</a>
+                    <a class="navbar-brand" href="#">AirAlcalÃ¡</a>
                 </div>
                 <ul class="nav navbar-nav">
                     <li class="active"><a href="index.html">Inicio</a></li>
@@ -59,7 +63,7 @@
                 <input placeholder="Email" name="email" id="email" type="email">
                 </div>
                 <div class="col-lg-6">
-                <label for="pass"><b>Contraseña</b></label>
+                <label for="pass"><b>ContraseÃ±a</b></label>
                 <input name="pass" id="pass" type="password">
                 </div>
             </div>   
@@ -76,7 +80,7 @@
                 <div class="row">
                     <div class="col-xs-6">
                         <p>
-                            AirAlcala - Alcal&aacute; de Henares, Madrid, España
+                            AirAlcala - Alcal&aacute; de Henares, Madrid, EspaÃ±a
                         </p>
                     </div>
                     <div class="col-xs-6">

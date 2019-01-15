@@ -1,14 +1,12 @@
 <%-- 
-    Document   : Summary
-    Created on : 28-dic-2018, 18:57:48
+    Document   : viewSale
+    Created on : 15-ene-2019, 12:28:56
     Author     : pablo
 --%>
 
-<%--
-    I don't know if we use sessions or we use sql
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!doctype html>
 <html lang="es">
 <head>
@@ -22,7 +20,11 @@
    <script type="text/javascript" charset="utf-8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.0/jquery.dataTables.min.js"></script>
     <link rel="stylesheet" type="text/css" href="styles/styles.css">    
     
-    
+    <script>
+    $(document).ready( function () {
+        $('#datatable').DataTable();
+    } );
+    </script>
 </head>
 <body>
      <%
@@ -52,9 +54,9 @@
                 <li class="active"><a href="routeController?operation=list">Rutas</a></li>        
                 <li class="active"><a href="saleController?operation=overview">Estadísticas</a></li>    <!-- aún no existe, hay que crearlo y calcular las estadísticas en el Controlador (GET) -->
             <%} if(session.getAttribute("sessionUserId") != null && !(session.getAttribute("sessionUserId") != null && session.getAttribute("sessionAdminId") != null)){%>
-                <li class="active"><a href="index.html">Buscar Vuelos</a></li>
-                <li class="active"><a href="saleController?operation=list&userId=<%=session.getAttribute("sessionUserId")%>">Mirar Compras</a></li>
-                <li class="active"><a href="creditcardController?operation=edit&userId=<%=session.getAttribute("sessionUserId")%>">Editar Medios de Pago</a></li>
+                <li class="active"><a href="flightController?operation=search">Buscar Vuelos</a></li>
+                <li class="active"><a href="salesController?operation=list&userId=<%=session.getAttribute("sessionUserId")%>">Mirar Compras</a></li>
+                <li class="active"><a href="creditcardController?operation=list">Editar Medios de Pago</a></li>
             <%} if(session.getAttribute("sessionUserId") == null && session.getAttribute("sessionAdminId") == null){ %>
                 <li class="active"><a href="index.jsp">Inicio</a></li>
                 <li class="active"><a href="userController?operation=add">Crear Cuenta</a></li>
@@ -80,36 +82,42 @@
     <br>
     <br>
     <div class="container">
-        <h4>Resumen de la compra</h4>
-        <table class="table table-striped">
+        <h4>Ver Datos Compra</h4>
+        <br>
+        <table class="table table-striped" style="width:100%">
             <tr>
-                <td>ID Compra</td>
-                <td><%=session.getAttribute("saleID")%></td>
+                <th>Id</th> 
+                    <td>${sale.id}</td>
             </tr>
             <tr>
-                <td>Origen</td>
-                <td><%=session.getAttribute("origin")%></td><!---->
+                <th>Localizador del Avi&oacute;n</th>
+                    <td>${sale.flight.locator}</td>
             </tr>
             <tr>
-                <td>Destino</td>
-                <td><%=session.getAttribute("destination")%></td><!---->
+                <th>Nombre</th>
+                    <td>${sale.user.pname}</td>
             </tr>
             <tr>
-                <td>Fecha Ida</td>
-                <td><%=session.getAttribute("Departure_date")%></td><!---->
-            </tr>
-            <!--<tr style="display:none" id="departure_2">
-                <td>Fecha Vuelta</td>
-                <td>Departure 2</td><%=session.getAttribute("Departure_2")%>
-            </tr>-->
-            <tr>
-                <td>N&uacute;mero de pasajeros</td>
-                <td><%=session.getAttribute("passengers")%></td><!---->
+                <th>Primer Apelido</th>
+                    <td>${sale.user.sname1}</td>
             </tr>
             <tr>
-                <td>Precio</td>
-                <td><%=session.getAttribute("price")%></td><!---->
+                <th>Aeropuerto de salida</th>
+                    <td>${sale.place}</td>
             </tr>
+            <tr>
+                <th>Pasajeros</th>
+                    <td>${sale.passengers}</td>
+            </tr>
+            <tr>
+                <th>N&uacute;mero de Tarjeta</th>
+                    <td>${sale.creditCard.number}</td>
+            </tr>
+            <tr>
+                <th>Precio</th>
+                    <td>${sale.price}</td>
+            </tr>
+            
         </table>
     </div>
 </div>

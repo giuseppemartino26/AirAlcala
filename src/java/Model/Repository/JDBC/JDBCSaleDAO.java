@@ -128,8 +128,8 @@ public class JDBCSaleDAO implements SaleDAO {
     public boolean insert(Sale sale) {
         boolean inserted = false;
         int insertedId = 0;
-        String query = "INSERT INTO sales (id, flight_id, user_id, place, passengers, creditcard_id) "
-                + "VALUES (?,?,?,?,?,?)";
+        String query = "INSERT INTO sales (id, flight_id, user_id, place, passengers, creditcard_id, price) "
+                + "VALUES (?,?,?,?,?,?,?)";
 
         try {
             connObj = dbConnect();
@@ -140,6 +140,7 @@ public class JDBCSaleDAO implements SaleDAO {
             stmtObj.setString(4, sale.getPlace());
             stmtObj.setInt(5, sale.getPassengers());
             stmtObj.setInt(6, sale.getCreditCard().getId());
+            stmtObj.setDouble(7, sale.getPrice());
 
             insertedId = stmtObj.executeUpdate();
 
@@ -159,7 +160,7 @@ public class JDBCSaleDAO implements SaleDAO {
         boolean updated = false;
         int updatedId = 0;
         String query = "UPDATE TABLE sales SET flight_id = ?, user_id = ?,"
-                + "place = '"+sale.getPlace()+"', passengers = ?,creditcard_id = ?"
+                + "place = '"+sale.getPlace()+"', passengers = ?,creditcard_id = ?, price = ?"
                 + "WHERE id = '" + sale.getId() + "';";
         try {
             connObj = dbConnect();
@@ -170,6 +171,7 @@ public class JDBCSaleDAO implements SaleDAO {
             //stmtObj.setString(3, sale.getPlace());
             stmtObj.setInt(3, sale.getPassengers());
             stmtObj.setInt(4, sale.getCreditCard().getId());
+            stmtObj.setDouble(5, sale.getPrice());
             //stmtObj.setInt(6, sale.getId());
 
             updatedId = stmtObj.executeUpdate();
@@ -214,10 +216,10 @@ public class JDBCSaleDAO implements SaleDAO {
         int numero, forma, j = 1;
         while (j < 7) {
             forma = (int) (aleatorio.nextDouble() * alfa.length() - 1 + 0);
-            numero = (int) (aleatorio.nextDouble() * 99 + 10);
-            if (j == 2) {
+            numero = (int) (aleatorio.nextDouble() * 99 );
+            if (j == 4) {
                 id = id + numero;
-            } else if (j != 3) {
+            } else if (j != 5) {
                 id = id + alfa.charAt(forma);
             }
             j++;
@@ -235,6 +237,46 @@ public class JDBCSaleDAO implements SaleDAO {
             }
         }
         return success;
+    }
+
+    @Override
+    public ArrayList<Sale> findByUserId(int userId) {
+        ArrayList<Sale> saleList = new ArrayList<Sale>();
+        String query = "SELECT * FROM sales WHERE user_id = ?";
+        try {
+            connObj = dbConnect();
+            stmtObj = connObj.prepareStatement(query);
+            stmtObj.setInt(1, userId);
+            rsObj = stmtObj.executeQuery();
+
+            while (rsObj.next()) {
+                FlightDAO flightDAO = new JDBCFlightDAO();
+                Flight flight = flightDAO.find(rsObj.getInt("flight_id"));
+
+                UserDAO userDAO = new JDBCUserDAO();
+                User user = userDAO.find(rsObj.getInt("user_id"));
+
+                CreditCardDAO ccDAO = new JDBCCreditCardDAO();
+                CreditCard cc = ccDAO.find(rsObj.getInt("creditcard_id"));
+
+                Sale sale = new Sale();
+                sale.setId(rsObj.getString("id"));
+                sale.setFlight(flight);
+                sale.setUser(user);
+                sale.setPlace(rsObj.getString("place"));
+                sale.setPassengers(rsObj.getInt("passengers"));
+                sale.setCreditCard(cc);
+                sale.setPrice(rsObj.getDouble("price"));
+
+                saleList.add(sale);
+            }
+            rsObj.close();
+            dbDisconnect();
+
+        } catch (SQLException e) {
+            System.out.println("Error Retrieving Data. " + e);
+        }
+        return saleList;
     }
     
 }

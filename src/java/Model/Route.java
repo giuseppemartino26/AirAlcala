@@ -16,8 +16,6 @@ public class Route {
     private Airport destination;
     private Airplane plane;
     private double ticketPrice;
-    private double tax;
-    private double luggagePrice;
 
     public Route() {
     }
@@ -60,22 +58,6 @@ public class Route {
 
     public void setTicketPrice(int ticketPrice) {
         this.ticketPrice = ticketPrice;
-    }
-
-    public double getTax() {
-        return tax;
-    }
-
-    public void setTax(double tax) {
-        this.tax = tax;
-    }
-
-    public double getLuggagePrice() {
-        return luggagePrice;
-    }
-
-    public void setLuggagePrice(double luggagePrice) {
-        this.luggagePrice = luggagePrice;
     }
 
 }

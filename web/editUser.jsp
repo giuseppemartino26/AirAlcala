@@ -50,9 +50,9 @@ src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></scri
                 <li class="active"><a href="routeController?operation=list">Rutas</a></li>        
                 <li class="active"><a href="saleController?operation=overview">Estadísticas</a></li>    <!-- aún no existe, hay que crearlo y calcular las estadísticas en el Controlador (GET) -->
             <%} if(session.getAttribute("sessionUserId") != null && !(session.getAttribute("sessionUserId") != null && session.getAttribute("sessionAdminId") != null)){%>
-                <li class="active"><a href="flightController?operation=search">Buscar Vuelos</a></li>
-                <li class="active"><a href="salesController?operation=list&userId=<%=session.getAttribute("sessionUserId")%>">Mirar Compras</a></li>
-                <li class="active"><a href="creditcardController?operation=list">Editar Medios de Pago</a></li>
+                <li class="active"><a href="index.html">Buscar Vuelos</a></li>
+                <li class="active"><a href="saleController?operation=list&userId=<%=session.getAttribute("sessionUserId")%>">Mirar Compras</a></li>
+                <li class="active"><a href="creditcardController?operation=edit&userId=<%=session.getAttribute("sessionUserId")%>">Editar Medios de Pago</a></li>
             <%} if(session.getAttribute("sessionUserId") == null && session.getAttribute("sessionAdminId") == null){ %>
                 <li class="active"><a href="index.html">Inicio</a></li>
                 <li class="active"><a href="userController?operation=add">Crear Cuenta</a></li>

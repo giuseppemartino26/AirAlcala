@@ -82,7 +82,7 @@
     <br>
     <div class="container">
         <h4>Lista de Administradores</h4>
-        <div class="topButton"><a href="administratorController?operation=add" class="btn btn-primary" role="button">Añadir Administrador</a></div>
+        <div class="topButton"><a href="flightController?operation=add" class="btn btn-primary" role="button">Añadir Vuelo</a></div>
         <br>
         <table id="datatable" class="display" style="width:100%">
             <thead>
@@ -100,22 +100,21 @@
                 <c:forEach items="${flights}" var="flight">
                     <tr>
                         <td><c:out value="${flight.locator}" /></td>
-                        <td><c:out value="${flight.ruta.origin} a ${flights.ruta.destination} "/></td>
+                        <td><c:out value="${flight.route.origin.name} a ${flight.route.destination.name} "/></td>
                         <td><c:out value="${flight.departure}" /></td>
                         <td><c:out value="${flight.arrival}" /></td>
-                        <td><a href="administratorController?operation=view&adminId=<c:out value="${flight.id}"/>">mirar</a></td>
-                        <td><a href="administratorController?operation=edit&adminId=<c:out value="${flight.id}"/>">actualizar</a></td>
-                        <td><a href="administratorController?operation=delete&adminId=<c:out value="${flight.id}"/>">borrar</a></td>
+                        <td><a href="flightController?operation=view&flightId=<c:out value="${flight.id}"/>">mirar</a></td>
+                        <td><a href="flightController?operation=edit&flightId=<c:out value="${flight.id}"/>">actualizar</a></td>
+                        <td><a href="flightController?operation=delete&flightId=<c:out value="${flight.id}"/>">borrar</a></td>
                     </tr>
                 </c:forEach>
             </tbody>
             <tfoot>
             <tr>
-                <th>Id</td>
-                <th>Nombre</td>
-                <th>Primer Apelido</td>
-                <th>Segundo Apelido</td>
-                <th>Email</th>
+                <th>Localizador</td>
+                <th>Ruta</td>
+                <th>Salida</td>
+                <th>Llegada</td>
                 <th></th>
                 <th></th>
                 <th></th>

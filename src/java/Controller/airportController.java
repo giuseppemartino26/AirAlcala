@@ -37,9 +37,10 @@ public class airportController extends HttpServlet {
     // Will be run at GET Events (e.g. hitting a link)
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession(false);
         String forward="";
         String operation = request.getParameter("operation");
-        boolean success = false;
+        boolean success=false;
         int airportId;
         
         if (operation.equalsIgnoreCase("delete")){
@@ -57,8 +58,10 @@ public class airportController extends HttpServlet {
             request.setAttribute("airports", airport);
         } else if (operation.equalsIgnoreCase("list")){
             forward = "listAirports.jsp";
+            
             request.setAttribute("airports", airportDAO.findAll());
-            System.out.println("piep");
+            System.out.println(airportDAO.findAll());
+            
         } else if (operation.equalsIgnoreCase("view")){
             airportId = Integer.parseInt(request.getParameter("airportId"));
             forward = "viewAirport.jsp";

@@ -98,7 +98,7 @@
                         <td><c:out value="${flight.departure}"/></td>
                         
                       
-                        <td><a href="loginController?flightId=<c:out value="${flight.id}"/>">Elegir vuelo</a></td>
+                        <td><a href="loginController?operation=sale&flightId=<c:out value="${flight.id}"/>">Elegir vuelo</a></td>
                        
                     </tr>
                 </c:forEach>
