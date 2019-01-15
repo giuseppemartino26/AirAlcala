@@ -76,15 +76,20 @@ public class saleController extends HttpServlet {
         int flightId = (int) s.getAttribute("flightId");
         String place = (String) s.getAttribute("origin");
         int passengers = (int) s.getAttribute("passengers");
-        int creditCardId = 1; //(int)s.getAttribute("creditCardId");
+        int creditCardId = 1;//(int)s.getAttribute("creditCardId");
         double price = (double) s.getAttribute("price");
         boolean success = false;
 
         user = userDAO.find(userId);
         flight = flightDAO.find(flightId);
-        creditCard = creditCardDAO.find(creditCardId);
+        creditCard = creditCardDAO.findByUserId(userId);
 
         sale = new Sale();
+        String id=saleDAO.generarID();
+        while(!saleDAO.comprobarId(id)){
+            id=saleDAO.generarID();
+        }
+        sale.setId(id);
         sale.setFlight(flight);
         sale.setUser(user);
         sale.setPlace(place);
@@ -95,14 +100,15 @@ public class saleController extends HttpServlet {
         s.setAttribute("Departure_date", flight.getDeparture());
         success = saleDAO.insert(sale);
         s.setAttribute("saleID", sale.getId());
-        if (success) {
+        resp.sendRedirect("Summary.jsp");
+        /*if (success) {
             resp.sendRedirect("Summary.jsp");
         } else {
             RequestDispatcher view = req.getRequestDispatcher("index.html");
             PrintWriter out = resp.getWriter();
             out.println("<font color=red>En el proceso de compra se ha producido un error vuelva a intentarlo</font>");
             view.forward(req, resp);
-        }
+        }*/
     }
 
     @Override

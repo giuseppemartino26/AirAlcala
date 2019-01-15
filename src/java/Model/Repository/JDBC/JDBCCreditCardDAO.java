@@ -90,7 +90,7 @@ public class JDBCCreditCardDAO implements CreditCardDAO {
 
     @Override
     public CreditCard findByUserId(int userId) {
-        CreditCard cc = null;
+        CreditCard cc = new CreditCard();
         userDAO = new JDBCUserDAO();
         String query="SELECT * FROM creditcards WHERE user_id = ?";
         System.out.println("text");

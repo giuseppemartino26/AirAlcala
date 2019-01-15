@@ -99,10 +99,12 @@ public class loginController extends HttpServlet {
                 HttpSession s = req.getSession(true);
                 s.setAttribute("sessionUserId", user.getId());
                 s.setAttribute("sessionUserPname", user.getPname());
+                
                 if (s.getAttribute("proceso").equals("ventaFlight")) {
                     RequestDispatcher view = req.getRequestDispatcher("Pay_data.jsp");
                     req.setAttribute("user", user);
                     req.setAttribute("creditCard", creditCard);
+                    s.setAttribute("creditCardId", creditCard.getId());
                     view.forward(req, res);
                 } else {
                     res.sendRedirect("flightController?operation=search");

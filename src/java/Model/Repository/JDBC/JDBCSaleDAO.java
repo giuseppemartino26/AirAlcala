@@ -134,11 +134,7 @@ public class JDBCSaleDAO implements SaleDAO {
         try {
             connObj = dbConnect();
             stmtObj = connObj.prepareStatement(query);
-            String id=this.generarID();
-            while(!this.comprobarId(id)){
-                id=this.generarID();
-            }
-            stmtObj.setString(1, id);
+            stmtObj.setString(1, sale.getId());
             stmtObj.setInt(2, sale.getFlight().getId());
             stmtObj.setInt(3, sale.getUser().getId());
             stmtObj.setString(4, sale.getPlace());
