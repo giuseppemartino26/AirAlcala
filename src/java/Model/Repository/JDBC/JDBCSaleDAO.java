@@ -15,6 +15,7 @@ import Model.Repository.SaleDAO;
 import Model.Repository.UserDAO;
 import Model.User;
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  *
@@ -49,13 +50,13 @@ public class JDBCSaleDAO implements SaleDAO {
     }
 
     @Override
-    public Sale find(int id) {
+    public Sale find(String id) {
         Sale sale = null;
-        String query = "SELECT * FROM sales WHERE id = ?";
+        String query = "SELECT * FROM sales WHERE id = '" + id + "'";
         try {
             connObj = dbConnect();
             stmtObj = connObj.prepareStatement(query);
-            stmtObj.setInt(1, id);
+            //stmtObj.setInt(1, id);
             rsObj = stmtObj.executeQuery();
             if (rsObj.next()) {
                 FlightDAO flightDAO = new JDBCFlightDAO();
@@ -65,17 +66,18 @@ public class JDBCSaleDAO implements SaleDAO {
                 User user = userDAO.find(rsObj.getInt("user_id"));
 
                 CreditCardDAO ccDAO = new JDBCCreditCardDAO();
-                CreditCard cc = ccDAO.find(rsObj.getInt("credit_card"));
+                CreditCard cc = ccDAO.find(rsObj.getInt("creditcard_id"));
 
                 sale = new Sale();
-                sale.setId(rsObj.getInt("id"));
+                sale.setId(rsObj.getString("id"));
                 sale.setFlight(flight);
                 sale.setUser(user);
                 sale.setPlace(rsObj.getString("place"));
-                sale.setNoLuggage(rsObj.getInt("number_luggages"));
+                sale.setPassengers(rsObj.getInt("passengers"));
                 sale.setCreditCard(cc);
                 sale.setPrice(rsObj.getDouble("price"));
             }
+            rsObj.close();
             dbDisconnect();
         } catch (SQLException e) {
             System.out.println("Not inserted. " + e);
@@ -100,19 +102,20 @@ public class JDBCSaleDAO implements SaleDAO {
                 User user = userDAO.find(rsObj.getInt("user_id"));
 
                 CreditCardDAO ccDAO = new JDBCCreditCardDAO();
-                CreditCard cc = ccDAO.find(rsObj.getInt("credit_card"));
+                CreditCard cc = ccDAO.find(rsObj.getInt("creditcard_id"));
 
                 Sale sale = new Sale();
-                sale.setId(rsObj.getInt("id"));
+                sale.setId(rsObj.getString("id"));
                 sale.setFlight(flight);
                 sale.setUser(user);
                 sale.setPlace(rsObj.getString("place"));
-                sale.setNoLuggage(rsObj.getInt("number_luggages"));
+                sale.setPassengers(rsObj.getInt("passengers"));
                 sale.setCreditCard(cc);
                 sale.setPrice(rsObj.getDouble("price"));
 
                 saleList.add(sale);
             }
+            rsObj.close();
             dbDisconnect();
 
         } catch (SQLException e) {
@@ -125,17 +128,22 @@ public class JDBCSaleDAO implements SaleDAO {
     public boolean insert(Sale sale) {
         boolean inserted = false;
         int insertedId = 0;
-        String query = "INSERT INTO sales (flight_id, user_id, place, no_luggage, creditcard_id) "
-                + "VALUES (?,?,?,?,?)";
+        String query = "INSERT INTO sales (id, flight_id, user_id, place, passengers, creditcard_id) "
+                + "VALUES (?,?,?,?,?,?)";
 
         try {
             connObj = dbConnect();
             stmtObj = connObj.prepareStatement(query);
-            stmtObj.setInt(1, sale.getFlight().getId());
-            stmtObj.setInt(2, sale.getUser().getId());
-            stmtObj.setString(3, sale.getPlace());
-            stmtObj.setInt(4, sale.getNoLuggage());
-            stmtObj.setInt(5, sale.getCreditCard().getId());
+            String id=this.generarID();
+            while(!this.comprobarId(id)){
+                id=this.generarID();
+            }
+            stmtObj.setString(1, id);
+            stmtObj.setInt(2, sale.getFlight().getId());
+            stmtObj.setInt(3, sale.getUser().getId());
+            stmtObj.setString(4, sale.getPlace());
+            stmtObj.setInt(5, sale.getPassengers());
+            stmtObj.setInt(6, sale.getCreditCard().getId());
 
             insertedId = stmtObj.executeUpdate();
 
@@ -155,18 +163,18 @@ public class JDBCSaleDAO implements SaleDAO {
         boolean updated = false;
         int updatedId = 0;
         String query = "UPDATE TABLE sales SET flight_id = ?, user_id = ?,"
-                + "place = ?, number_luggages = ?,credit_card = ?"
-                + "WHERE id = ?;";
+                + "place = '"+sale.getPlace()+"', passengers = ?,creditcard_id = ?"
+                + "WHERE id = '" + sale.getId() + "';";
         try {
             connObj = dbConnect();
             stmtObj = connObj.prepareStatement(query);
 
             stmtObj.setInt(1, sale.getFlight().getId());
             stmtObj.setInt(2, sale.getUser().getId());
-            stmtObj.setString(3, sale.getPlace());
-            stmtObj.setInt(4, sale.getNoLuggage());
-            stmtObj.setInt(5, sale.getCreditCard().getId());
-            stmtObj.setInt(6, sale.getId());
+            //stmtObj.setString(3, sale.getPlace());
+            stmtObj.setInt(3, sale.getPassengers());
+            stmtObj.setInt(4, sale.getCreditCard().getId());
+            //stmtObj.setInt(6, sale.getId());
 
             updatedId = stmtObj.executeUpdate();
 
@@ -181,14 +189,14 @@ public class JDBCSaleDAO implements SaleDAO {
     }
 
     @Override
-    public boolean delete(int id) {
+    public boolean delete(String id) {
         boolean deleted = false;
         int deletedId = 0;
-        String query = "DELETE FROM sales WHERE id= ?;";
+        String query = "DELETE FROM sales WHERE id= '"+id+"';";
         try {
             connObj = dbConnect();
             stmtObj = connObj.prepareStatement(query);
-            stmtObj.setInt(1, id);
+            //stmtObj.setInt(1, id);
 
             deletedId = stmtObj.executeUpdate();
 
@@ -202,4 +210,36 @@ public class JDBCSaleDAO implements SaleDAO {
         return deleted;
     }
 
+    public String generarID() {
+        boolean success = false;
+        Random aleatorio = new Random();
+        String id = "";
+        String alfa = "ABCDEFGHIJKLMNOPQRSTVWXYZ";
+        int numero, forma, j = 1;
+        while (j < 7) {
+            forma = (int) (aleatorio.nextDouble() * alfa.length() - 1 + 0);
+            numero = (int) (aleatorio.nextDouble() * 99 + 10);
+            if (j == 2) {
+                id = id + numero;
+            } else if (j != 3) {
+                id = id + alfa.charAt(forma);
+            }
+            j++;
+        }
+        return id;
+    }
+
+    @Override
+    public boolean comprobarId(String id) {
+        boolean success=true;
+        ArrayList<Sale> all = this.findAll();
+        for (int i = 0; i < all.size(); i++) {
+            if (all.get(i).getId().equals(id)) {
+                success = false;
+            }
+        }
+        return success;
+    }
+    
 }
+

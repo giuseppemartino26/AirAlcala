@@ -12,22 +12,22 @@ package Model;
  */
 public class Sale {
 
-    private int id;
+    private String id;
     private Flight flight;
     private User user;
     private String place;
-    private int noLuggage;
+    private int passengers;
     private CreditCard creditCard;
     private double price;
 
     public Sale() {
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -55,12 +55,12 @@ public class Sale {
         this.place = place;
     }
 
-    public int getNoLuggage() {
-        return noLuggage;
+    public int getPassengers() {
+        return passengers;
     }
 
-    public void setNoLuggage(int noLuggage) {
-        this.noLuggage = noLuggage;
+    public void setPassengers(int passengers) {
+        this.passengers = passengers;
     }
 
     public CreditCard getCreditCard() {

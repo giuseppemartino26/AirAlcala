@@ -42,7 +42,7 @@ public class JDBCRouteDAO implements RouteDAO {
 
     public static void dbDisconnect() {
         try {
-            rsObj.close();
+            //rsObj.close();
             stmtObj.close();
             connObj.close();
         } catch (Exception exObj) {
@@ -60,9 +60,6 @@ public class JDBCRouteDAO implements RouteDAO {
             stmtObj.setInt(1, id);
             rsObj = stmtObj.executeQuery();
             if (rsObj.next()) {
-                /*RouteDAO routeDAO = new JDBCRouteDAO();
-                route = routeDAO.find(rsObj.getInt("id"));*/
-
                 AirplaneDAO planeDAO = new JDBCAirplaneDAO();
                 Airplane plane = planeDAO.find(rsObj.getInt("airplane_id"));
 
@@ -78,6 +75,7 @@ public class JDBCRouteDAO implements RouteDAO {
                 route.setLuggagePrice(rsObj.getInt("luggageprice"));
                 route.setTax(rsObj.getDouble("tax"));
             }
+            rsObj.close();
             dbDisconnect();
         } catch (SQLException e) {
             System.out.println("Not inserted. " + e);
@@ -177,9 +175,7 @@ public class JDBCRouteDAO implements RouteDAO {
             rsObj = stmtObj.executeQuery();
 
             while (rsObj.next()) {
-                RouteDAO routeDAO = new JDBCRouteDAO();
-                Route route = routeDAO.find(rsObj.getInt("id"));
-
+                Route route = new Route();
                 AirplaneDAO planeDAO = new JDBCAirplaneDAO();
                 Airplane plane = planeDAO.find(rsObj.getInt("airplane_id"));
 
@@ -197,6 +193,7 @@ public class JDBCRouteDAO implements RouteDAO {
 
                 routeList.add(route);
             }
+            rsObj.close();
             dbDisconnect();
 
         } catch (SQLException e) {
@@ -235,6 +232,7 @@ public class JDBCRouteDAO implements RouteDAO {
                     routeList.add(route);
                 }
             }
+            rsObj.close();
             dbDisconnect();
 
         } catch (SQLException e) {

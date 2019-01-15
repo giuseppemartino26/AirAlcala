@@ -42,7 +42,7 @@ public class JDBCFlightDAO implements FlightDAO {
 
     public static void dbDisconnect() {
         try {
-            rsObj.close();
+            //rsObj.close();
             stmtObj.close();
             connObj.close();
         } catch (Exception exObj) {
@@ -70,7 +70,7 @@ public class JDBCFlightDAO implements FlightDAO {
                 flight.setDeparture(rsObj.getDate("departure"));
                 flight.setArrival(rsObj.getDate("arrival"));
             }
-
+            rsObj.close();
             dbDisconnect();
         } catch (SQLException e) {
             System.out.println("Not inserted. " + e);
@@ -109,19 +109,19 @@ public class JDBCFlightDAO implements FlightDAO {
     public boolean update(Flight flight) {
         boolean updated = false;
         int updatedId = 0;
-        String query = "UPDATE routes SET locator = ?, route_id = ?,"
-                + "departure = ?, arrival = ?"
+        String query = "UPDATE routes SET locator = '"+flight.getLocator()+"', route_id = ?,"
+                + "departure = '"+flight.getDeparture()+"', arrival = '"+flight.getArrival()+"'"
                 + "WHERE id = ?;";
         try {
             connObj = dbConnect();
             stmtObj = connObj.prepareStatement(query);
 
             stmtObj = connObj.prepareStatement(query);
-            stmtObj.setString(1, flight.getLocator());
-            stmtObj.setInt(2, flight.getRoute().getId());
-            stmtObj.setDate(3, flight.getDeparture());
-            stmtObj.setDate(4, flight.getArrival());
-            stmtObj.setInt(5, flight.getId());
+            //stmtObj.setString(1, flight.getLocator());
+            stmtObj.setInt(1, flight.getRoute().getId());
+            /*stmtObj.setDate(3, flight.getDeparture());
+            stmtObj.setDate(4, flight.getArrival());*/
+            stmtObj.setInt(2, flight.getId());
 
             updatedId = stmtObj.executeUpdate();
 
@@ -180,8 +180,8 @@ public class JDBCFlightDAO implements FlightDAO {
 
                 flightList.add(flight);
             }
+            rsObj.close();
             dbDisconnect();
-
         } catch (SQLException e) {
             System.out.println("Error Retrieving Data. " + e);
         }
@@ -209,6 +209,7 @@ public class JDBCFlightDAO implements FlightDAO {
 
                 flightList.add(flight);
             }
+            rsObj.close();
             dbDisconnect();
         } catch (SQLException e) {
             System.out.println("Error Retrieving Data. " + e);

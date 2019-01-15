@@ -38,7 +38,7 @@ public class JDBCAirportDAO implements AirportDAO {
 
     public void dbDisconnect() {
         try {
-            rsObj.close();
+            //rsObj.close();
             stmtObj.close();
             connObj.close();
         } catch (Exception exObj) {
@@ -64,6 +64,7 @@ public class JDBCAirportDAO implements AirportDAO {
                 airport.setCountry(rsObj.getString("country"));
                 airport.setTax(rsObj.getInt("tax"));
             }
+            rsObj.close();
             dbDisconnect();
         } catch (SQLException e) {
             System.out.println("Not inserted. " + e);
@@ -87,6 +88,7 @@ public class JDBCAirportDAO implements AirportDAO {
                 airport.setCountry(rsObj.getString("country"));
                 airport.setTax(rsObj.getInt("tax"));
             }
+            rsObj.close();
             dbDisconnect();
         } catch (SQLException e) {
             System.out.println("Error Retrieving Data. " + e);
@@ -145,16 +147,16 @@ public class JDBCAirportDAO implements AirportDAO {
     public boolean update(Airport airport) {
         boolean updated = false;
         int updatedId = 0;
-        String query = "UPDATE airports SET name= ?, country= ?, tax= ?"
-                + "WHERE id = ?";
+        String query = "UPDATE airports SET name= '"+airport.getName()+"', country= '"+airport.getCountry()+"', tax= ?ç"
+                + " WHERE id = ?";
         try {
             connObj = dbConnect();
             stmtObj = connObj.prepareStatement(query);
 
-            stmtObj.setString(1, airport.getName());
-            stmtObj.setString(2, airport.getCountry());
-            stmtObj.setInt(3, airport.getTax());
-
+            /*stmtObj.setString(1, airport.getName());
+            stmtObj.setString(2, airport.getCountry());*/
+            stmtObj.setInt(1, airport.getTax());
+            stmtObj.setInt(2, airport.getId());
             updatedId = stmtObj.executeUpdate();
 
             dbDisconnect();
@@ -207,6 +209,7 @@ public class JDBCAirportDAO implements AirportDAO {
                 airport.setCountry(rsObj.getString("country"));
                 airport.setTax(rsObj.getInt("tax"));
             }
+            rsObj.close();
             dbDisconnect();
         } catch (SQLException e) {
             System.out.println("Not inserted. " + e);

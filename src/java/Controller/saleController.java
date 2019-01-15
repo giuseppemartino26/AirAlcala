@@ -75,7 +75,7 @@ public class saleController extends HttpServlet {
         int userId = (int) s.getAttribute("sessionUserId");
         int flightId = (int) s.getAttribute("flightId");
         String place = (String) s.getAttribute("origin");
-        int luggage = (int) s.getAttribute("passengers");
+        int passengers = (int) s.getAttribute("passengers");
         int creditCardId = 1; //(int)s.getAttribute("creditCardId");
         double price = (double) s.getAttribute("price");
         boolean success = false;
@@ -88,7 +88,7 @@ public class saleController extends HttpServlet {
         sale.setFlight(flight);
         sale.setUser(user);
         sale.setPlace(place);
-        sale.setNoLuggage(luggage);
+        sale.setPassengers(passengers);
         sale.setCreditCard(creditCard);
         sale.setPrice(price);
 

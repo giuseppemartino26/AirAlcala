@@ -14,15 +14,19 @@ import java.util.ArrayList;
  */
 public interface SaleDAO {
 
-    public Sale find(int id);
+    public Sale find(String id);
 
     public boolean insert(Sale sale);
 
     public boolean update(Sale sale);
 
-    public boolean delete(int id);
+    public boolean delete(String id);
     
     public ArrayList<Sale> findAll();
+    
+    public String generarID();
+    
+    public boolean comprobarId(String id);
 
 
 }

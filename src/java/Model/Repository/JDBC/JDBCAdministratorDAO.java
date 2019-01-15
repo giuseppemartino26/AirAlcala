@@ -34,7 +34,7 @@ public class JDBCAdministratorDAO implements AdministratorDAO {
     
     public static void dbDisconnect() {
 	try {
-            rsObj.close();
+            //rsObj.close();
             stmtObj.close();
             connObj.close();
 	} catch (Exception exObj) {
@@ -60,6 +60,7 @@ public class JDBCAdministratorDAO implements AdministratorDAO {
                 admin.setEmail(rsObj.getString("email"));
                 admin.setPass(rsObj.getString("pass"));
             }
+            rsObj.close();
             dbDisconnect();
         } catch (SQLException e) {
             System.out.println("Not inserted. " + e);
@@ -87,6 +88,7 @@ public class JDBCAdministratorDAO implements AdministratorDAO {
             
                 adminList.add(admin);
             }
+            rsObj.close();
             dbDisconnect();
         } catch(SQLException e){
             System.out.println("Error Retrieving Data. " + e);
@@ -113,6 +115,7 @@ public class JDBCAdministratorDAO implements AdministratorDAO {
                 admin.setEmail(rsObj.getString("email"));
                 admin.setPass(rsObj.getString("pass"));
               }
+            rsObj.close();
             dbDisconnect();
         } catch (SQLException e) {
             System.out.println("Not inserted. " + e);

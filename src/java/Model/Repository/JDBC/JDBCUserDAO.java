@@ -39,7 +39,7 @@ public class JDBCUserDAO implements UserDAO {
     
     public void dbDisconnect() {
 	try {
-            rsObj.close();
+            //rsObj.close();
             stmtObj.close();
             connObj.close();
 	} catch (Exception exObj) {
@@ -72,6 +72,7 @@ public class JDBCUserDAO implements UserDAO {
                 user.setCity(rsObj.getString("city"));
                 user.setCountry(rsObj.getString("country"));
             }
+            rsObj.close();
             dbDisconnect();
         } catch (SQLException e) {
             System.out.println("Not inserted. " + e);
@@ -93,6 +94,7 @@ public class JDBCUserDAO implements UserDAO {
                 if (rsObj.next()) {
                     success = true;
                 }
+                rsObj.close();
                 dbDisconnect();
             } catch (SQLException e) {
                 System.out.println("Not inserted. " + e);
@@ -103,11 +105,11 @@ public class JDBCUserDAO implements UserDAO {
     
         public User findbyEmail(String email) {
         User user = null;
-        String query = "SELECT * FROM users WHERE email = ?";
+        String query = "SELECT * FROM users WHERE email = '"+email+"'";
         try {
             connObj = dbConnect();
             stmtObj = connObj.prepareStatement(query);
-            stmtObj.setString(1, email);
+            //stmtObj.setString(1, email);
             rsObj = stmtObj.executeQuery();
             
             if (rsObj.next()) {
@@ -125,6 +127,7 @@ public class JDBCUserDAO implements UserDAO {
                 user.setCity(rsObj.getString("city"));
                 user.setCountry(rsObj.getString("country"));
             }
+            rsObj.close();
             dbDisconnect();
         } catch (SQLException e) {
             System.out.println("Not inserted. " + e);
@@ -156,6 +159,7 @@ public class JDBCUserDAO implements UserDAO {
                 user.setCountry(rsObj.getString("country"));
                 userList.add(user);
             }
+            rsObj.close();
             dbDisconnect();
         } catch(SQLException e){
             System.out.println("Error Retrieving Data. " + e);
@@ -231,25 +235,25 @@ public class JDBCUserDAO implements UserDAO {
     public boolean update(User user) {
         boolean updated = false;
         int updatedId = 0;
-        String query = "UPDATE users SET prename= ?, surname1= ?,"
-                + "surname2= ?, email= ?,pass= ?, birthday=  ?, "
-                + "address= ?, postalcode= ?, city=?, country= ?"
+        String query = "UPDATE users SET prename= '"+user.getPname()+"', surname1= '"+user.getSname1()+"',"
+                + "surname2= '"+user.getSname2()+"', email= '"+user.getEmail()+"',pass= '"+user.getPass()+"', birthday=  ?, "
+                + "address= '"+user.getAddress()+"', postalcode= '"+user.getPcode()+"', city='"+user.getCity()+"', country= '"+user.getCountry()+"'"
                 + "WHERE id = ?";
         try {
             connObj = dbConnect();
             stmtObj = connObj.prepareStatement(query);
             
-            stmtObj.setString(1, user.getPname());
+            /*stmtObj.setString(1, user.getPname());
             stmtObj.setString(2,user.getSname1());
             stmtObj.setString(3,user.getSname2());
             stmtObj.setString(4,user.getEmail());
-            stmtObj.setString(5,user.getPass());
-            stmtObj.setDate(6, (Date) user.getBday());
-            stmtObj.setString(7,user.getAddress());
+            stmtObj.setString(5,user.getPass());*/
+            stmtObj.setDate(1, (Date) user.getBday());
+            /*stmtObj.setString(7,user.getAddress());
             stmtObj.setString(8,user.getPcode());
             stmtObj.setString(9,user.getCity());
-            stmtObj.setString(10, user.getCountry());
-            stmtObj.setInt(11,user.getId());
+            stmtObj.setString(10, user.getCountry());*/
+            stmtObj.setInt(2,user.getId());
             
             updatedId = stmtObj.executeUpdate();
             

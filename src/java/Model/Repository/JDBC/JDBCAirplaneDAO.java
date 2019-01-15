@@ -39,7 +39,7 @@ public class JDBCAirplaneDAO implements AirplaneDAO {
 
     public void dbDisconnect() {
         try {
-            rsObj.close();
+            //rsObj.close();
             stmtObj.close();
             connObj.close();
         } catch (Exception exObj) {
@@ -64,6 +64,7 @@ public class JDBCAirplaneDAO implements AirplaneDAO {
                 airplane.setName(rsObj.getString("code"));
                 airplane.setPlaces(rsObj.getInt("places"));
             }
+            rsObj.close();
             dbDisconnect();
         } catch (SQLException e) {
             System.out.println("Not inserted. " + e);
@@ -86,6 +87,7 @@ public class JDBCAirplaneDAO implements AirplaneDAO {
                 airplane.setName(rsObj.getString("name"));
                 airplane.setPlaces(rsObj.getInt("places"));
             }
+            rsObj.close();
             dbDisconnect();
         } catch (SQLException e) {
             System.out.println("Error Retrieving Data. " + e);
@@ -142,14 +144,15 @@ public class JDBCAirplaneDAO implements AirplaneDAO {
     public boolean update(Airplane airplane) {
         boolean updated = false;
         int updatedId = 0;
-        String query = "UPDATE airplanes SET name= ?, places= ?"
+        String query = "UPDATE airplanes SET name= '"+airplane.getName()+"', places= ?"
                 + "WHERE id = ?";
         try {
             connObj = dbConnect();
             stmtObj = connObj.prepareStatement(query);
 
-            stmtObj.setString(1, airplane.getName());
-            stmtObj.setInt(2, airplane.getPlaces());
+            //stmtObj.setString(1, airplane.getName());
+            stmtObj.setInt(1, airplane.getPlaces());
+            stmtObj.setInt(2, airplane.getId());
 
             updatedId = stmtObj.executeUpdate();
 

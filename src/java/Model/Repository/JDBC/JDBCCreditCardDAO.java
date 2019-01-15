@@ -44,7 +44,7 @@ public class JDBCCreditCardDAO implements CreditCardDAO {
 
     public static void dbDisconnect() {
         try {
-            rsObj.close();
+            //rsObj.close();
             stmtObj.close();
             connObj.close();
         } catch (Exception exObj) {
@@ -80,6 +80,8 @@ public class JDBCCreditCardDAO implements CreditCardDAO {
                 cc.setMonth(month);
 
             }
+            rsObj.close();
+            dbDisconnect();
         } catch (SQLException e) {
             System.out.println("Not inserted. " + e);
         }
@@ -99,23 +101,16 @@ public class JDBCCreditCardDAO implements CreditCardDAO {
             rsObj = stmtObj.executeQuery();
 
             if (rsObj.next()) {
-                int cc_id = rsObj.getInt("id");
-                System.out.println(cc_id);
+                cc.setId(rsObj.getInt("id"));
                 user = userDAO.find(userId);
-                System.out.println("text");
-                //long number = rsObj.getLong("number");
-                //int year=rsObj.getInt("expiration_year");
-                //int month=rsObj.getInt("expiration_month");
-                //int cvc = rsObj.getInt("securitycode");
-                cc = new CreditCard();
-                 cc.setId(cc_id);
                 cc.setUser(user);
-                //cc.setNumber(number);
-                //cc.setSecurityCode(cvc);
-                //cc.setYear(year);
-                //cc.setMonth(month);
-
+                cc.setNumber(rsObj.getLong("number"));
+                cc.setMonth(rsObj.getInt("expiration_month"));
+                cc.setYear(rsObj.getInt("expiration_year"));
+                cc.setSecurityCode(rsObj.getInt("securitycode"));
             }
+            rsObj.close();
+            dbDisconnect();
         } catch (SQLException e) {
             System.out.println("Not inserted. " + e);
         }
