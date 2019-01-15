@@ -43,22 +43,6 @@
             }
             ;
             function check_credit_data() {
-                if ($("#name_credit").val() == "") {
-                    alert("Falta el titular");
-                    return false;
-                }
-                if ($("#number_credit").val() == "") {
-                    alert("Falta el numero de tarjeta de credito");
-                    return false;
-                }
-                if ($("#month").val() == "" || $("#year").val() == "") {
-                    alert("Falta el mes y/o año");
-                    return false;
-                }
-                if ($("#cvc").val() == "") {
-                    alert("Falta el numero cvc");
-                    return false;
-                }
                 if (!mc_cardnumber() && !visa_cardnumber()) {
                     alert("Numero de tarjeta de credito no valido");
                     return false;
@@ -69,57 +53,61 @@
         </script>
     </head>
     <body>
-    <%
-    //allow access only if session exists
-    if(session.getAttribute("sessionUserId") == null){
-            response.sendRedirect("loginController?operation=myacount");
-    }
-    %>
+        <%
+            //allow access only if session exists
+            if (session.getAttribute("sessionUserId") == null) {
+                response.sendRedirect("loginController?operation=myacount");
+            }
+        %>
         <div id="wrapper">
             <header>
                 <div class="container">
                     <h1>Air Alcala</h1>
                 </div>
             </header>
-      <nav class="navbar navbar-default">
-        <div class="container-fluid">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="#">AirAlcalá</a>
-        </div>
-        <ul class="nav navbar-nav">
-            <%if(session.getAttribute("sessionAdminId") != null || (session.getAttribute("sessionUserId") != null && session.getAttribute("sessionAdminId") != null)){ %>
-                <li class="active"><a href="userController?operation=list">Usarios</a></li>
-                <li class="active"><a href="administratorController?operation=list">Administradores</a></li>
-                <li class="active"><a href="airplaneController?operation=list">Aviones</a></li>
-                <li class="active"><a href="airportController?operation=list">Aeropuertos</a></li>
-                <li class="active"><a href="flightController?operation=list">Vuelos</a></li>        
-                <li class="active"><a href="routeController?operation=list">Rutas</a></li>        
-                <li class="active"><a href="saleController?operation=overview">Estadísticas</a></li>    <!-- aún no existe, hay que crearlo y calcular las estadísticas en el Controlador (GET) -->
-            <%} if(session.getAttribute("sessionUserId") != null && !(session.getAttribute("sessionUserId") != null && session.getAttribute("sessionAdminId") != null)){%>
-                <li class="active"><a href="index.html">Buscar Vuelos</a></li>
-                <li class="active"><a href="saleController?operation=list&userId=<%=session.getAttribute("sessionUserId")%>">Mirar Compras</a></li>
-                <li class="active"><a href="creditcardController?operation=edit&userId=<%=session.getAttribute("sessionUserId")%>">Editar Medios de Pago</a></li>
-            <%} if(session.getAttribute("sessionUserId") == null && session.getAttribute("sessionAdminId") == null){ %>
-                <li class="active"><a href="index.jsp">Inicio</a></li>
-                <li class="active"><a href="userController?operation=add">Crear Cuenta</a></li>
-            <%}%>
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
-            <%if(session.getAttribute("sessionAdminId") != null || (session.getAttribute("sessionUserId") != null && session.getAttribute("sessionAdminId") != null)){ %>
-                <li><a href="administratorController?operation=view&adminId=<%=session.getAttribute("sessionAdminId")%>">
-                        <span class="glyphicon glyphicon-user"></span><%=session.getAttribute("sessionAdminPname")%></a></li>
-                <li><a href="adminlogoutController"><span class="glyphicon glyphicon-log-out"></span>Admin Logout</a></li>
-            <%} if(session.getAttribute("sessionUserId") != null && !(session.getAttribute("sessionUserId") != null && session.getAttribute("sessionAdminId") != null)){%>
-                <li><a href="userController?operation=view&userId=<%=session.getAttribute("sessionUserId")%>">
-                        <span class="glyphicon glyphicon-user"></span><%=session.getAttribute("sessionUserPname")%></a></li>
-                <li><a href="logoutController"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
-            <%} if(session.getAttribute("sessionUserId") == null && session.getAttribute("sessionAdminId") == null){%>
-                <li><a href="loginController"><span class="glyphicon glyphicon-log-out">
-                    </span>Login</a></li>
-            <% } %>
-        </ul>
-      </div>
-    </nav>
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="#">AirAlcalá</a>
+                    </div>
+                    <ul class="nav navbar-nav">
+                        <%if (session.getAttribute("sessionAdminId") != null || (session.getAttribute("sessionUserId") != null && session.getAttribute("sessionAdminId") != null)) { %>
+                        <li class="active"><a href="userController?operation=list">Usarios</a></li>
+                        <li class="active"><a href="administratorController?operation=list">Administradores</a></li>
+                        <li class="active"><a href="airplaneController?operation=list">Aviones</a></li>
+                        <li class="active"><a href="airportController?operation=list">Aeropuertos</a></li>
+                        <li class="active"><a href="flightController?operation=list">Vuelos</a></li>        
+                        <li class="active"><a href="routeController?operation=list">Rutas</a></li>        
+                        <li class="active"><a href="saleController?operation=overview">Estadísticas</a></li>    <!-- aún no existe, hay que crearlo y calcular las estadísticas en el Controlador (GET) -->
+                            <%}
+                                if (session.getAttribute("sessionUserId") != null && !(session.getAttribute("sessionUserId") != null && session.getAttribute("sessionAdminId") != null)) {%>
+                        <li class="active"><a href="index.html">Buscar Vuelos</a></li>
+                        <li class="active"><a href="saleController?operation=list&userId=<%=session.getAttribute("sessionUserId")%>">Mirar Compras</a></li>
+                        <li class="active"><a href="creditcardController?operation=edit&userId=<%=session.getAttribute("sessionUserId")%>">Editar Medios de Pago</a></li>
+                            <%}
+                                if (session.getAttribute("sessionUserId") == null && session.getAttribute("sessionAdminId") == null) { %>
+                        <li class="active"><a href="index.jsp">Inicio</a></li>
+                        <li class="active"><a href="userController?operation=add">Crear Cuenta</a></li>
+                            <%}%>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <%if (session.getAttribute("sessionAdminId") != null || (session.getAttribute("sessionUserId") != null && session.getAttribute("sessionAdminId") != null)) {%>
+                        <li><a href="administratorController?operation=view&adminId=<%=session.getAttribute("sessionAdminId")%>">
+                                <span class="glyphicon glyphicon-user"></span><%=session.getAttribute("sessionAdminPname")%></a></li>
+                        <li><a href="adminlogoutController"><span class="glyphicon glyphicon-log-out"></span>Admin Logout</a></li>
+                            <%}
+                                if (session.getAttribute("sessionUserId") != null && !(session.getAttribute("sessionUserId") != null && session.getAttribute("sessionAdminId") != null)) {%>
+                        <li><a href="userController?operation=view&userId=<%=session.getAttribute("sessionUserId")%>">
+                                <span class="glyphicon glyphicon-user"></span><%=session.getAttribute("sessionUserPname")%></a></li>
+                        <li><a href="logoutController"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                            <%}
+                                if (session.getAttribute("sessionUserId") == null && session.getAttribute("sessionAdminId") == null) {%>
+                        <li><a href="loginController"><span class="glyphicon glyphicon-log-out">
+                                </span>Login</a></li>
+                                <% }%>
+                    </ul>
+                </div>
+            </nav>
             <br>
             <div class="container">
                 <h2>Editar Tarjeta de Cr&eacute;dito</h2>
@@ -128,20 +116,20 @@
                     <input type="hidden" name="id" value="${creditCard.id}" />
                     <div class="form-group">
                         <label for="name_credit">Nombre del titular</label>
-                        <input type="text" id="name_credit" class="form-control">
+                        <input type="text" id="name_credit" class="form-control" required pattern="[A-zÀ-ž\s]{1,}">
                     </div>
                     <div class="form-group">
-                        <input type="number" id="number" class="form-control" placeholder="${creditCard.number}">
+                        <input type="number" id="number" class="form-control" placeholder="${creditCard.number}" required>
                     </div>    
                     <div class="form-group col-xs-2">
-                        <input type="number" id="month" class="form-control" placeholder="${creditCard.month}" min="1" max="12">
+                        <input type="number" id="month" class="form-control" placeholder="${creditCard.month}" min="1" max="12" required>
                         <!--1-12 Range-->
                         <br>
-                        <input type="number" id="year" class="form-control" placeholder="${creditCard.year}" min="2019" >
+                        <input type="number" id="year" class="form-control" placeholder="${creditCard.year}" min="2019" required>
                         <!--+19 Range-->
                     </div>    
                     <div class="form-group" >
-                        <input type="number" id="cvc" class="form-control" placeholder="${creditCard.securityCode}" min="1" max="999">
+                        <input type="number" id="cvc" class="form-control" placeholder="${creditCard.securityCode}" min="1" max="999" required>
                         <!--3 digits Range-->
                     </div> 
                     <button type="submit" class="btn btn-primary">Env&iacute;o</button>

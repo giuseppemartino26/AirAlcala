@@ -24,14 +24,6 @@ and open the template in the editor.
             function check_data() {
                 var dNow = new Date();
                 var date = new Date($("#departure_date").val());
-                if ($("#source").val() == "") {
-                    alert("Falta el origen del vuelo");
-                    return false;
-                }
-                if ($("#destination").val() == "") {
-                    alert("Falta el destino del vuelo");
-                    return false;
-                }
                 if (dNow > date) {  /*cant pick today */
                     alert("Fecha de salida invalida");
                     return false;
@@ -73,20 +65,20 @@ and open the template in the editor.
                 <form method="POST" action="searchController" class="form-container" onsubmit="return check_data()">
                     <div class="form-group">
                         <label for="source" class="control-label">Origen</label>
-                        <input type="text" id="source" name= "source" class="form-control"> 
+                        <input type="text" id="source" name= "source" class="form-control" required pattern="[A-zÀ-ž\s]{1,}" > 
                     </div>
                     <div class="form-group">
                         <label for="destination">Destino</label>
-                        <input type="text" id="destination" name="destination" class="form-control">
+                        <input type="text" id="destination" name="destination" class="form-control" required pattern="[A-zÀ-ž\s]{1,}" >
                     </div>
                     <div class="form-group">
                         <label for="departure_date">Fecha de Salida</label>
-                        <input type="date" id="departure_date" class="form-control"> 
+                        <input type="date" id="departure_date" class="form-control" required> 
                     </div>
                     <div class="form-group">
                         <!--Only 5 passengers with you-->
                         <label for="passengers">Pasajeros</label>
-                        <select class="form-control" name="passengers" id="passengers">
+                        <select class="form-control" name="passengers" id="passengers" required>
                             <option value="1">1 pasajero</option>
                             <option value="2">2 pasajeros</option>
                             <option value="3">3 pasajeros</option>
@@ -96,18 +88,18 @@ and open the template in the editor.
                     </div>
                     <div class="form-group">
                         <label for="class">Clase</label>
-                        <select class="form-control" name="" id="class">
+                        <select class="form-control" name="flyclass" id="class" required>
                             <option value="economy">Turista</option>
                             <option value="first">Primera</option>
                         </select>
                     </div>
                     <label for="round_trip">Ida/Vuelta</label>
-                    <input type="checkbox" name="" id="round_trip"><br>
+                    <input type="checkbox" name="ida_vuelta" id="round_trip"><br>
 
                     <!--hide until you check round_trip-->
                     <div class="form-group" id="div_departure_2" style="display:none">  
                         <label for="departure_date_2" id="label_date_2" >Fecha de salida del vuelo de vuelta</label>
-                        <input type="date" name="" id="departure_date_2" class="form-control">
+                        <input type="date" name="departure_date_2" id="departure_date_2" class="form-control">
                     </div>
 
                     <button type="submit" class="btn btn-secondary"><span class="glyphicon glyphicon-search"></span> Buscar</button>
