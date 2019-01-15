@@ -28,7 +28,7 @@
         response.sendRedirect("userController?operation=list");
     }
     if(session.getAttribute("sessionUserId") != null && !(session.getAttribute("sessionUserId") != null && session.getAttribute("sessionAdminId") != null)){
-         response.sendRedirect("flightController?operation=search");
+         response.sendRedirect("Pay_data.jsp");
     }
 %>
         <div id="wrapper">

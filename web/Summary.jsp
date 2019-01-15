@@ -42,12 +42,8 @@
             }
     </style>
     <script>
-        $(document).ready(function () {
-            var round_trip=true; /*round_trip=<%=session.getAttribute("Roundtrip")%>*/
-            if(round_trip){
-                $("#departure_2").toggle();
-            };
-        });     
+        
+    
     </script>
 </head>
 <body>
@@ -72,27 +68,27 @@
             </tr>
             <tr>
                 <td>Origen</td>
-                <td><%=session.getAttribute("Origin")%></td><!---->
+                <td><%=session.getAttribute("origin")%></td><!---->
             </tr>
             <tr>
                 <td>Destino</td>
-                <td><%=session.getAttribute("Destination")%></td><!---->
+                <td><%=session.getAttribute("destination")%></td><!---->
             </tr>
             <tr>
                 <td>Fecha Ida</td>
                 <td><%=session.getAttribute("Departure_date")%></td><!---->
             </tr>
-            <tr style="display:none" id="departure_2">
+            <!--<tr style="display:none" id="departure_2">
                 <td>Fecha Vuelta</td>
-                <td>Departure 2</td><!--<%=session.getAttribute("Departure_2")%>-->
-            </tr>
+                <td>Departure 2</td><%=session.getAttribute("Departure_2")%>
+            </tr>-->
             <tr>
                 <td>N&uacute;mero de pasajeros</td>
-                <td>Passengers</td><!--<%=session.getAttribute("Passengers")%>-->
+                <td><%=session.getAttribute("passengers")%></td><!---->
             </tr>
             <tr>
                 <td>Precio</td>
-                <td><%=session.getAttribute("Price")%></td><!---->
+                <td><%=session.getAttribute("price")%></td><!---->
             </tr>
         </table>
     </div>

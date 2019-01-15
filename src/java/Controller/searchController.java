@@ -44,11 +44,12 @@ public class searchController extends HttpServlet {
        int passengers = Integer.parseInt(req.getParameter("passengers"));
        s.setAttribute("origin", origin);
        s.setAttribute("destination", destination);
+       s.setAttribute("passengers", passengers);
        ArrayList<Route> routes= routeDAO.findRoute(origin, destination, passengers);
-       //System.out.println(routes.toString());
+       System.out.println(routes.toString());
        ArrayList<Flight> allFlights =new ArrayList();
        for (int i = 0; i < routes.size(); i++) {
-            ArrayList<Flight> flights = flightDAO.findFlights(routes.get(i).getId());
+            ArrayList<Flight> flights = flightDAO.findFlights(routes.get(i));
             System.out.println(flights.toString());
             allFlights.addAll(flights);
         }

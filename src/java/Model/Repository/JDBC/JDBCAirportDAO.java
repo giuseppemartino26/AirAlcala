@@ -192,11 +192,11 @@ public class JDBCAirportDAO implements AirportDAO {
     @Override
     public Airport findName(String name) {
         Airport airport = null;
-        String query = "SELECT * FROM airports WHERE name = ?";
+        String query = "SELECT * FROM airports WHERE name = '"+name+"'";
         try {
             connObj = dbConnect();
             stmtObj = connObj.prepareStatement(query);
-            stmtObj.setString(1, "'" + name + "'");
+            //stmtObj.setString(1, "'" + name + "'");
             rsObj = stmtObj.executeQuery();
 
             if (rsObj.next()) {

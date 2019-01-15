@@ -54,21 +54,22 @@ public class JDBCFlightDAO implements FlightDAO {
     public Flight find(int id) {
         Flight flight = new Flight();
         Route route = new Route();
-        String query = "SELECT * FROM flight WHERE id = ?";
+        String query = "SELECT * FROM flights WHERE id = ?";
         try {
             connObj = dbConnect();
             stmtObj = connObj.prepareStatement(query);
             stmtObj.setInt(1, id);
             rsObj = stmtObj.executeQuery();
+            if (rsObj.next()) {
+                RouteDAO routeDAO = new JDBCRouteDAO();
+                route = routeDAO.find(rsObj.getInt("route_id"));
 
-            RouteDAO routeDAO = new JDBCRouteDAO();
-            route = routeDAO.find(rsObj.getInt("route_id"));
-
-            flight.setId(rsObj.getInt("id"));
-            flight.setLocator(rsObj.getString("locator"));
-            flight.setRoute(route);
-            flight.setDeparture(rsObj.getDate("departure"));
-            flight.setArrival(rsObj.getDate("arrival"));
+                flight.setId(rsObj.getInt("id"));
+                flight.setLocator(rsObj.getString("locator"));
+                flight.setRoute(route);
+                flight.setDeparture(rsObj.getDate("departure"));
+                flight.setArrival(rsObj.getDate("arrival"));
+            }
 
             dbDisconnect();
         } catch (SQLException e) {
@@ -188,20 +189,17 @@ public class JDBCFlightDAO implements FlightDAO {
     }
 
     @Override
-    public ArrayList<Flight> findFlights(int routeId) {
+    public ArrayList<Flight> findFlights(Route route) {
         ArrayList<Flight> flightList = new ArrayList<>();
         String query = "SELECT * FROM flights WHERE route_id = ?";
         try {
             connObj = dbConnect();
             stmtObj = connObj.prepareStatement(query);
-            stmtObj.setInt(1, routeId);
+            stmtObj.setInt(1, route.getId());
             rsObj = stmtObj.executeQuery();
-            
 
             while (rsObj.next()) {
                 Flight flight = new Flight();
-                RouteDAO routeDAO = new JDBCRouteDAO();
-                Route route = routeDAO.find(rsObj.getInt("route_id"));
 
                 flight.setId(rsObj.getInt("id"));
                 flight.setLocator(rsObj.getString("locator"));

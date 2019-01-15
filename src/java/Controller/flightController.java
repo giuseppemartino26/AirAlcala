@@ -120,7 +120,6 @@ public class flightController extends HttpServlet {
                 RequestDispatcher view = req.getRequestDispatcher("viewFlight.jsp");
                 req.setAttribute("flight", flight);
                 view.forward(req, res);
-                res.sendRedirect(res.encodeRedirectURL("viewFlight.jsp"));
             }
         }
         // This is the "edit flight" case
@@ -132,7 +131,6 @@ public class flightController extends HttpServlet {
                 RequestDispatcher view = req.getRequestDispatcher("viewFlight.jsp");
                 req.setAttribute("flight", flight);
                 view.forward(req, res);
-                res.sendRedirect(res.encodeRedirectURL("viewFlight.jsp"));
             }
         }
     }

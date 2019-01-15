@@ -105,7 +105,6 @@ public class airplaneController extends HttpServlet {
                 RequestDispatcher view = req.getRequestDispatcher("viewAirplane.jsp");
                 req.setAttribute("airplane", airplane);
                 view.forward(req, res);
-                res.sendRedirect(res.encodeRedirectURL("viewAirplane.jsp"));
             }
         }
         // This is the "edit user" case
@@ -117,7 +116,6 @@ public class airplaneController extends HttpServlet {
                 RequestDispatcher view = req.getRequestDispatcher("viewAirplane.jsp");
                 req.setAttribute("airplane", airplane);
                 view.forward(req, res);
-                res.sendRedirect(res.encodeRedirectURL("viewAirplane.jsp"));
             }
         }
     }

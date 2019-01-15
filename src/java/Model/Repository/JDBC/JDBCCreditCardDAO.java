@@ -56,7 +56,7 @@ public class JDBCCreditCardDAO implements CreditCardDAO {
     public CreditCard find(int id) {
         CreditCard cc = null;
         userDAO = new JDBCUserDAO();
-        String query = "SELECT * FROM creditcard WHERE id = ?";
+        String query = "SELECT * FROM creditcards WHERE id = ?";
         try {
             connObj = dbConnect();
             stmtObj = connObj.prepareStatement(query);
@@ -67,15 +67,17 @@ public class JDBCCreditCardDAO implements CreditCardDAO {
                 int cc_id = rsObj.getInt("id");
                 int userId = rsObj.getInt("user_id");
                 user = userDAO.find(userId);
-                int number = rsObj.getInt("number");
-                java.sql.Date expiration = rsObj.getDate("expiration");
+                long number = rsObj.getLong("number");
+                int year=rsObj.getInt("expiration_year");
+                int month=rsObj.getInt("expiration_month");
                 int cvc = rsObj.getInt("securitycode");
                 cc = new CreditCard();
                 cc.setId(cc_id);
                 cc.setUser(user);
                 cc.setNumber(number);
                 cc.setSecurityCode(cvc);
-                cc.setExpiration(expiration);
+                cc.setYear(year);
+                cc.setMonth(month);
 
             }
         } catch (SQLException e) {
@@ -84,10 +86,12 @@ public class JDBCCreditCardDAO implements CreditCardDAO {
         return cc;
     }
 
+    @Override
     public CreditCard findByUserId(int userId) {
         CreditCard cc = null;
         userDAO = new JDBCUserDAO();
-        String query="SELECT * FROM creditcard WHERE user_id = ?";
+        String query="SELECT * FROM creditcards WHERE user_id = ?";
+        System.out.println("text");
         try {
             connObj = dbConnect();
             stmtObj = connObj.prepareStatement(query);
@@ -96,16 +100,20 @@ public class JDBCCreditCardDAO implements CreditCardDAO {
 
             if (rsObj.next()) {
                 int cc_id = rsObj.getInt("id");
+                System.out.println(cc_id);
                 user = userDAO.find(userId);
-                int number = rsObj.getInt("number");
-                java.sql.Date expiration = rsObj.getDate("expiration");
-                int cvc = rsObj.getInt("securitycode");
+                System.out.println("text");
+                //long number = rsObj.getLong("number");
+                //int year=rsObj.getInt("expiration_year");
+                //int month=rsObj.getInt("expiration_month");
+                //int cvc = rsObj.getInt("securitycode");
                 cc = new CreditCard();
                  cc.setId(cc_id);
                 cc.setUser(user);
-                cc.setNumber(number);
-                cc.setSecurityCode(cvc);
-                cc.setExpiration(expiration);
+                //cc.setNumber(number);
+                //cc.setSecurityCode(cvc);
+                //cc.setYear(year);
+                //cc.setMonth(month);
 
             }
         } catch (SQLException e) {
@@ -118,16 +126,17 @@ public class JDBCCreditCardDAO implements CreditCardDAO {
         boolean inserted = false;
         int insertedId=0;
         
-        String query="INSERT INTO creditcard (id, user_id, number, expiration, securitycode)"
+        String query="INSERT INTO creditcards (user_id, number, expiration_year, expiration_month, securitycode)"
                 +"VALUES (?,?,?,?,?)";
         
         try {
             connObj=dbConnect();
             stmtObj= connObj.prepareStatement(query);
-            stmtObj.setInt(1, creditCard.getId());
-            stmtObj.setInt(2, creditCard.getUser().getId());
-            stmtObj.setInt(3, creditCard.getNumber());
-            stmtObj.setDate(4, (java.sql.Date) creditCard.getExpiration());
+            //stmtObj.setInt(1, creditCard.getId());
+            stmtObj.setInt(1, creditCard.getUser().getId());
+            stmtObj.setLong(2, creditCard.getNumber());
+            stmtObj.setInt(3, creditCard.getYear());
+            stmtObj.setInt(4, creditCard.getMonth());
             stmtObj.setInt(5, creditCard.getSecurityCode());
             
             insertedId=stmtObj.executeUpdate();
@@ -146,17 +155,18 @@ public class JDBCCreditCardDAO implements CreditCardDAO {
     public boolean update(CreditCard creditCard) {
         boolean updated=false;
         int updatedId=0;
-        String query = "UPDATE creditcard SET user_id= ?, number= ?, expiration= ?, "
-                +"securitycode= ? WHERE id = ?";
+        String query = "UPDATE creditcards SET user_id= ?, number= ?, expiration_year= ?, "
+                +"expiration_month= ?, securitycode= ? WHERE id = ?";
         
         try {
             connObj = dbConnect();
             stmtObj = connObj.prepareStatement(query);
             stmtObj.setInt(1, creditCard.getUser().getId());
-            stmtObj.setInt(2, creditCard.getNumber());
-            stmtObj.setDate(3, (java.sql.Date) creditCard.getExpiration());
-            stmtObj.setInt(4, creditCard.getSecurityCode());
-            stmtObj.setInt(5, creditCard.getId());
+            stmtObj.setLong(2, creditCard.getNumber());
+            stmtObj.setInt(3, creditCard.getYear());
+            stmtObj.setInt(4, creditCard.getMonth());
+            stmtObj.setInt(5, creditCard.getSecurityCode());
+            stmtObj.setInt(6, creditCard.getId());
             
             updatedId=stmtObj.executeUpdate();
             
@@ -174,7 +184,7 @@ public class JDBCCreditCardDAO implements CreditCardDAO {
     public boolean delete(int id) {
         boolean deleted = false;
         int deletedId = 0;
-        String query = "DELETE FROM creditcard WHERE id=?";
+        String query = "DELETE FROM creditcards WHERE id=?";
         try{
             connObj=dbConnect();
             stmtObj=connObj.prepareStatement(query);

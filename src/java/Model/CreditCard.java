@@ -15,8 +15,7 @@ public class CreditCard {
 
     private int id;
     private User user;
-    private int number;
-    private java.sql.Date expiration;
+    private long number;
     private int securityCode;
     private int month;
     private int year;
@@ -40,20 +39,12 @@ public class CreditCard {
         this.user = user;
     }
 
-    public int getNumber() {
+    public long getNumber() {
         return number;
     }
 
-    public void setNumber(int number) {
+    public void setNumber(long number) {
         this.number = number;
-    }
-
-    public java.sql.Date getExpiration() {
-        return expiration;
-    }
-
-    public void setExpiration(java.sql.Date expiration) {
-        this.expiration = expiration;
     }
 
     public int getSecurityCode() {
@@ -62,6 +53,22 @@ public class CreditCard {
 
     public void setSecurityCode(int securityCode) {
         this.securityCode = securityCode;
+    }
+
+    public int getMonth() {
+        return month;
+    }
+
+    public void setMonth(int month) {
+        this.month = month;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
     }
 
 }

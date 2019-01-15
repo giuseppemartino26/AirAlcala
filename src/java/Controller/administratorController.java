@@ -105,7 +105,6 @@ public class administratorController extends HttpServlet {
                 RequestDispatcher view = req.getRequestDispatcher("viewAdmin.jsp");
                 req.setAttribute("admin", admin);
                 view.forward(req, res);
-                res.sendRedirect(res.encodeRedirectURL("viewAdmin.jsp"));
             }
         }
         // This is the "edit user" case
@@ -117,7 +116,6 @@ public class administratorController extends HttpServlet {
                 RequestDispatcher view = req.getRequestDispatcher("viewAdmin.jsp");
                 req.setAttribute("admin", admin);
                 view.forward(req, res);
-                res.sendRedirect(res.encodeRedirectURL("viewAdmin.jsp"));
             }
         }
     }

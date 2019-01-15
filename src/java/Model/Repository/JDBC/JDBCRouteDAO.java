@@ -59,25 +59,25 @@ public class JDBCRouteDAO implements RouteDAO {
             stmtObj = connObj.prepareStatement(query);
             stmtObj.setInt(1, id);
             rsObj = stmtObj.executeQuery();
+            if (rsObj.next()) {
+                /*RouteDAO routeDAO = new JDBCRouteDAO();
+                route = routeDAO.find(rsObj.getInt("id"));*/
 
-            RouteDAO routeDAO = new JDBCRouteDAO();
-            route = routeDAO.find(rsObj.getInt("id"));
+                AirplaneDAO planeDAO = new JDBCAirplaneDAO();
+                Airplane plane = planeDAO.find(rsObj.getInt("airplane_id"));
 
-            AirplaneDAO planeDAO = new JDBCAirplaneDAO();
-            Airplane plane = planeDAO.find(rsObj.getInt("airplane_id"));
+                AirportDAO airportDAO = new JDBCAirportDAO();
+                Airport origin = airportDAO.findName(rsObj.getString("origin"));
+                Airport destination = airportDAO.findName(rsObj.getString("destination"));
 
-            AirportDAO airportDAO = new JDBCAirportDAO();
-            Airport origin = airportDAO.findName(rsObj.getString("origin"));
-            Airport destination = airportDAO.findName(rsObj.getString("destination"));
-
-            route.setId(rsObj.getInt("id"));
-            route.setOrigin(origin);
-            route.setDestination(destination);
-            route.setPlane(plane);
-            route.setTicketPrice(rsObj.getInt("ticketprice"));
-            route.setLuggagePrice(rsObj.getInt("luggageprice"));
-            route.setTax(rsObj.getDouble("tax"));
-
+                route.setId(rsObj.getInt("id"));
+                route.setOrigin(origin);
+                route.setDestination(destination);
+                route.setPlane(plane);
+                route.setTicketPrice(rsObj.getInt("ticketprice"));
+                route.setLuggagePrice(rsObj.getInt("luggageprice"));
+                route.setTax(rsObj.getDouble("tax"));
+            }
             dbDisconnect();
         } catch (SQLException e) {
             System.out.println("Not inserted. " + e);
@@ -208,12 +208,12 @@ public class JDBCRouteDAO implements RouteDAO {
     @Override
     public ArrayList<Route> findRoute(String origin, String destination, int passengers) {
         ArrayList<Route> routeList = new ArrayList<Route>();
-        String query = "SELECT * FROM routes WHERE origin = ? AND destination = ?";
+        String query = "SELECT * FROM routes WHERE origin = '" + origin + "' AND destination = '" + destination + "'";
         try {
             connObj = dbConnect();
             stmtObj = connObj.prepareStatement(query);
-            stmtObj.setString(1, "'"+origin+"'");
-            stmtObj.setString(2, "'"+destination+"'");
+            //stmtObj.setString(1, "'"+origin+"'");
+            //stmtObj.setString(2, "'"+destination+"'");
             rsObj = stmtObj.executeQuery();
             while (rsObj.next()) {
                 Route route = new Route();

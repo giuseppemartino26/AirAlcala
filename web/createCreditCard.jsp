@@ -54,7 +54,7 @@
             <%} if(session.getAttribute("sessionUserId") != null && !(session.getAttribute("sessionUserId") != null && session.getAttribute("sessionAdminId") != null)){%>
                 <li class="active"><a href="flightController?operation=search">Buscar Vuelos</a></li>
                 <li class="active"><a href="salesController?operation=list&userId=<%=session.getAttribute("sessionUserId")%>">Mirar Compras</a></li>
-                <li class="active"><a href="creditcardController?operation=list">Editar Medios de Pago</a></li>
+                <li class="active"><a href="creditcardController?operation=view&userId=<%=session.getAttribute("sessionUserId")%>">Editar Medios de Pago</a></li>
             <%} if(session.getAttribute("sessionUserId") == null && session.getAttribute("sessionAdminId") == null){ %>
                 <li class="active"><a href="index.jsp">Inicio</a></li>
                 <li class="active"><a href="userController?operation=add">Crear Cuenta</a></li>
@@ -81,23 +81,23 @@
                 <h2>Crear Tarjeta de Cr&eacute;dito</h2>
                 <br>
                 
-                <form method="POST" action="creditCardController" class="form-container" onsubmit="check_credit_data()">
+                <form method="POST" action="creditcardController" class="form-container" onsubmit="check_credit_data()">
                     <div class="form-group">
                         <label for="name_credit">Nombre del titular</label>
                         <input type="text" id="name_credit" class="form-control">
                     </div>
                     <div class="form-group">
-                        <input type="number" id="number" class="form-control" placeholder="Numeros de tarjeta de crédito">
+                        <input type="number" name="number" id="number" class="form-control" placeholder="Numeros de tarjeta de crédito">
                     </div>    
                     <div class="form-group col-xs-2">
-                        <input type="number" id="month" class="form-control" placeholder="mm" min="1" max="12">
+                        <input type="number" name="month" id="month" class="form-control" placeholder="mm" min="1" max="12">
                         <!--1-12 Range-->
                         <br>
-                        <input type="number" id="year" class="form-control" placeholder="yy" min="2019" >
+                        <input type="number" name="year" id="year" class="form-control" placeholder="yy" min="2019" >
                         <!--+19 Range-->
                     </div>    
                     <div class="form-group" >
-                        <input type="number" id="cvc" class="form-control" placeholder="cvc" min="1" max="999">
+                        <input type="number" name="cvc" id="cvc" class="form-control" placeholder="cvc" min="1" max="999">
                         <!--3 digits Range-->
                     </div> 
                     <button type="submit" class="btn btn-primary">Env&iacute;o</button>

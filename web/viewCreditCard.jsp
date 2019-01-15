@@ -29,7 +29,7 @@
 <body>
      <%
     //allow access only if session exists
-    if(session.getAttribute("sessionAdminId") == null){
+    if(session.getAttribute("sessionUserId") == null){
             response.sendRedirect("loginController");
     }
     %>
@@ -90,7 +90,7 @@
         </div>
 
         <br>
-        <table class="table table-striped" style="width:100%">
+        <!--<table class="table table-striped" style="width:100%">
             <tr>
                 <th>Id</td> 
                     <td>${creditCard.id}</td>
@@ -113,13 +113,13 @@
             </tr>
             <tr>
                 <th>Fecha de Expiraci&oacute;n</th>
-                    <td>${creditCard.expiration}</td>
+                    <td>${creditCard.year}</td>
             </tr>
             <tr>
                 <th>CVC</th>
                     <td>${creditCard.securityCode}</td>
             </tr>
-        </table>
+        </table>-->
     </div>
 </div>
     <footer>

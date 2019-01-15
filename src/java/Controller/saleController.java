@@ -33,6 +33,7 @@ import javax.servlet.http.HttpSession;
  * @author pablo
  */
 public class saleController extends HttpServlet {
+
     private Sale sale;
     private Flight flight;
     private User user;
@@ -42,7 +43,7 @@ public class saleController extends HttpServlet {
     private UserDAO userDAO;
     private CreditCardDAO creditCardDAO;
 
-    public void init(ServletConfig cfg) throws ServletException{
+    public void init(ServletConfig cfg) throws ServletException {
         saleDAO = new JDBCSaleDAO();
         userDAO = new JDBCUserDAO();
         flightDAO = new JDBCFlightDAO();
@@ -51,16 +52,15 @@ public class saleController extends HttpServlet {
 
     /*We only need a list of sales because the sales dont edit or delete only  
         we just need to see them*/
-     
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        
+
         ArrayList<Sale> saleList;
-        
+
         saleList = saleDAO.findAll();
-        
+
         req.setAttribute("saleList", saleList);
-        
+
         RequestDispatcher view = req.getRequestDispatcher("Web Pages/listSales.jsp");
         view.forward(req, resp);
     }
@@ -69,48 +69,45 @@ public class saleController extends HttpServlet {
     userId, flight id, Place, NoLuggage, CreditCardId and the price of the buy with sessions*/
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HttpSession s =req.getSession(true);
+        HttpSession s = req.getSession(true);
         //get userId and flightId from sessions that we save in login (userId) and selectFlight(flightId) ...
         // with session.setAtribute on the jsp pages
-        int userId = (int) s.getAttribute("userId");
+        int userId = (int) s.getAttribute("sessionUserId");
         int flightId = (int) s.getAttribute("flightId");
-        String place = (String)s.getAttribute("place");
-        int luggage = (int)s.getAttribute("luggage");
-        int creditCardId = (int)s.getAttribute("creditCardId");
-        double price = (double)s.getAttribute("price");
+        String place = (String) s.getAttribute("origin");
+        int luggage = (int) s.getAttribute("passengers");
+        int creditCardId = 1; //(int)s.getAttribute("creditCardId");
+        double price = (double) s.getAttribute("price");
         boolean success = false;
-        
+
         user = userDAO.find(userId);
         flight = flightDAO.find(flightId);
         creditCard = creditCardDAO.find(creditCardId);
-        
-        sale =  new Sale();
+
+        sale = new Sale();
         sale.setFlight(flight);
         sale.setUser(user);
         sale.setPlace(place);
         sale.setNoLuggage(luggage);
         sale.setCreditCard(creditCard);
         sale.setPrice(price);
-        
-        s.setAttribute("saleID", sale.getId());
-        s.setAttribute("Origin", flight.getRoute().getOrigin().getName());
-        s.setAttribute("Destination", flight.getRoute().getDestination().getName());
+
         s.setAttribute("Departure_date", flight.getDeparture());
         success = saleDAO.insert(sale);
-        if(success){
-            s.setAttribute("success", true);
-        }else{
-            s.setAttribute("success", false);
+        s.setAttribute("saleID", sale.getId());
+        if (success) {
+            resp.sendRedirect("Summary.jsp");
+        } else {
+            RequestDispatcher view = req.getRequestDispatcher("index.html");
+            PrintWriter out = resp.getWriter();
+            out.println("<font color=red>En el proceso de compra se ha producido un error vuelva a intentarlo</font>");
+            view.forward(req, resp);
         }
-        resp.sendRedirect("/Web pages/Summaty.jsp");
     }
 
     @Override
     public void destroy() {
         super.destroy(); //To change body of generated methods, choose Tools | Templates.
     }
-   
-    
-      
-    
+
 }

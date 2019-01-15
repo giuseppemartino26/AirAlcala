@@ -16,7 +16,6 @@ import Model.Repository.UserDAO;
 import Model.User;
 import java.util.ArrayList;
 
-
 /**
  *
  * @author fabri
@@ -26,7 +25,7 @@ public class JDBCSaleDAO implements SaleDAO {
     private static Connection connObj;
     private static PreparedStatement stmtObj;
     private static ResultSet rsObj;
-    
+
     private Connection dbConnect() {
         try {
             Class.forName("org.apache.derby.jdbc.ClientDriver");
@@ -38,15 +37,15 @@ public class JDBCSaleDAO implements SaleDAO {
         }
         return connObj;
     }
-    
+
     public static void dbDisconnect() {
-	try {
-            rsObj.close();
+        try {
+            //rsObj.close();
             stmtObj.close();
             connObj.close();
-	} catch (Exception exObj) {
+        } catch (Exception exObj) {
             exObj.printStackTrace();
-        }		
+        }
     }
 
     @Override
@@ -58,51 +57,51 @@ public class JDBCSaleDAO implements SaleDAO {
             stmtObj = connObj.prepareStatement(query);
             stmtObj.setInt(1, id);
             rsObj = stmtObj.executeQuery();
-            
-            FlightDAO flightDAO = new JDBCFlightDAO();
-            Flight flight = flightDAO.find(rsObj.getInt("flight_id"));
-            
-            UserDAO userDAO = new JDBCUserDAO();
-            User user = userDAO.find(rsObj.getInt("user_id"));
-            
-            CreditCardDAO ccDAO = new JDBCCreditCardDAO();
-            CreditCard cc = ccDAO.find(rsObj.getInt("credit_card"));
-            
-            sale = new Sale();
-            sale.setId(rsObj.getInt("id"));
-            sale.setFlight(flight);
-            sale.setUser(user);
-            sale.setPlace(rsObj.getString("place"));
-            sale.setNoLuggage(rsObj.getInt("number_luggages"));
-            sale.setCreditCard(cc);
-            sale.setPrice(rsObj.getDouble("price"));
-            
+            if (rsObj.next()) {
+                FlightDAO flightDAO = new JDBCFlightDAO();
+                Flight flight = flightDAO.find(rsObj.getInt("flight_id"));
+
+                UserDAO userDAO = new JDBCUserDAO();
+                User user = userDAO.find(rsObj.getInt("user_id"));
+
+                CreditCardDAO ccDAO = new JDBCCreditCardDAO();
+                CreditCard cc = ccDAO.find(rsObj.getInt("credit_card"));
+
+                sale = new Sale();
+                sale.setId(rsObj.getInt("id"));
+                sale.setFlight(flight);
+                sale.setUser(user);
+                sale.setPlace(rsObj.getString("place"));
+                sale.setNoLuggage(rsObj.getInt("number_luggages"));
+                sale.setCreditCard(cc);
+                sale.setPrice(rsObj.getDouble("price"));
+            }
             dbDisconnect();
         } catch (SQLException e) {
             System.out.println("Not inserted. " + e);
         }
         return sale;
     }
-    
-        public ArrayList<Sale> findAll(){
+
+    public ArrayList<Sale> findAll() {
         ArrayList<Sale> saleList = new ArrayList<Sale>();
         String query = "SELECT * FROM sales";
-        
-        try{
+
+        try {
             connObj = dbConnect();
             stmtObj = connObj.prepareStatement(query);
             rsObj = stmtObj.executeQuery();
-            
-            while(rsObj.next()){
+
+            while (rsObj.next()) {
                 FlightDAO flightDAO = new JDBCFlightDAO();
                 Flight flight = flightDAO.find(rsObj.getInt("flight_id"));
-                
+
                 UserDAO userDAO = new JDBCUserDAO();
                 User user = userDAO.find(rsObj.getInt("user_id"));
-                
+
                 CreditCardDAO ccDAO = new JDBCCreditCardDAO();
                 CreditCard cc = ccDAO.find(rsObj.getInt("credit_card"));
-                
+
                 Sale sale = new Sale();
                 sale.setId(rsObj.getInt("id"));
                 sale.setFlight(flight);
@@ -111,12 +110,12 @@ public class JDBCSaleDAO implements SaleDAO {
                 sale.setNoLuggage(rsObj.getInt("number_luggages"));
                 sale.setCreditCard(cc);
                 sale.setPrice(rsObj.getDouble("price"));
-                
+
                 saleList.add(sale);
             }
             dbDisconnect();
 
-        } catch(SQLException e){
+        } catch (SQLException e) {
             System.out.println("Error Retrieving Data. " + e);
         }
         return saleList;
@@ -126,25 +125,26 @@ public class JDBCSaleDAO implements SaleDAO {
     public boolean insert(Sale sale) {
         boolean inserted = false;
         int insertedId = 0;
-        String query = "INSERT INTO sales (flight_id, user_id, place, number_luggages, credit_card) "
+        String query = "INSERT INTO sales (flight_id, user_id, place, no_luggage, creditcard_id) "
                 + "VALUES (?,?,?,?,?)";
-        
+
         try {
             connObj = dbConnect();
             stmtObj = connObj.prepareStatement(query);
-            stmtObj.setInt(1, sale.getFlight().getId() );
-            stmtObj.setInt(2,sale.getUser().getId());
-            stmtObj.setString(3,sale.getPlace());
-            stmtObj.setInt(4,sale.getNoLuggage());
-            stmtObj.setInt(5, sale.getCreditCard().getId() );
-            
+            stmtObj.setInt(1, sale.getFlight().getId());
+            stmtObj.setInt(2, sale.getUser().getId());
+            stmtObj.setString(3, sale.getPlace());
+            stmtObj.setInt(4, sale.getNoLuggage());
+            stmtObj.setInt(5, sale.getCreditCard().getId());
+
             insertedId = stmtObj.executeUpdate();
-            
+
             dbDisconnect();
         } catch (SQLException e) {
             System.out.println("Not inserted. " + e);
         }
         if (insertedId > 0) {
+            System.out.println("Insertado");
             inserted = true;
         }
         return inserted;
@@ -160,16 +160,16 @@ public class JDBCSaleDAO implements SaleDAO {
         try {
             connObj = dbConnect();
             stmtObj = connObj.prepareStatement(query);
-           
-            stmtObj.setInt(1,sale.getFlight().getId());
-            stmtObj.setInt(2,sale.getUser().getId());            
-            stmtObj.setString(3,sale.getPlace());
+
+            stmtObj.setInt(1, sale.getFlight().getId());
+            stmtObj.setInt(2, sale.getUser().getId());
+            stmtObj.setString(3, sale.getPlace());
             stmtObj.setInt(4, sale.getNoLuggage());
             stmtObj.setInt(5, sale.getCreditCard().getId());
             stmtObj.setInt(6, sale.getId());
-            
+
             updatedId = stmtObj.executeUpdate();
-            
+
             dbDisconnect();
         } catch (SQLException e) {
             System.out.println("Not inserted. " + e);
@@ -177,7 +177,7 @@ public class JDBCSaleDAO implements SaleDAO {
         if (updatedId > 0) {
             updated = true;
         }
-        return updated;    
+        return updated;
     }
 
     @Override
@@ -188,10 +188,10 @@ public class JDBCSaleDAO implements SaleDAO {
         try {
             connObj = dbConnect();
             stmtObj = connObj.prepareStatement(query);
-            stmtObj.setInt(1,id);
+            stmtObj.setInt(1, id);
 
             deletedId = stmtObj.executeUpdate();
-            
+
             dbDisconnect();
         } catch (SQLException e) {
             System.out.println("Not inserted. " + e);

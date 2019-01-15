@@ -6,6 +6,7 @@
 package Model.Repository;
 
 import Model.Flight;
+import Model.Route;
 import java.util.ArrayList;
 
 /**
@@ -24,6 +25,6 @@ public interface FlightDAO {
 
     public boolean delete(int id);
     
-    public ArrayList<Flight> findFlights(int routeId);
+    public ArrayList<Flight> findFlights(Route route);
 
 }

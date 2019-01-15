@@ -21,7 +21,7 @@
     </servlet>
     <servlet>
         <servlet-name>creditCardController</servlet-name>
-        <servlet-class>Controller.creditCardController</servlet-class>
+        <servlet-class>Controller.creditcardController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>saleController</servlet-name>

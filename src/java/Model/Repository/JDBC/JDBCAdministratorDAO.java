@@ -96,11 +96,11 @@ public class JDBCAdministratorDAO implements AdministratorDAO {
     
     public Administrator findbyEmail(String email) {
         Administrator admin = null;
-        String query = "SELECT * FROM administrators WHERE email = ?";
+        String query = "SELECT * FROM administrators WHERE email = '"+email+"'";
         try {
             connObj = dbConnect();
             stmtObj = connObj.prepareStatement(query);
-            stmtObj.setString(1, "'"+email+"'"); //whit string only works qith ''
+            //stmtObj.setString(1, "'"+email+"'"); //whit string only works qith ''
             rsObj = stmtObj.executeQuery();
             
             if (rsObj.next()) {
@@ -151,20 +151,20 @@ public class JDBCAdministratorDAO implements AdministratorDAO {
     @Override
     public boolean update(Administrator admin) {
         boolean updated = false;
-        int updatedId = 0;
-        String query = "UPDATE administrators SET email= ?, pass= ?,"
-                + "prename= ?, surname1= ?,surname2= ?"
+        int updatedId = 0; 
+        String query = "UPDATE administrators SET email= '"+admin.getEmail()+"', pass= '"+admin.getPass()+"',"
+                + "prename= '"+admin.getPname()+"', surname1= '"+admin.getSname1()+"',surname2= '"+admin.getSname2()+"'"
                 + "WHERE id = ?";
         try {
             connObj = dbConnect();
             stmtObj = connObj.prepareStatement(query);
            
-            stmtObj.setString(1,admin.getEmail());
+            /*stmtObj.setString(1,admin.getEmail());
             stmtObj.setString(2,admin.getPass());            
             stmtObj.setString(3,admin.getPname());
             stmtObj.setString(4,admin.getSname1());
-            stmtObj.setString(5,admin.getSname2());
-            stmtObj.setInt(6, admin.getId());
+            stmtObj.setString(5,admin.getSname2());*/
+            stmtObj.setInt(1, admin.getId());
             
             updatedId = stmtObj.executeUpdate();
 
