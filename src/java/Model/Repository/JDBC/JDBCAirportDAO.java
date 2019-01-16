@@ -62,7 +62,7 @@ public class JDBCAirportDAO implements AirportDAO {
                 airport.setId(rsObj.getInt("id"));
                 airport.setName(rsObj.getString("name"));
                 airport.setCountry(rsObj.getString("country"));
-                airport.setTax(rsObj.getInt("tax"));
+                airport.setTax(rsObj.getDouble("tax"));
             }
             rsObj.close();
             dbDisconnect();
@@ -86,7 +86,7 @@ public class JDBCAirportDAO implements AirportDAO {
                 airport.setId(rsObj.getInt("id"));
                 airport.setName(rsObj.getString("name"));
                 airport.setCountry(rsObj.getString("country"));
-                airport.setTax(rsObj.getInt("tax"));
+                airport.setTax(rsObj.getDouble("tax"));
                 airportList.add(airport);
             }
             rsObj.close();
@@ -111,7 +111,7 @@ public class JDBCAirportDAO implements AirportDAO {
                 stmtObj = connObj.prepareStatement(query);
                 stmtObj.setString(1, airport.getName());
                 stmtObj.setString(2, airport.getCountry());
-                stmtObj.setInt(3, airport.getTax());
+                stmtObj.setDouble(3, airport.getTax());
 
                 insertedId = stmtObj.executeUpdate();
 
@@ -128,7 +128,7 @@ public class JDBCAirportDAO implements AirportDAO {
                 stmtObj = connObj.prepareStatement(query);
                 stmtObj.setString(1, airport.getName());
                 stmtObj.setString(2, airport.getCountry());
-                stmtObj.setInt(3, airport.getTax());
+                stmtObj.setDouble(3, airport.getTax());
 
                 insertedId = stmtObj.executeUpdate();
 
@@ -156,7 +156,7 @@ public class JDBCAirportDAO implements AirportDAO {
 
             /*stmtObj.setString(1, airport.getName());
             stmtObj.setString(2, airport.getCountry());*/
-            stmtObj.setInt(1, airport.getTax());
+            stmtObj.setDouble(1, airport.getTax());
             stmtObj.setInt(2, airport.getId());
             updatedId = stmtObj.executeUpdate();
 
@@ -208,7 +208,7 @@ public class JDBCAirportDAO implements AirportDAO {
                 airport.setId(rsObj.getInt("id"));
                 airport.setName(rsObj.getString("name"));
                 airport.setCountry(rsObj.getString("country"));
-                airport.setTax(rsObj.getInt("tax"));
+                airport.setTax(rsObj.getDouble("tax"));
             }
             rsObj.close();
             dbDisconnect();

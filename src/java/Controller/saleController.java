@@ -35,7 +35,7 @@ import javax.servlet.http.HttpSession;
 public class saleController extends HttpServlet {
 
     private Sale sale;
-    private Flight flight;
+    private Flight flight, flight_arrival;
     private User user;
     private CreditCard creditCard;
     private SaleDAO saleDAO;
@@ -54,14 +54,14 @@ public class saleController extends HttpServlet {
         we just need to see them*/
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse resp) throws ServletException, IOException {
-HttpSession session = request.getSession(false);
+        HttpSession session = request.getSession(false);
         String forward = "";
         String operation = request.getParameter("operation");
         boolean success = false;
         int userId;
 
         if (operation.equalsIgnoreCase("list")) {
-            userId=Integer.parseInt(request.getParameter("userId"));
+            userId = Integer.parseInt(request.getParameter("userId"));
             forward = "listSales.jsp";
             System.out.println(saleDAO.findByUserId(userId).toString());
             request.setAttribute("sales", saleDAO.findByUserId(userId));
@@ -75,7 +75,7 @@ HttpSession session = request.getSession(false);
 
         RequestDispatcher view = request.getRequestDispatcher(forward);
         view.forward(request, resp);
-       /* ArrayList<Sale> saleList;
+        /* ArrayList<Sale> saleList;
 
         saleList = saleDAO.findAll();
 
@@ -93,21 +93,33 @@ HttpSession session = request.getSession(false);
         //get userId and flightId from sessions that we save in login (userId) and selectFlight(flightId) ...
         // with session.setAtribute on the jsp pages
         int userId = (int) s.getAttribute("sessionUserId");
-        int flightId = (int) s.getAttribute("flightId");
+        int flightId = (int) s.getAttribute("flightIdDeparture");
+        int flightIdArrival = 0;
         String place = (String) s.getAttribute("origin");
+        String flightArrival = String.valueOf(s.getAttribute("flightIdArrival"));
+        double price_2 = 0;
+        if (flightArrival != null) {
+            flightIdArrival = (int) s.getAttribute("flightIdArrival");
+            price_2 = (double) s.getAttribute("price_2");
+            s.setAttribute("price_2",price_2);
+        }
         int passengers = (int) s.getAttribute("passengers");
-        int creditCardId = 1;//(int)s.getAttribute("creditCardId");
-        double price = (double) s.getAttribute("price");
+        int creditCardId = (int) s.getAttribute("creditCardId");
+        double price_1 = (double) s.getAttribute("price_1");
         boolean success = false;
-
+        int sales = saleDAO.numberSales(userId) + 1;
+        if (sales % 3 == 0) {
+            price_1 = price_1 / 2;
+            s.setAttribute("price_1", "Precio rebajado (50%) por haber contartado 2 viajes anteriormente: " + price_1);
+        }
         user = userDAO.find(userId);
         flight = flightDAO.find(flightId);
         creditCard = creditCardDAO.findByUserId(userId);
 
         sale = new Sale();
-        String id=saleDAO.generarID();
-        while(!saleDAO.comprobarId(id)){
-            id=saleDAO.generarID();
+        String id = saleDAO.generarID();
+        while (!saleDAO.comprobarId(id)) {
+            id = saleDAO.generarID();
         }
         sale.setId(id);
         sale.setFlight(flight);
@@ -115,11 +127,36 @@ HttpSession session = request.getSession(false);
         sale.setPlace(place);
         sale.setPassengers(passengers);
         sale.setCreditCard(creditCard);
-        sale.setPrice(price);
-
-        s.setAttribute("Departure_date", flight.getDeparture());
+        sale.setPrice(price_1);
         success = saleDAO.insert(sale);
         s.setAttribute("saleID", sale.getId());
+        if (flightIdArrival != 0) {
+            sales = saleDAO.numberSales(userId) + 2;
+            if (sales % 3 == 0) {
+                price_2 = price_2 / 2;
+                s.setAttribute("price_2", "Precio rebajado (50%) por haber contartado 2 viajes anteriormente: " + price_2);
+            }
+            flight_arrival = flightDAO.find(flightIdArrival);
+            sale = new Sale();
+            id = saleDAO.generarID();
+            while (!saleDAO.comprobarId(id)) {
+                id = saleDAO.generarID();
+            }
+            sale.setId(id);
+            sale.setFlight(flight_arrival);
+            sale.setUser(user);
+            sale.setPlace(place);
+            sale.setPassengers(passengers);
+            sale.setCreditCard(creditCard);
+            sale.setPrice(price_2);
+
+            s.setAttribute("Departure_2", flight_arrival.getDeparture());
+            success = saleDAO.insert(sale);
+            s.setAttribute("saleID_2", sale.getId());
+        }
+
+        s.setAttribute("Departure_date", flight.getDeparture());
+        
         resp.sendRedirect("Summary.jsp");
         /*if (success) {
             resp.sendRedirect("Summary.jsp");

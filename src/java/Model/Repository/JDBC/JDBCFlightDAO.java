@@ -10,6 +10,7 @@ import Model.Repository.FlightDAO;
 import Model.Repository.RouteDAO;
 import Model.Route;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -191,13 +192,14 @@ public class JDBCFlightDAO implements FlightDAO {
     }
 
     @Override
-    public ArrayList<Flight> findFlights(Route route) {
+    public ArrayList<Flight> findFlights(Route route, String date) {
         ArrayList<Flight> flightList = new ArrayList<>();
-        String query = "SELECT * FROM flights WHERE route_id = ?";
+        String query = "SELECT * FROM flights WHERE route_id = ? AND departure > '"+date+"'";
         try {
             connObj = dbConnect();
             stmtObj = connObj.prepareStatement(query);
             stmtObj.setInt(1, route.getId());
+            //stmtObj.setDate(2, date);
             rsObj = stmtObj.executeQuery();
 
             while (rsObj.next()) {

@@ -12,7 +12,7 @@
 <html lang="en">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>Crear Vuelos</title>   
+        <title>AirAlcala</title>   
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet"
               href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -60,7 +60,7 @@
             <nav class="navbar navbar-default">
                 <div class="container-fluid">
                     <div class="navbar-header">
-                        <a class="navbar-brand" href="#">AirAlcalá</a>
+                        <a class="navbar-brand" href="index.html">AirAlcalá</a>
                     </div>
                     <ul class="nav navbar-nav">
                         <%if (session.getAttribute("sessionAdminId") != null || (session.getAttribute("sessionUserId") != null && session.getAttribute("sessionAdminId") != null)) { %>
@@ -72,13 +72,13 @@
                         <li class="active"><a href="routeController?operation=list">Rutas</a></li>        
                         <li class="active"><a href="saleController?operation=overview">Estadísticas</a></li>    <!-- aún no existe, hay que crearlo y calcular las estadísticas en el Controlador (GET) -->
                             <%}
-                if (session.getAttribute("sessionUserId") != null && !(session.getAttribute("sessionUserId") != null && session.getAttribute("sessionAdminId") != null)) {%>
-                        <li class="active"><a href="flightController?operation=search">Buscar Vuelos</a></li>
-                        <li class="active"><a href="salesController?operation=list&userId=<%=session.getAttribute("sessionUserId")%>">Mirar Compras</a></li>
-                        <li class="active"><a href="creditcardController?operation=list">Editar Medios de Pago</a></li>
+                                if (session.getAttribute("sessionUserId") != null && !(session.getAttribute("sessionUserId") != null && session.getAttribute("sessionAdminId") != null)) {%>
+                        <li class="active"><a href="index.html">Buscar Vuelos</a></li>
+                        <li class="active"><a href="saleController?operation=list&userId=<%=session.getAttribute("sessionUserId")%>">Mirar Compras</a></li>
+                        <li class="active"><a href="creditcardController?operation=edit&userId=<%=session.getAttribute("sessionUserId")%>">Editar Medios de Pago</a></li>
                             <%}
-                if (session.getAttribute("sessionUserId") == null && session.getAttribute("sessionAdminId") == null) { %>
-                        <li class="active"><a href="index.jsp">Inicio</a></li>
+                                if (session.getAttribute("sessionUserId") == null && session.getAttribute("sessionAdminId") == null) { %>
+                        <li class="active"><a href="index.html">Inicio</a></li>
                         <li class="active"><a href="userController?operation=add">Crear Cuenta</a></li>
                             <%}%>
                     </ul>
@@ -88,12 +88,12 @@
                                 <span class="glyphicon glyphicon-user"></span><%=session.getAttribute("sessionAdminPname")%></a></li>
                         <li><a href="adminlogoutController"><span class="glyphicon glyphicon-log-out"></span>Admin Logout</a></li>
                             <%}
-                if (session.getAttribute("sessionUserId") != null && !(session.getAttribute("sessionUserId") != null && session.getAttribute("sessionAdminId") != null)) {%>
+                                if (session.getAttribute("sessionUserId") != null && !(session.getAttribute("sessionUserId") != null && session.getAttribute("sessionAdminId") != null)) {%>
                         <li><a href="userController?operation=view&userId=<%=session.getAttribute("sessionUserId")%>">
                                 <span class="glyphicon glyphicon-user"></span><%=session.getAttribute("sessionUserPname")%></a></li>
                         <li><a href="logoutController"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
                             <%}
-                if (session.getAttribute("sessionUserId") == null && session.getAttribute("sessionAdminId") == null) {%>
+                                if (session.getAttribute("sessionUserId") == null && session.getAttribute("sessionAdminId") == null) {%>
                         <li><a href="loginController"><span class="glyphicon glyphicon-log-out">
                                 </span>Login</a></li>
                                 <% }%>
@@ -146,7 +146,7 @@
                     </div>
                 </form>
             </div>
-
+        </div>
             <footer>
                 <div class='container'>
                     <div class="row">

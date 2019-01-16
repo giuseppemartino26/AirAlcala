@@ -11,7 +11,7 @@
 <html lang="en">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>PaginaAd</title>   
+        <title>AirAlcala</title>   
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet"
               href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -45,7 +45,7 @@
             <nav class="navbar navbar-default">
                 <div class="container-fluid">
                     <div class="navbar-header">
-                        <a class="navbar-brand" href="#">AirAlcalá</a>
+                        <a class="navbar-brand" href="index.html">AirAlcalá</a>
                     </div>
                     <ul class="nav navbar-nav">
                         <%if (session.getAttribute("sessionAdminId") != null || (session.getAttribute("sessionUserId") != null && session.getAttribute("sessionAdminId") != null)) { %>
@@ -81,7 +81,7 @@
                                 if (session.getAttribute("sessionUserId") == null && session.getAttribute("sessionAdminId") == null) {%>
                         <li><a href="loginController"><span class="glyphicon glyphicon-log-out">
                                 </span>Login</a></li>
-                                <% } %>
+                                <% }%>
                     </ul>
                 </div>
             </nav>
@@ -184,7 +184,7 @@
                     </div>
                 </form>
             </div>
-
+        </div>
             <footer>
                 <div class='container'>
                     <div class="row">

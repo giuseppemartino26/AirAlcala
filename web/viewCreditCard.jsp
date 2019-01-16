@@ -42,7 +42,7 @@
             <nav class="navbar navbar-default">
                 <div class="container-fluid">
                     <div class="navbar-header">
-                        <a class="navbar-brand" href="#">AirAlcalá</a>
+                        <a class="navbar-brand" href="index.html">AirAlcalá</a>
                     </div>
                     <ul class="nav navbar-nav">
                         <%if (session.getAttribute("sessionAdminId") != null || (session.getAttribute("sessionUserId") != null && session.getAttribute("sessionAdminId") != null)) { %>
@@ -55,12 +55,12 @@
                         <li class="active"><a href="saleController?operation=overview">Estadísticas</a></li>    <!-- aún no existe, hay que crearlo y calcular las estadísticas en el Controlador (GET) -->
                             <%}
                                 if (session.getAttribute("sessionUserId") != null && !(session.getAttribute("sessionUserId") != null && session.getAttribute("sessionAdminId") != null)) {%>
-                        <li class="active"><a href="flightController?operation=search">Buscar Vuelos</a></li>
-                        <li class="active"><a href="salesController?operation=list&userId=<%=session.getAttribute("sessionUserId")%>">Mirar Compras</a></li>
-                        <li class="active"><a href="creditcardController?operation=list">Editar Medios de Pago</a></li>
+                        <li class="active"><a href="index.html">Buscar Vuelos</a></li>
+                        <li class="active"><a href="saleController?operation=list&userId=<%=session.getAttribute("sessionUserId")%>">Mirar Compras</a></li>
+                        <li class="active"><a href="creditcardController?operation=edit&userId=<%=session.getAttribute("sessionUserId")%>">Editar Medios de Pago</a></li>
                             <%}
                                 if (session.getAttribute("sessionUserId") == null && session.getAttribute("sessionAdminId") == null) { %>
-                        <li class="active"><a href="index.jsp">Inicio</a></li>
+                        <li class="active"><a href="index.html">Inicio</a></li>
                         <li class="active"><a href="userController?operation=add">Crear Cuenta</a></li>
                             <%}%>
                     </ul>
@@ -86,10 +86,10 @@
             <br>
             <br>
             <div class="container">
-                <h4>Lista Usarios</h4>
+                <h4>Tarjeta de cr&eacute;dito</h4>
                 <div class="btn-group topButton" role="group" aria-label="Basic example">
-                    <a href="creditCardController?operation=delete&creditCardId=<c:out value="${creditCard.id}"/>">Borrar Tarjeta de Cr&eacute;dito</a>
-                    <a href="creditCardController?operation=edit&creditCardId=<c:out value="${creditCard.id}"/>">Actualizar Tarjeta de Cr&eacute;dito</a>
+                    <a href="creditCardController?operation=delete&creditCardId=<c:out value="${creditCard.id} "/>"class="btn btn-primary" role="button">Borrar Tarjeta de Cr&eacute;dito</a>
+                    <a href="creditCardController?operation=edit&creditCardId=<c:out value="${creditCard.id}"/>"class="btn btn-primary" role="button">Actualizar Tarjeta de Cr&eacute;dito</a>
                     <a href="creditCardController?operation=add" class="btn btn-primary" role="button">Añadir Tarjeta de Cr&eacute;dito</a>        
                 </div>
 

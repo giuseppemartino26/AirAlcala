@@ -22,14 +22,23 @@
         <script type="text/javascript" charset="utf-8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.0/jquery.dataTables.min.js"></script>
         <link rel="stylesheet" type="text/css" href="styles/styles.css">    
 
+        <script>
 
+        </script>
     </head>
     <body>
         <%
             //allow access only if session exists
             if (session.getAttribute("sessionUserId") == null) {
                 response.sendRedirect("loginController");
-            }
+            };
+            /*String precio_1 = String.valueOf(session.getAttribute("price_1"));
+            String precio_2 = String.valueOf(session.getAttribute("price_2"));
+            Double compra= Double.parseDouble(precio_1) + Double.parseDouble(precio_2);*/
+            String departure2 = "No hay vuelo de vuelta";
+            if (session.getAttribute("saleID_2") != null) {
+                departure2 = String.valueOf(session.getAttribute("Departure_2"));
+            };
         %>
         <div id="wrapper">
             <header>
@@ -40,7 +49,7 @@
             <nav class="navbar navbar-default">
                 <div class="container-fluid">
                     <div class="navbar-header">
-                        <a class="navbar-brand" href="#">AirAlcalá</a>
+                        <a class="navbar-brand" href="index.html">AirAlcalá</a>
                     </div>
                     <ul class="nav navbar-nav">
                         <%if (session.getAttribute("sessionAdminId") != null || (session.getAttribute("sessionUserId") != null && session.getAttribute("sessionAdminId") != null)) { %>
@@ -52,13 +61,13 @@
                         <li class="active"><a href="routeController?operation=list">Rutas</a></li>        
                         <li class="active"><a href="saleController?operation=overview">Estadísticas</a></li>    <!-- aún no existe, hay que crearlo y calcular las estadísticas en el Controlador (GET) -->
                             <%}
-                if (session.getAttribute("sessionUserId") != null && !(session.getAttribute("sessionUserId") != null && session.getAttribute("sessionAdminId") != null)) {%>
+                                if (session.getAttribute("sessionUserId") != null && !(session.getAttribute("sessionUserId") != null && session.getAttribute("sessionAdminId") != null)) {%>
                         <li class="active"><a href="index.html">Buscar Vuelos</a></li>
                         <li class="active"><a href="saleController?operation=list&userId=<%=session.getAttribute("sessionUserId")%>">Mirar Compras</a></li>
                         <li class="active"><a href="creditcardController?operation=edit&userId=<%=session.getAttribute("sessionUserId")%>">Editar Medios de Pago</a></li>
                             <%}
-                if (session.getAttribute("sessionUserId") == null && session.getAttribute("sessionAdminId") == null) { %>
-                        <li class="active"><a href="index.jsp">Inicio</a></li>
+                                if (session.getAttribute("sessionUserId") == null && session.getAttribute("sessionAdminId") == null) { %>
+                        <li class="active"><a href="index.html">Inicio</a></li>
                         <li class="active"><a href="userController?operation=add">Crear Cuenta</a></li>
                             <%}%>
                     </ul>
@@ -68,12 +77,12 @@
                                 <span class="glyphicon glyphicon-user"></span><%=session.getAttribute("sessionAdminPname")%></a></li>
                         <li><a href="adminlogoutController"><span class="glyphicon glyphicon-log-out"></span>Admin Logout</a></li>
                             <%}
-                if (session.getAttribute("sessionUserId") != null && !(session.getAttribute("sessionUserId") != null && session.getAttribute("sessionAdminId") != null)) {%>
+                                if (session.getAttribute("sessionUserId") != null && !(session.getAttribute("sessionUserId") != null && session.getAttribute("sessionAdminId") != null)) {%>
                         <li><a href="userController?operation=view&userId=<%=session.getAttribute("sessionUserId")%>">
                                 <span class="glyphicon glyphicon-user"></span><%=session.getAttribute("sessionUserPname")%></a></li>
                         <li><a href="logoutController"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
                             <%}
-                if (session.getAttribute("sessionUserId") == null && session.getAttribute("sessionAdminId") == null) {%>
+                                if (session.getAttribute("sessionUserId") == null && session.getAttribute("sessionAdminId") == null) {%>
                         <li><a href="loginController"><span class="glyphicon glyphicon-log-out">
                                 </span>Login</a></li>
                                 <% }%>
@@ -83,8 +92,8 @@
 
             <br>
             <br>
-            <div class="container">
-                <h4>Resumen de la compra</h4>
+            <div class="col-md-4">
+                <h4>Resumen de la compra vuelo de ida</h4>
                 <table class="table table-striped">
                     <tr>
                         <td>ID Compra</td>
@@ -102,20 +111,47 @@
                         <td>Fecha Ida</td>
                         <td><%=session.getAttribute("Departure_date")%></td><!---->
                     </tr>
-                    <!--<tr style="display:none" id="departure_2">
-                        <td>Fecha Vuelta</td>
-                        <td>Departure 2</td><%=session.getAttribute("Departure_2")%>
-                    </tr>-->
                     <tr>
                         <td>N&uacute;mero de pasajeros</td>
                         <td><%=session.getAttribute("passengers")%></td><!---->
                     </tr>
                     <tr>
                         <td>Precio</td>
-                        <td><%=session.getAttribute("price")%></td><!---->
+                        <td><%=session.getAttribute("price_1")%></td><!---->
                     </tr>
                 </table>
             </div>
+            <div class="col-md-4" id="roundTrip" >
+                <h4>Resumen de la compra vuelo de vuelta</h4>
+                <table class="table table-striped">
+                    <tr>
+                        <td>ID Compra</td>
+                        <td><%=session.getAttribute("saleID_2")%></td>
+                    </tr>
+                    <tr>
+                        <td>Origen</td>
+                        <td><%=session.getAttribute("destination")%></td><!---->
+                    </tr>
+                    <tr>
+                        <td>Destino</td>
+                        <td><%=session.getAttribute("origin")%></td><!---->
+                    </tr>
+                    <tr>
+                        <td>Fecha Vuelta</td>
+                        <td><%=session.getAttribute("Departure_2")%></td><!---->
+                    </tr>
+                    
+                    <tr>
+                        <td>N&uacute;mero de pasajeros</td>
+                        <td><%=session.getAttribute("passengers")%></td><!---->
+                    </tr>
+                    <tr>
+                        <td>Precio</td>
+                        <td><%=session.getAttribute("price_2")%></td><!---->
+                    </tr>
+                </table>
+            </div>
+                    <!--<h4>Precio final: <--%=compra%></h4>-->
         </div>
         <footer>
             <div class='container'>

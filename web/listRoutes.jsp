@@ -1,7 +1,7 @@
 <%-- 
-    Document   : ListAirports
-    Created on : 13-ene-2019, 11:12:03
-    Author     : David
+    Document   : listRoutes
+    Created on : 16-ene-2019, 4:14:05
+    Author     : pablo
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -18,7 +18,7 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <script type="text/javascript" charset="utf-8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.1.min.js"></script>
         <script type="text/javascript" charset="utf-8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.0/jquery.dataTables.min.js"></script>
-        <link rel="stylesheet" type="text/css" href="styles/styles.css">    
+        <link rel="stylesheet" type="text/css" href="styles/styles.css">
 
         <script>
             $(document).ready(function () {
@@ -82,34 +82,52 @@
                     </ul>
                 </div>
             </nav>
-
             <br>
             <br>
             <div class="container">
-                <h4>Aeropuerto</h4>
-                <div class="btn-group topButton" role="group" aria-label="Basic example">
-                    <a href="airportController?operation=list" class="btn btn-primary" role="button">Volver a Lista</a>     
-                </div>
-
+                <h4>Lista de Rutas</h4>
+                <div class="topButton"><a href="routeController?operation=add" class="btn btn-primary" role="button">Añadir Ruta</a></div>
                 <br>
-                <table class="table table-striped" style="width:100%">
-                    <tr>
-                        <th>Id</th> 
-                        <td>${airport.id}</td>
-                    </tr>
-                    <tr>
-                        <th>Nombre</th>
-                        <td>${airport.name}</td>
-                    </tr>
-                    <tr>
-                        <th>País</th>
-                        <td>${airport.country}</td>
-                    </tr>
-                    <tr>
-                        <th>Tax</th>
-                        <td>${airport.tax}</td>
-                    </tr>
+                <table id="datatable" class="display" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Origen</th>
+                            <th>Destino</th>
+                            <th>C&oacute; del Avi&oacute;n</th>
+                            <th>Precio del Billete</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>                
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach items="${routes}" var="route">
+                            <tr>
+                                <td><c:out value="${route.id}" /></td>
+                                <td><c:out value="${route.origin.name}"/></td>
+                                <td><c:out value="${route.destination.name}" /></td>
+                                <td><c:out value="${route.plane.name}" /></td>
+                                <td><c:out value="${route.ticketPrice}" /></td>
+                                <td><a href="routeController?operation=view&routeId=<c:out value="${route.id}"/>">mirar</a></td>
+                                <td><a href="routeController?operation=edit&routeId=<c:out value="${route.id}"/>">actualizar</a></td>
+                                <td><a href="routeController?operation=delete&routeId=<c:out value="${route.id}"/>">borrar</a></td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>Id</th>
+                            <th>Origen</th>
+                            <th>Destino</th>
+                            <th>Localizador Avi&oacute;n</th>
+                            <th>Precio del Billete</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
 
+                        </tr> 
+                    </tfoot>
                 </table>
             </div>
         </div>
@@ -133,3 +151,4 @@
         </footer>
     </body>
 </html>
+

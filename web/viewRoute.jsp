@@ -1,7 +1,7 @@
 <%-- 
-    Document   : ListAirports
-    Created on : 13-ene-2019, 11:12:03
-    Author     : David
+    Document   : viewRoute
+    Created on : 16-ene-2019, 5:04:40
+    Author     : pablo
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -86,30 +86,33 @@
             <br>
             <br>
             <div class="container">
-                <h4>Aeropuerto</h4>
+                <h4>Ruta</h4>
                 <div class="btn-group topButton" role="group" aria-label="Basic example">
-                    <a href="airportController?operation=list" class="btn btn-primary" role="button">Volver a Lista</a>     
+                    <a href="routeController?operation=list" class="btn btn-primary" role="button">Lista de Rutas</a>       
                 </div>
 
                 <br>
                 <table class="table table-striped" style="width:100%">
                     <tr>
                         <th>Id</th> 
-                        <td>${airport.id}</td>
+                        <td>${route.id}</td>
                     </tr>
                     <tr>
-                        <th>Nombre</th>
-                        <td>${airport.name}</td>
+                        <th>Origen: </th>
+                        <td>${route.origin.id} - ${route.origin.name}</td>
                     </tr>
                     <tr>
-                        <th>País</th>
-                        <td>${airport.country}</td>
+                        <th>Destino: </th>
+                        <td>${route.destination.id} - ${route.destination.name}</td>
                     </tr>
                     <tr>
-                        <th>Tax</th>
-                        <td>${airport.tax}</td>
+                        <th>Avi&oacute;n: </th>
+                        <td>${route.plane.name}</td>
                     </tr>
-
+                    <tr>
+                        <th>Precio Billete: </th>
+                        <td>${route.ticketPrice}</td>
+                    </tr>
                 </table>
             </div>
         </div>

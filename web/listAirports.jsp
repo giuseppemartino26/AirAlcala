@@ -57,7 +57,7 @@
                             <%}
                 if (session.getAttribute("sessionUserId") != null && !(session.getAttribute("sessionUserId") != null && session.getAttribute("sessionAdminId") != null)) {%>
                         <li class="active"><a href="flightController?operation=search">Buscar Vuelos</a></li>
-                        <li class="active"><a href="salesController?operation=list&userId=<%=session.getAttribute("sessionUserId")%>">Mirar Compras</a></li>
+                        <li class="active"><a href="saleController?operation=list&userId=<%=session.getAttribute("sessionUserId")%>">Mirar Compras</a></li>
                         <li class="active"><a href="creditcardController?operation=list">Editar Medios de Pago</a></li>
                             <%}
                 if (session.getAttribute("sessionUserId") == null && session.getAttribute("sessionAdminId") == null) { %>

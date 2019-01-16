@@ -50,18 +50,6 @@ public class loginController extends HttpServlet {
         String operation = request.getParameter("operation");
         String forward = "";
         if (operation.equalsIgnoreCase("sale")) {
-            flightId = Integer.parseInt(request.getParameter("flightId"));
-            Flight flight = new Flight();
-            FlightDAO flightDAO = new JDBCFlightDAO();
-            flight = flightDAO.find(flightId);
-            double compra = 0;
-            System.out.println(flight.getId());
-            System.out.println(flight.getLocator());
-            double price = flight.getRoute().getTicketPrice();
-            double tax = flight.getRoute().getOrigin().getTax();
-            compra = ((price + tax) * iva) * ((int) s.getAttribute("passengers"));
-            s.setAttribute("flightId", flightId);
-            s.setAttribute("price", compra);
             s.setAttribute("proceso", "ventaFlight");
             forward = "index.jsp";
         } else if (operation.equalsIgnoreCase("alreadylogin")) {

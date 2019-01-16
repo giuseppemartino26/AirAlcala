@@ -63,8 +63,8 @@ public class JDBCRouteDAO implements RouteDAO {
                 AirplaneDAO planeDAO = new JDBCAirplaneDAO();
                 Airplane plane = planeDAO.find(rsObj.getInt("airplane_id"));
                 AirportDAO airportDAO = new JDBCAirportDAO();
-                Airport origin = airportDAO.findName(rsObj.getString("origin"));
-                Airport destination = airportDAO.findName(rsObj.getString("destination"));
+                Airport origin = airportDAO.find(rsObj.getInt("origin"));
+                Airport destination = airportDAO.find(rsObj.getInt("destination"));
 
                 route.setId(rsObj.getInt("id"));
                 System.out.println(route.getId());
@@ -85,8 +85,8 @@ public class JDBCRouteDAO implements RouteDAO {
     public boolean insert(Route route) {
         boolean inserted = false;
         int insertedId = 0;
-        String query = "INSERT INTO routes (origin, destination, airplane_id, ticketprice, luggageprice, tax) "
-                + "VALUES (?,?,?,?,?,?)";
+        String query = "INSERT INTO routes (origin, destination, airplane_id, ticketprice) "
+                + "VALUES (?,?,?,?)";
 
         try {
             connObj = dbConnect();
@@ -114,7 +114,7 @@ public class JDBCRouteDAO implements RouteDAO {
         int updatedId = 0;
         String query = "UPDATE routes SET origin = ?, destination = ?,"
                 + "airplane_id = ?, ticketprice = ?"
-                + "WHERE id = ?;";
+                + "WHERE id = ?";
         try {
             connObj = dbConnect();
             stmtObj = connObj.prepareStatement(query);
@@ -123,7 +123,7 @@ public class JDBCRouteDAO implements RouteDAO {
             stmtObj.setInt(2, route.getDestination().getId());
             stmtObj.setInt(3, route.getPlane().getId());
             stmtObj.setDouble(4, route.getTicketPrice());
-            stmtObj.setInt(7, route.getId());
+            stmtObj.setInt(5, route.getId());
             updatedId = stmtObj.executeUpdate();
 
             dbDisconnect();
@@ -140,12 +140,12 @@ public class JDBCRouteDAO implements RouteDAO {
     public boolean delete(int id) {
         boolean deleted = false;
         int deletedId = 0;
-        String query = "DELETE FROM routes WHERE id= ?;";
+        String query = "DELETE FROM routes WHERE id= ?";
         try {
             connObj = dbConnect();
             stmtObj = connObj.prepareStatement(query);
             stmtObj.setInt(1, id);
-
+            System.out.println("No Boorado Ruta");
             deletedId = stmtObj.executeUpdate();
 
             dbDisconnect();
@@ -154,6 +154,7 @@ public class JDBCRouteDAO implements RouteDAO {
         }
         if (deletedId > 0) {
             deleted = true;
+            System.out.println("Boorado Ruta");
         }
         return deleted;
     }
@@ -174,8 +175,8 @@ public class JDBCRouteDAO implements RouteDAO {
                 Airplane plane = planeDAO.find(rsObj.getInt("airplane_id"));
 
                 AirportDAO airportDAO = new JDBCAirportDAO();
-                Airport origin = airportDAO.findName(rsObj.getString("origin"));
-                Airport destination = airportDAO.findName(rsObj.getString("destination"));
+                Airport origin = airportDAO.find(rsObj.getInt("origin"));
+                Airport destination = airportDAO.find(rsObj.getInt("destination"));
                 
 
                 route.setId(rsObj.getInt("id"));
@@ -196,14 +197,14 @@ public class JDBCRouteDAO implements RouteDAO {
     }
 
     @Override
-    public ArrayList<Route> findRoute(String origin, String destination, int passengers) {
+    public ArrayList<Route> findRoute(int origin, int destination, int passengers) {
         ArrayList<Route> routeList = new ArrayList<Route>();
-        String query = "SELECT * FROM routes WHERE origin = '" + origin + "' AND destination = '" + destination + "'";
+        String query = "SELECT * FROM routes WHERE origin = ? AND destination = ? ";
         try {
             connObj = dbConnect();
             stmtObj = connObj.prepareStatement(query);
-            //stmtObj.setString(1, "'"+origin+"'");
-            //stmtObj.setString(2, "'"+destination+"'");
+            stmtObj.setInt(1, origin);
+            stmtObj.setInt(2, destination);
             rsObj = stmtObj.executeQuery();
             while (rsObj.next()) {
                 Route route = new Route();
