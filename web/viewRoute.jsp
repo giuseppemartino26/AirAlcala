@@ -1,6 +1,6 @@
 <%-- 
-    Document   : viewCreditCard
-    Created on : 12-ene-2019, 23:34:05
+    Document   : viewRoute
+    Created on : 16-ene-2019, 5:04:40
     Author     : pablo
 --%>
 
@@ -42,7 +42,7 @@
             <nav class="navbar navbar-default">
                 <div class="container-fluid">
                     <div class="navbar-header">
-                        <a class="navbar-brand" href="#">AirAlcalá</a>
+                        <a class="navbar-brand" href="index.html">AirAlcalá</a>
                     </div>
                     <ul class="nav navbar-nav">
                         <%if (session.getAttribute("sessionAdminId") != null || (session.getAttribute("sessionUserId") != null && session.getAttribute("sessionAdminId") != null)) { %>
@@ -54,13 +54,13 @@
                         <li class="active"><a href="routeController?operation=list">Rutas</a></li>        
                         <li class="active"><a href="saleController?operation=overview">Estadísticas</a></li>    <!-- aún no existe, hay que crearlo y calcular las estadísticas en el Controlador (GET) -->
                             <%}
-                if (session.getAttribute("sessionUserId") != null && !(session.getAttribute("sessionUserId") != null && session.getAttribute("sessionAdminId") != null)) {%>
-                        <li class="active"><a href="flightController?operation=search">Buscar Vuelos</a></li>
-                        <li class="active"><a href="salesController?operation=list&userId=<%=session.getAttribute("sessionUserId")%>">Mirar Compras</a></li>
-                        <li class="active"><a href="creditcardController?operation=list">Editar Medios de Pago</a></li>
+                                if (session.getAttribute("sessionUserId") != null && !(session.getAttribute("sessionUserId") != null && session.getAttribute("sessionAdminId") != null)) {%>
+                        <li class="active"><a href="index.html">Buscar Vuelos</a></li>
+                        <li class="active"><a href="saleController?operation=list&userId=<%=session.getAttribute("sessionUserId")%>">Mirar Compras</a></li>
+                        <li class="active"><a href="creditcardController?operation=edit&userId=<%=session.getAttribute("sessionUserId")%>">Editar Medios de Pago</a></li>
                             <%}
-                if (session.getAttribute("sessionUserId") == null && session.getAttribute("sessionAdminId") == null) { %>
-                        <li class="active"><a href="index.jsp">Inicio</a></li>
+                                if (session.getAttribute("sessionUserId") == null && session.getAttribute("sessionAdminId") == null) { %>
+                        <li class="active"><a href="index.html">Inicio</a></li>
                         <li class="active"><a href="userController?operation=add">Crear Cuenta</a></li>
                             <%}%>
                     </ul>
@@ -70,12 +70,12 @@
                                 <span class="glyphicon glyphicon-user"></span><%=session.getAttribute("sessionAdminPname")%></a></li>
                         <li><a href="adminlogoutController"><span class="glyphicon glyphicon-log-out"></span>Admin Logout</a></li>
                             <%}
-                if (session.getAttribute("sessionUserId") != null && !(session.getAttribute("sessionUserId") != null && session.getAttribute("sessionAdminId") != null)) {%>
+                                if (session.getAttribute("sessionUserId") != null && !(session.getAttribute("sessionUserId") != null && session.getAttribute("sessionAdminId") != null)) {%>
                         <li><a href="userController?operation=view&userId=<%=session.getAttribute("sessionUserId")%>">
                                 <span class="glyphicon glyphicon-user"></span><%=session.getAttribute("sessionUserPname")%></a></li>
                         <li><a href="logoutController"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
                             <%}
-                if (session.getAttribute("sessionUserId") == null && session.getAttribute("sessionAdminId") == null) {%>
+                                if (session.getAttribute("sessionUserId") == null && session.getAttribute("sessionAdminId") == null) {%>
                         <li><a href="loginController"><span class="glyphicon glyphicon-log-out">
                                 </span>Login</a></li>
                                 <% }%>
@@ -86,11 +86,9 @@
             <br>
             <br>
             <div class="container">
-                <h4>Mirar Ruta</h4>
+                <h4>Ruta</h4>
                 <div class="btn-group topButton" role="group" aria-label="Basic example">
-                    <a href="creditCardController?operation=delete&creditCardId=<c:out value="${flight.id}"/>">Borrar Tarjeta de Cr&eacute;dito</a>
-                    <a href="creditCardController?operation=edit&creditCardId=<c:out value="${flight.id}"/>">Actualizar Tarjeta de Cr&eacute;dito</a>
-                    <a href="creditCardController?operation=add" class="btn btn-primary" role="button">Añadir Tarjeta de Cr&eacute;dito</a>        
+                    <a href="routeController?operation=list" class="btn btn-primary" role="button">Lista de Rutas</a>       
                 </div>
 
                 <br>
@@ -101,28 +99,20 @@
                     </tr>
                     <tr>
                         <th>Origen: </th>
-                        <td>${route.origin} a $(flight.route.destination)</td>
+                        <td>${route.origin.id} - ${route.origin.name}</td>
                     </tr>
                     <tr>
-                        <th>Destinación: </th>
-                        <td>${route.destination}</td>
+                        <th>Destino: </th>
+                        <td>${route.destination.id} - ${route.destination.name}</td>
                     </tr>
                     <tr>
-                        <th>Avión: </th>
-                        <td>${route.airplane.name}</td>
+                        <th>Avi&oacute;n: </th>
+                        <td>${route.plane.name}</td>
                     </tr>
                     <tr>
-                        <th>Precio de billete: </th>
-                        <td>${route.ticketprice}</td>
+                        <th>Precio Billete: </th>
+                        <td>${route.ticketPrice}</td>
                     </tr>
-                    <tr>
-                        <th>Precio de Maleta </th>
-                        <td>${route.luggageprice}</td>
-                    </tr> 
-                    <tr>
-                        <th>PTaza de Impuestos: </th>
-                        <td>${route.tax}</td>
-                    </tr>                     
                 </table>
             </div>
         </div>

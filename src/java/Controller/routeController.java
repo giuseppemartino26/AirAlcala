@@ -46,6 +46,10 @@ public class routeController extends HttpServlet {
         HttpSession session = request.getSession(false);
         String forward = "";
         String operation = request.getParameter("operation");
+        ArrayList<Airport> airports=new ArrayList();
+        ArrayList<Airplane> planes =new ArrayList();
+        airports=airportDAO.findAll();
+        planes=airplaneDAO.findAll();
         boolean success = false;
         int routeId;
         
@@ -69,9 +73,12 @@ public class routeController extends HttpServlet {
             forward = "editRoute.jsp";
             Route route = routeDAO.find(routeId);
             request.setAttribute("route", route);
+            request.setAttribute("airports", airports);
+            request.setAttribute("planes", planes);
         } else if (operation.equalsIgnoreCase("list")) {
             forward = "listRoutes.jsp";
             request.setAttribute("routes", routeDAO.findAll());
+            System.out.println(routeDAO.findAll().toString());
         } else if (operation.equalsIgnoreCase("view")) {
             routeId = Integer.parseInt(request.getParameter("routeId"));
             forward = "viewRoute.jsp";
@@ -144,6 +151,17 @@ public class routeController extends HttpServlet {
                 res.sendRedirect(res.encodeRedirectURL("routeController?operation=list")); // o conseguir mensaje Alarma con AJAX/JavaScript
             } else {
                 res.sendRedirect(res.encodeRedirectURL("routeController?operation=list"));  // o conseguir mensaje Alarma con AJAX/JavaScript
+        }else{
+            route.setId(Integer.parseInt(req.getParameter("id")));
+            success=routeDAO.update(route);
+            if(success){
+                RequestDispatcher view= req.getRequestDispatcher("viewRoute.jsp");
+                req.setAttribute("route", route);
+                view.forward(req, res);
+            }else{
+                RequestDispatcher view= req.getRequestDispatcher("listRoutes.jsp");
+                req.setAttribute("routes", routeDAO.findAll());
+                view.forward(req, res);
             }
         }
     }

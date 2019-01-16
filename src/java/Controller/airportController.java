@@ -79,9 +79,8 @@ public class airportController extends HttpServlet {
     public void doPost(HttpServletRequest req,
     HttpServletResponse res) throws ServletException, IOException{
         HttpSession s = req.getSession(true);
+        
         Boolean success = false;
-       
-      
         
         airport = new Airport();
         airport.setName(req.getParameter("name"));

@@ -59,6 +59,10 @@
         <servlet-name>routeController</servlet-name>
         <servlet-class>Controller.routeController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>selectflightController</servlet-name>
+        <servlet-class>Controller.selectflightController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>flightController</servlet-name>
         <url-pattern>/flightController</url-pattern>
@@ -114,6 +118,10 @@
     <servlet-mapping>
         <servlet-name>routeController</servlet-name>
         <url-pattern>/routeController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>selectflightController</servlet-name>
+        <url-pattern>/selectflightController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

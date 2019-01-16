@@ -61,6 +61,7 @@ public class JDBCSaleDAO implements SaleDAO {
             if (rsObj.next()) {
                 FlightDAO flightDAO = new JDBCFlightDAO();
                 Flight flight = flightDAO.find(rsObj.getInt("flight_id"));
+                
 
                 UserDAO userDAO = new JDBCUserDAO();
                 User user = userDAO.find(rsObj.getInt("user_id"));
@@ -97,6 +98,7 @@ public class JDBCSaleDAO implements SaleDAO {
             while (rsObj.next()) {
                 FlightDAO flightDAO = new JDBCFlightDAO();
                 Flight flight = flightDAO.find(rsObj.getInt("flight_id"));
+                
 
                 UserDAO userDAO = new JDBCUserDAO();
                 User user = userDAO.find(rsObj.getInt("user_id"));
@@ -141,7 +143,6 @@ public class JDBCSaleDAO implements SaleDAO {
             stmtObj.setInt(5, sale.getPassengers());
             stmtObj.setInt(6, sale.getCreditCard().getId());
             stmtObj.setDouble(7, sale.getPrice());
-
             insertedId = stmtObj.executeUpdate();
 
             dbDisconnect();
@@ -253,6 +254,8 @@ public class JDBCSaleDAO implements SaleDAO {
                 FlightDAO flightDAO = new JDBCFlightDAO();
                 Flight flight = flightDAO.find(rsObj.getInt("flight_id"));
 
+                
+                
                 UserDAO userDAO = new JDBCUserDAO();
                 User user = userDAO.find(rsObj.getInt("user_id"));
 
@@ -278,6 +281,28 @@ public class JDBCSaleDAO implements SaleDAO {
         }
         return saleList;
     }
+
+    @Override
+    public int numberSales(int userId) {
+        int number=0;
+        String query="select count(id) from sales where user_id = ?";
+        try {
+            connObj = dbConnect();
+            stmtObj = connObj.prepareStatement(query);
+            stmtObj.setInt(1, userId);
+            rsObj = stmtObj.executeQuery();
+            if (rsObj.next()) {
+                number=rsObj.getInt(1);
+            }
+            rsObj.close();
+            dbDisconnect();
+
+        } catch (SQLException e) {
+            System.out.println("Error Retrieving Data. " + e);
+        }
+        return number;
+    }
+    
     
 }
 

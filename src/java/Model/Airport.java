@@ -14,7 +14,7 @@ public class Airport {
     private int id;
     private String name;
     private String country;
-    private int tax;
+    private double tax;
 
     public Airport() {
     }
@@ -43,11 +43,11 @@ public class Airport {
         this.country = country;
     }
 
-    public int getTax() {
+    public double getTax() {
         return tax;
     }
 
-    public void setTax(int tax) {
+    public void setTax(double tax) {
         this.tax = tax;
     }
 

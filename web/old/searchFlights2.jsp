@@ -114,20 +114,12 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <label for="departure"><b>Origen</b></label>
-                             <select name="departure" id="departure">
-                            <c:forEach items="${routes}" var="route">
-                                <option value="${routes.origin}">routes.origin</option>
-                            </c:forEach>
-                             </select>
+                            <input placeholder="Aeropuerto de salida" name="departure" id="departure" type="text" required pattern="[A-zÀ-ž\s]{1,}">
                         </div>
                         <div class="col-lg-6">
-                    <label for="destination"><b>Destino</b></label>
-                    <select name="destination" id="destination">
-                        <c:forEach items="${routes}" var="route">
-                            <option value="${routes.destination}">routes.destination</option>
-                        </c:forEach>
-                    </select>
-                </div>
+                            <label for="destination"><b>Destino</b></label>
+                            <input placeholder="Aeropuerto de destino" name="destination" id="destination" type="text" required pattern="[A-zÀ-ž\s]{1,}">
+                        </div>
                     </div> 
                     <div class="row">
                         <div class="col-lg-6">
