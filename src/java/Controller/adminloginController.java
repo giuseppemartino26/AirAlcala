@@ -70,7 +70,7 @@ public class adminloginController extends HttpServlet {
                 s.setAttribute("sessionAdminId", admin.getId());
                 s.setAttribute("sessionAdminPname", admin.getPname());                
                         
-                res.sendRedirect("paginaadmin.jsp");
+                res.sendRedirect("userController?operation=list");
             } else {
                 res.sendRedirect("adminloginController");
             }

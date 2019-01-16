@@ -113,39 +113,40 @@
                 <h2>Editar Ruta</h2>
                 <br>
                 <div class="btn-group topButton" role="group" aria-label="Basic example">
-                    <a href="flightController?operation=list" class="btn btn-primary" role="button">Volver a Lista</a>
+                    <a href="routeController?operation=list" class="btn btn-primary" role="button">Volver a Lista</a>
                 </div>
-                <form method="POST" action="flightController" class="form-container" onsubmit="showResponse()">
+                <form method="POST" action="routeController" class="form-container" onsubmit="showResponse()">
                     <div class="row">
+                        <input type="hidden" name="id" value="${route.id}" />
                         <div class="col-lg-6">
                             <label for="name"><b>Origen: </b></label>
-                           <select name="airplane" id="airplane">
+                           <select name="originID" id="originID" class="form-control">
                                 <c:forEach items="${airports}" var="airport">    
                                     <option value="${airport.id}">${airport.name}</option>
                                 </c:forEach> 
-                            </select
+                           </select>
                         </div>
 
                         <div class="col-lg-6">              
                             <label for="route"><b>Destinación: </b></label>
-                           <select name="airplane" id="airplane">
+                           <select name="destinationID" id="destinationID" class="form-control">
                                 <c:forEach items="${airports}" var="airport">    
                                     <option value="${airport.id}">${airport.name}</option>
                                 </c:forEach> 
-                            </select  
+                           </select>  
                         </div>
                     </div>
 
                     
                     <div class="row">
                         <div class="col-lg-4">
-                            <label for="arrival"><b>Precio de Billete: </b></label>
-                            <input name="arrival" id="arrival" type="number"
-                                   value="${route.ticketprice}" required>
+                            <label for="ticketprice"><b>Precio de Billete: </b></label>
+                            <input name="ticketprice" id="ticketprice" type="number"
+                                   value="${route.ticketPrice}" required>
                         </div>
                         <div class="col-lg-6">
                             <label for="airpane"><b>Avión: </b></label>
-                            <select name="airplane" id="airplane">
+                            <select name="airplaneID" id="airplaneID" class="form-control">
                                 <c:forEach items="${airplanes}" var="airplane">    
                                     <option value="${airplane.id}">${airplane.name}</option>
                                 </c:forEach> 

@@ -47,9 +47,9 @@ public class routeController extends HttpServlet {
         String forward = "";
         String operation = request.getParameter("operation");
         ArrayList<Airport> airports=new ArrayList();
-        ArrayList<Airplane> planes =new ArrayList();
+        ArrayList<Airplane> airplanes =new ArrayList();
         airports=airportDAO.findAll();
-        planes=airplaneDAO.findAll();
+        airplanes=airplaneDAO.findAll();
         boolean success = false;
         int routeId;
         
@@ -74,7 +74,7 @@ public class routeController extends HttpServlet {
             Route route = routeDAO.find(routeId);
             request.setAttribute("route", route);
             request.setAttribute("airports", airports);
-            request.setAttribute("planes", planes);
+            request.setAttribute("airplanes", airplanes);
         } else if (operation.equalsIgnoreCase("list")) {
             forward = "listRoutes.jsp";
             request.setAttribute("routes", routeDAO.findAll());
@@ -104,53 +104,27 @@ public class routeController extends HttpServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
         HttpSession s = req.getSession(true);
-        String operation = (String) req.getParameter("operation");
-        Boolean success;
-
-        if (operation.equals("add")) {
-            Airport origin = airportDAO.find(Integer.parseInt(req.getParameter("origin")));
-            Airport destination = airportDAO.find(Integer.parseInt(req.getParameter("destination")));
-            Airplane plane = airplaneDAO.find(Integer.parseInt(req.getParameter("airplane")));
-            int ticketPrice = Integer.parseInt(req.getParameter("ticketprice"));
-            
-            route = new Route();
-            route.setOrigin(origin);
-            route.setDestination(destination);
-            route.setPlane(plane);
-            route.setTicketPrice(ticketPrice);
-            success = routeDAO.insert(route);
-            if (success) {
-                res.sendRedirect(res.encodeRedirectURL("routeController?operation=list")); // o conseguir mensaje Alarma con AJAX/JavaScript
-            } else {
-                res.sendRedirect(res.encodeRedirectURL("routeController?operation=add"));  // o conseguir mensaje Alarma con AJAX/JavaScript
+        
+        Boolean success=false;
+        route=new Route();
+        Airport origin = airportDAO.find(Integer.parseInt(req.getParameter("originID")));
+        Airport destination = airportDAO.find(Integer.parseInt(req.getParameter("destinationID")));
+        Airplane plane= airplaneDAO.find(Integer.parseInt(req.getParameter("airplaneID")));
+        route.setOrigin(origin);
+        route.setDestination(destination);
+        route.setPlane(plane);
+        route.setTicketPrice(Double.parseDouble(req.getParameter("ticketprice")));
+        if(req.getParameter("id")==null || req.getParameter("id").isEmpty()){
+            success= routeDAO.insert(route);
+            if(success){
+                RequestDispatcher view= req.getRequestDispatcher("viewRoute.jsp");
+                req.setAttribute("route", route);
+                view.forward(req, res);
+            }else{
+                RequestDispatcher view= req.getRequestDispatcher("listRoutes.jsp");
+                req.setAttribute("routes", routeDAO.findAll());
+                view.forward(req, res);
             }
-        }
-        if (operation.equals("edit")) {
-            Airport origin = airportDAO.find(Integer.parseInt(req.getParameter("origin")));
-            Airport destination = airportDAO.find(Integer.parseInt(req.getParameter("destination")));
-            Airplane plane = airplaneDAO.find(Integer.parseInt(req.getParameter("airplane")));
-            int id = Integer.parseInt(req.getParameter("id"));
-            int ticketPrice = Integer.parseInt(req.getParameter("ticketPrice"));
-            route = new Route();
-            route.setId(id);
-            route.setOrigin(origin);
-            route.setDestination(destination);
-            route.setPlane(plane);
-            route.setTicketPrice(ticketPrice);
-
-            success = routeDAO.update(route);
-            if (success) {
-                res.sendRedirect(res.encodeRedirectURL("routeController?operation=list")); 
-            } else {
-                res.sendRedirect(res.encodeRedirectURL("routeController?operation=edit?routeId="+id));  
-            }
-        }
-        if (operation.equals("delete")) {
-            success = routeDAO.delete(Integer.parseInt(req.getParameter("id")));
-            if (success) {
-                res.sendRedirect(res.encodeRedirectURL("routeController?operation=list")); // o conseguir mensaje Alarma con AJAX/JavaScript
-            } else {
-                res.sendRedirect(res.encodeRedirectURL("routeController?operation=list"));  // o conseguir mensaje Alarma con AJAX/JavaScript
         }else{
             route.setId(Integer.parseInt(req.getParameter("id")));
             success=routeDAO.update(route);
@@ -166,3 +140,5 @@ public class routeController extends HttpServlet {
         }
     }
 }
+
+
