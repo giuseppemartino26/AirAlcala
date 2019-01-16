@@ -100,7 +100,7 @@
 
                         <div class="col-lg-4">
                             <label for="tax"><b>Tax</b></label>
-                            <input placeholder="Tax" name="tax" id="tax" type="number" required min="0" max="100">
+                            <input placeholder="Tax" name="tax" id="tax" type="number" step="any" required>
                         </div>
                     </div>
 

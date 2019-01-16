@@ -85,7 +85,7 @@ public class airportController extends HttpServlet {
         airport = new Airport();
         airport.setName(req.getParameter("name"));
         airport.setCountry(req.getParameter("country"));
-        airport.setTax(Integer.parseInt(req.getParameter("tax")));
+        airport.setTax(Double.parseDouble(req.getParameter("tax")));
         
         //This is the "add user" case
         if(req.getParameter("id") == null || req.getParameter("id").isEmpty()){

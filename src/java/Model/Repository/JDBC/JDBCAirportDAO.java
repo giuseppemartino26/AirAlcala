@@ -148,16 +148,16 @@ public class JDBCAirportDAO implements AirportDAO {
     public boolean update(Airport airport) {
         boolean updated = false;
         int updatedId = 0;
-        String query = "UPDATE airports SET name= '"+airport.getName()+"', country= '"+airport.getCountry()+"', tax= ?ç"
+        String query = "UPDATE airports SET name= ? country= ? tax= ?"
                 + " WHERE id = ?";
         try {
             connObj = dbConnect();
             stmtObj = connObj.prepareStatement(query);
 
-            /*stmtObj.setString(1, airport.getName());
-            stmtObj.setString(2, airport.getCountry());*/
-            stmtObj.setDouble(1, airport.getTax());
-            stmtObj.setInt(2, airport.getId());
+            stmtObj.setString(1, airport.getName());
+            stmtObj.setString(2, airport.getCountry());
+            stmtObj.setDouble(3, airport.getTax());
+            stmtObj.setInt(4, airport.getId());
             updatedId = stmtObj.executeUpdate();
 
             dbDisconnect();

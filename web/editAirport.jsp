@@ -111,7 +111,7 @@
 
                         <div class="col-lg-4">
                             <label for="tax"><b>Tax</b></label>
-                            <input placeholder="Tax" name="tax" id="tax"
+                            <input placeholder="Tax" name="tax" id="tax" type="number"
                                    value="${airport.tax}" required onChange="validate()"/>
                         </div>
                     </div>
