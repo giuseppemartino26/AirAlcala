@@ -140,24 +140,23 @@
                 </form>
             </div>
         </div>
-            <footer>
-                <div class='container'>
-                    <div class="row">
-                        <div class="col-xs-6">
-                            <p>
-                                AirAlcala - Alcal&aacute; de Henares, Madrid, España
-                            </p>
-                        </div>
-                        <div class="col-xs-6">
-                            <ul class="list-inline text-right">
-                                <li><a href="https://twitter.com/">Twitter</a></li>
-                                <li><a href="https://www.facebook.com/">Facebook</a></li>
-                                <li>Contacto 900 900 411 <a href="mailto:ciu@uah.es">ciu@uah.es</a></li>
-                            </ul>
-                        </div>
+        <footer>
+            <div class='container'>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <p>
+                            AirAlcala - Alcal&aacute; de Henares, Madrid, España
+                        </p>
+                    </div>
+                    <div class="col-xs-6">
+                        <ul class="list-inline text-right">
+                            <li><a href="https://twitter.com/">Twitter</a></li>
+                            <li><a href="https://www.facebook.com/">Facebook</a></li>
+                            <li>Contacto 900 900 411 <a href="mailto:ciu@uah.es">ciu@uah.es</a></li>
+                        </ul>
                     </div>
                 </div>
-            </footer>
-        </div>
+            </div>
+        </footer>
     </body>
 </html>
