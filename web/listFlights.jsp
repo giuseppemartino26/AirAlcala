@@ -85,7 +85,7 @@
             <br>
             <br>
             <div class="container">
-                <h4>Lista de Administradores</h4>
+                <h4>Lista de Vuelos</h4>
                 <div class="topButton"><a href="flightController?operation=add" class="btn btn-primary" role="button">Añadir Vuelo</a></div>
                 <br>
                 <table id="datatable" class="display" style="width:100%">
@@ -93,11 +93,13 @@
                         <tr>
                             <th>Localizador</th>
                             <th>Ruta</th>
-                            <th>Salida</th>
-                            <th>Llegada</th>
+                            <th>Fecha de Salida</th>
+                            <th>Tiempo de Salida</th>
+                            <th>Tiempo de Llegada</th>
+                            <th>Plazas disponibles</th>
                             <th></th>
                             <th></th>
-                            <th></th>                
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -106,7 +108,9 @@
                                 <td><c:out value="${flight.locator}" /></td>
                                 <td><c:out value="${flight.route.origin.name} a ${flight.route.destination.name} "/></td>
                                 <td><c:out value="${flight.departure}" /></td>
-                                <td><c:out value="${flight.arrival}" /></td>
+                                <td><c:out value="${flight.departuretime}" /></td>
+                                <td><c:out value="${flight.arrivaltime}" /></td>
+                                <td><c:out value="${flight.availableSeats}" /></td>
                                 <td><a href="flightController?operation=view&flightId=<c:out value="${flight.id}"/>">mirar</a></td>
                                 <td><a href="flightController?operation=edit&flightId=<c:out value="${flight.id}"/>">actualizar</a></td>
                                 <td><a href="flightController?operation=delete&flightId=<c:out value="${flight.id}"/>">borrar</a></td>
@@ -117,8 +121,10 @@
                         <tr>
                             <th>Localizador</th>
                             <th>Ruta</th>
-                            <th>Salida</th>
-                            <th>Llegada</th>
+                            <th>Fecha de Salida</th>
+                            <th>Tiempo de Salida</th>
+                            <th>Tiempo de Llegada</th>
+                            <th>Plazas disponibles</th>
                             <th></th>
                             <th></th>
                             <th></th>

@@ -55,7 +55,7 @@ public class airportController extends HttpServlet {
             airportId = Integer.parseInt(request.getParameter("airportId"));
             forward = "editAirport.jsp";
             Airport airport = airportDAO.find(airportId);
-            request.setAttribute("airports", airport);
+            request.setAttribute("airport", airport);
         } else if (operation.equalsIgnoreCase("list")){
             forward = "listAirports.jsp";
             

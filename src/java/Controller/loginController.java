@@ -107,7 +107,7 @@ public class loginController extends HttpServlet {
                     res.sendRedirect("paginauser.jsp");
                 }
             } else {
-                res.sendRedirect("loginController");
+                res.sendRedirect("loginController?operation=login");
             }
         } else {
             RequestDispatcher view = req.getRequestDispatcher("index.html");

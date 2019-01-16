@@ -12,7 +12,7 @@
 <html lang="en">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>AirAlcala</title>   
+        <title>Crear Vuelos</title>   
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet"
               href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -21,7 +21,35 @@
         <script
         src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <link rel="stylesheet" type="text/css" href="styles/styles.css">
-
+        <script>
+            function validation() {
+                if (document.getElementById('origin').value == '') {
+                    alert('Introduzca un origen');
+                    return false;
+                }
+                if (document.getElementById('destination').value == '') {
+                    alert('Introduzca una destinación');
+                    return false;
+                }
+                if (document.getElementById('airplane_id').value == '') {
+                    alert('Introduzca un avión');
+                    return false;
+                }
+                if (document.getElementById('ticketprice').value == '') {
+                    alert('Introduzca una precio de billete');
+                    return false;
+                }
+                if (document.getElementById('luggageprice').value == '') {
+                    alert('Introduzca un precio de maleta');
+                    return false;
+                }
+                if (document.getElementById('tax').value == '') {
+                    alert('Introduzca un porcentaje de impuestos');
+                    return false;
+                }                
+                return true;
+            }
+        </script>
     </head>
 
     <body>
@@ -40,7 +68,7 @@
             <nav class="navbar navbar-default">
                 <div class="container-fluid">
                     <div class="navbar-header">
-                        <a class="navbar-brand" href="index.html">AirAlcalá</a>
+                        <a class="navbar-brand" href="#">AirAlcalá</a>
                     </div>
                     <ul class="nav navbar-nav">
                         <%if (session.getAttribute("sessionAdminId") != null || (session.getAttribute("sessionUserId") != null && session.getAttribute("sessionAdminId") != null)) { %>
@@ -52,13 +80,13 @@
                         <li class="active"><a href="routeController?operation=list">Rutas</a></li>        
                         <li class="active"><a href="saleController?operation=overview">Estadísticas</a></li>    <!-- aún no existe, hay que crearlo y calcular las estadísticas en el Controlador (GET) -->
                             <%}
-                                if (session.getAttribute("sessionUserId") != null && !(session.getAttribute("sessionUserId") != null && session.getAttribute("sessionAdminId") != null)) {%>
-                        <li class="active"><a href="index.html">Buscar Vuelos</a></li>
-                        <li class="active"><a href="saleController?operation=list&userId=<%=session.getAttribute("sessionUserId")%>">Mirar Compras</a></li>
-                        <li class="active"><a href="creditcardController?operation=edit&userId=<%=session.getAttribute("sessionUserId")%>">Editar Medios de Pago</a></li>
+                if (session.getAttribute("sessionUserId") != null && !(session.getAttribute("sessionUserId") != null && session.getAttribute("sessionAdminId") != null)) {%>
+                        <li class="active"><a href="flightController?operation=search">Buscar Vuelos</a></li>
+                        <li class="active"><a href="salesController?operation=list&userId=<%=session.getAttribute("sessionUserId")%>">Mirar Compras</a></li>
+                        <li class="active"><a href="creditcardController?operation=list">Editar Medios de Pago</a></li>
                             <%}
-                                if (session.getAttribute("sessionUserId") == null && session.getAttribute("sessionAdminId") == null) { %>
-                        <li class="active"><a href="index.html">Inicio</a></li>
+                if (session.getAttribute("sessionUserId") == null && session.getAttribute("sessionAdminId") == null) { %>
+                        <li class="active"><a href="index.jsp">Inicio</a></li>
                         <li class="active"><a href="userController?operation=add">Crear Cuenta</a></li>
                             <%}%>
                     </ul>
@@ -68,12 +96,12 @@
                                 <span class="glyphicon glyphicon-user"></span><%=session.getAttribute("sessionAdminPname")%></a></li>
                         <li><a href="adminlogoutController"><span class="glyphicon glyphicon-log-out"></span>Admin Logout</a></li>
                             <%}
-                                if (session.getAttribute("sessionUserId") != null && !(session.getAttribute("sessionUserId") != null && session.getAttribute("sessionAdminId") != null)) {%>
+                if (session.getAttribute("sessionUserId") != null && !(session.getAttribute("sessionUserId") != null && session.getAttribute("sessionAdminId") != null)) {%>
                         <li><a href="userController?operation=view&userId=<%=session.getAttribute("sessionUserId")%>">
                                 <span class="glyphicon glyphicon-user"></span><%=session.getAttribute("sessionUserPname")%></a></li>
                         <li><a href="logoutController"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
                             <%}
-                                if (session.getAttribute("sessionUserId") == null && session.getAttribute("sessionAdminId") == null) {%>
+                if (session.getAttribute("sessionUserId") == null && session.getAttribute("sessionAdminId") == null) {%>
                         <li><a href="loginController"><span class="glyphicon glyphicon-log-out">
                                 </span>Login</a></li>
                                 <% }%>
@@ -82,41 +110,48 @@
             </nav>
             <br>
             <div class="container">
-                <h2>Editar Vuelo</h2>
+                <h2>Crear Vuelo</h2>
                 <br>
                 <div class="btn-group topButton" role="group" aria-label="Basic example">
                     <a href="flightController?operation=list" class="btn btn-primary" role="button">Volver a Lista</a>
                 </div>
-                <form method="POST" action="flightController" class="form-container" onsubmit="showResponse()">
+                <form method="POST" action="flightController?operation=add" class="form-container" onsubmit="showResponse()">
                     <div class="row">
-                        <input type="hidden" name="id" value="${flight.id}" />
-                        <div class="col-lg-6">
-                            <label for="name"><b>Localizador</b></label>
-                            <input placeholder="locator" name="locator" id="locator" type="text" value="${flight.locator}" required>
+                         <div class="col-lg-6">
+                            <label for="locator"><b>Locator:</b></label>
+                            <input name="locator" id="locator" type="text"
+                                   value="${flight.locator}" required>
                         </div>
-
-                        <div class="col-lg-6">              
-                            <label for="route"><b>Ruta: </b></label>
-                            <select name="route" id="route" required>
-                                <c:forEach items="${routes}" var="route">
-                                    <option value="${route.id}"> ${route.origin} => ${route.destination}</option>
-                                </c:forEach>
-                            </select>
+                        <div class="col-lg-6">
+                            <label for="routeID"><b>Ruta: </b></label>
+                           <select name="routeID" class="form-control" id="routeID">
+                                <c:forEach items="${routes}" var="route">    
+                                    <option value="${route.id}" 
+                                        <c:if test="${flight.route.id} == ${route.id}"></c:if>
+                                        <c:out value="selected"/>>
+                                        ${route.origin.name} a ${route.destination.name}</option>
+                                </c:forEach> 
+                           </select>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-6">
-                            <label for="departure"><b>Fecha de Salida: </b></label>
-                            <input name="departure" id="departure" type="date" required="">
+                        <div class="col-lg-4">
+                            <label for="departuredate"><b>Fecha de Salida: </b></label>
+                            <input name="departuredate" class="form-control" id="departuredate"
+                                   value = "${flight.departure}"type="date" required>
                         </div>
-
-                        <div class="col-lg-6">
-                            <label for="arrival"><b>Fecha de Llegada: </b></label>
-                            <input name="arrival" id="arrival" type="date" required>
+                        <div class="col-lg-4">
+                            <label for="departuretime"><b>Tiempo de Salida: </b></label>
+                            <input name="departuretime" class="form-control" id="departuretime"
+                                   value = "${flight.departuretime}" type="time" required>
+                        </div>
+                        <div class="col-lg-4">
+                            <label for="arrivaltime"><b>Tiempo de Llegada: </b></label>
+                            <input name="arrivaltime" class="form-control" id="arrivaltime"
+                                   value = "${flight.arrivaltime}" type = "time" required>
                         </div>
                     </div>
 
-                    <div class="row">
                         <div class="col-lg-6">
                             <button type="submit" class="btn">Env&iacute;o</button>
                         </div>
@@ -127,7 +162,7 @@
                     </div>
                 </form>
             </div>
-        </div>
+
             <footer>
                 <div class='container'>
                     <div class="row">

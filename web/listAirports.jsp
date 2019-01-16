@@ -99,6 +99,7 @@
                             <th>Tax</th>
                             <th></th>
                             <th></th>
+                            <th></th>
 
                         </tr>
                     </thead>
@@ -121,6 +122,7 @@
                             <th>Nombre</th>
                             <th>País</th>
                             <th>Tax</th>
+                            <th></th>
                             <th></th>
                             <th></th>
                         </tr> 

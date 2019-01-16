@@ -76,7 +76,7 @@
             <div class="container">
                 <h2>Login</h2>
                 <br>
-                <form method="POST" action="loginController" class="form-container" onsubmit="return validation()">
+                <form method="POST" action="loginController?operation=login" class="form-container" onsubmit="return validation()">
                     <div class="row">
                         <div class="col-lg-6">
                             <label for="email"><b>Email</b></label>

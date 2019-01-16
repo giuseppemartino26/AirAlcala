@@ -4,6 +4,7 @@
     Author     : Martin
 --%>
 
+<%@page import="Model.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
@@ -28,9 +29,20 @@
     </head>
     <body>
         <%
+            // Realizes that a user can only open his own edit form
+            User user = (User) request.getAttribute("user");
+            int userId=-1;
+            if(user!=null)
+                userId = user.getId();
+            Integer sessionUserId = (Integer) session.getAttribute("sessionUserId");
             //allow access only if session exists
-            if (session.getAttribute("sessionUserId") == null) {
+            if (session.getAttribute("sessionUserId") == null && session.getAttribute("sessionAdminId") == null)
                 response.sendRedirect("loginController");
+            if(user != null){
+                if( sessionUserId != userId)
+                    response.sendRedirect("userController?operation=view&userId="+sessionUserId);
+            } else{
+                response.sendRedirect("userController?operation=view&userId="+sessionUserId);
             }
         %>
         <div id="wrapper">

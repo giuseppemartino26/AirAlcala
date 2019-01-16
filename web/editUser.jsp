@@ -4,6 +4,7 @@
     Author     : Martin
 --%>
 
+<%@page import="Model.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.sql.*;" %>
 <!DOCTYPE html>
@@ -29,11 +30,22 @@
         </script>
 
     </head>
-    <body>
+    <body>     
         <%
+            // Realizes that a user can only open his own edit form
+            User user = (User) request.getAttribute("user");
+            int userId=-1;
+            if(user!=null)
+                userId = user.getId();
+            Integer sessionUserId = (Integer) session.getAttribute("sessionUserId");
             //allow access only if session exists
-            if (session.getAttribute("sessionAdminId") == null && session.getAttribute("sessionUserId") == null) {
+            if (session.getAttribute("sessionUserId") == null && session.getAttribute("sessionAdminId") == null)
                 response.sendRedirect("loginController");
+            if(user != null){
+                if( sessionUserId != userId)
+                    response.sendRedirect("userController?operation=edit&userId="+sessionUserId);
+            } else{
+                response.sendRedirect("userController?operation=edit&userId="+sessionUserId);
             }
         %>
         <div id="wrapper">
@@ -87,7 +99,7 @@
             </nav>
             <br>
             <div class="container">
-                <h2>Editar Cuenta de Usario</h2>
+                <h2>Editar Cuenta de Usario <%=session.getAttribute("sessionUserId")%></h2>
                 <br>
                 <div class="btn-group topButton" role="group" aria-label="Basic example">
                     <% if (session.getAttribute("sessionAdminId") != null) { %>

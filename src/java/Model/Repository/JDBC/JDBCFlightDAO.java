@@ -70,8 +70,10 @@ public class JDBCFlightDAO implements FlightDAO {
                 flight.setId(rsObj.getInt("id"));
                 flight.setLocator(rsObj.getString("locator"));
                 flight.setRoute(route);
-                flight.setDeparture(rsObj.getDate("departure"));
-                flight.setArrival(rsObj.getDate("arrival"));
+                flight.setDeparture(rsObj.getDate("departure_date"));
+                flight.setDeparturetime(rsObj.getString("departure_time"));
+                flight.setArrivaltime(rsObj.getString("arrival_time"));
+                flight.setAvailableSeats(rsObj.getInt("available_seats"));
             }
             rsObj.close();
             dbDisconnect();
@@ -85,8 +87,8 @@ public class JDBCFlightDAO implements FlightDAO {
     public boolean insert(Flight flight) {
         boolean inserted = false;
         int insertedId = 0;
-        String query = "INSERT INTO flights (locator, route_id, departure, arrival) "
-                + "VALUES (?,?,?,?)";
+        String query = "INSERT INTO flights (locator, route_id, departure_date, departure_time, arrival_time, available_seats) "
+                + "VALUES (?,?,?,?,?,?)";
 
         try {
             connObj = dbConnect();
@@ -94,8 +96,9 @@ public class JDBCFlightDAO implements FlightDAO {
             stmtObj.setString(1, flight.getLocator());
             stmtObj.setInt(2, flight.getRoute().getId());
             stmtObj.setDate(3, flight.getDeparture());
-            stmtObj.setDate(4, flight.getArrival());
-
+            stmtObj.setString(4, flight.getDeparturetime());
+            stmtObj.setString(5, flight.getArrivaltime());
+            stmtObj.setInt(6, flight.getAvailableSeats());
             insertedId = stmtObj.executeUpdate();
 
             dbDisconnect();
@@ -112,19 +115,21 @@ public class JDBCFlightDAO implements FlightDAO {
     public boolean update(Flight flight) {
         boolean updated = false;
         int updatedId = 0;
-        String query = "UPDATE routes SET locator = '"+flight.getLocator()+"', route_id = ?,"
-                + "departure = '"+flight.getDeparture()+"', arrival = '"+flight.getArrival()+"'"
+        String query = "UPDATE flights SET locator = ?, route_id = ?,"
+                + "departure_date = ?, departure_time = ?, arrival_time = ?, available_seats = ?"
                 + "WHERE id = ?;";
         try {
             connObj = dbConnect();
             stmtObj = connObj.prepareStatement(query);
 
             stmtObj = connObj.prepareStatement(query);
-            //stmtObj.setString(1, flight.getLocator());
-            stmtObj.setInt(1, flight.getRoute().getId());
-            /*stmtObj.setDate(3, flight.getDeparture());
-            stmtObj.setDate(4, flight.getArrival());*/
-            stmtObj.setInt(2, flight.getId());
+            stmtObj.setString(1, flight.getLocator());
+            stmtObj.setInt(2, flight.getRoute().getId());
+            stmtObj.setDate(3, flight.getDeparture());
+            stmtObj.setString(4, flight.getDeparturetime());
+            stmtObj.setString(5, flight.getArrivaltime());
+            stmtObj.setInt(6, flight.getAvailableSeats());
+            stmtObj.setInt(7, flight.getId());
 
             updatedId = stmtObj.executeUpdate();
 
@@ -178,9 +183,11 @@ public class JDBCFlightDAO implements FlightDAO {
                 flight.setId(rsObj.getInt("id"));
                 flight.setLocator(rsObj.getString("locator"));
                 flight.setRoute(route);
-                flight.setDeparture(rsObj.getDate("departure"));
-                flight.setArrival(rsObj.getDate("arrival"));
-
+                flight.setDeparture(rsObj.getDate("departure_date"));
+                flight.setDeparturetime(rsObj.getString("departure_time"));
+                flight.setArrivaltime(rsObj.getString("arrival_time"));
+                flight.setAvailableSeats(rsObj.getInt("available_seats"));
+                
                 flightList.add(flight);
             }
             rsObj.close();
@@ -209,7 +216,9 @@ public class JDBCFlightDAO implements FlightDAO {
                 flight.setLocator(rsObj.getString("locator"));
                 flight.setRoute(route);
                 flight.setDeparture(rsObj.getDate("departure"));
-                flight.setArrival(rsObj.getDate("arrival"));
+                flight.setArrivaltime(rsObj.getString("departure_time"));
+                flight.setArrivaltime(rsObj.getString("arrival_time"));
+                flight.setAvailableSeats(rsObj.getInt("available_seats"));
 
                 flightList.add(flight);
             }

@@ -15,7 +15,9 @@ public class Flight {
     private String locator;
     private Route route;
     private java.sql.Date departure;
-    private java.sql.Date arrival;
+    private String departuretime;
+    private String arrivaltime;
+    private int availableSeats;
 
     public Flight() {
     }
@@ -52,12 +54,28 @@ public class Flight {
     public void setDeparture(java.sql.Date departure) {
         this.departure = departure;
     }
-
-    public java.sql.Date getArrival() {
-        return arrival;
+    
+    public String getDeparturetime(){
+        return departuretime;
+    }
+    
+    public void setDeparturetime(String departuretime){
+        this.departuretime = departuretime;
+    }
+    
+    public String getArrivaltime() {
+        return arrivaltime;
     }
 
-    public void setArrival(java.sql.Date arrival) {
-        this.arrival = arrival;
+    public void setArrivaltime(String arrivaltime) {
+        this.arrivaltime = arrivaltime;
+    }
+    
+    public int getAvailableSeats(){
+        return availableSeats;
+    }
+    
+    public void setAvailableSeats(int availableSeats){
+        this.availableSeats = availableSeats;
     }
 }

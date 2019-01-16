@@ -93,7 +93,7 @@
                 <div class="btn-group topButton" role="group" aria-label="Basic example">
                     <a href="airplaneController?operation=list" class="btn btn-primary" role="button">Volver a Lista</a>        
                 </div>
-                <form method="POST" action="airportController" class="form-container" onsubmit="showResponse()">
+                <form method="POST" action="airplaneController" class="form-container" onsubmit="showResponse()">
                     <div class="row">
                         <input type="hidden" name="id" value="${airplane.id}" />
                         <div class="col-lg-6">

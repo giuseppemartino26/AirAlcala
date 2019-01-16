@@ -95,19 +95,23 @@
                 <table class="table table-striped" style="width:100%">
                     <tr>
                         <th>Id</th> 
-                        <td>${fligh.id}</td>
+                        <td>${flight.id}</td>
                     </tr>
                     <tr>
                         <th>Ruta: </th>
-                        <td>${flight.route.origin} a $(flight.route.destination)</td>
+                        <td>${flight.route.origin.name} a ${flight.route.destination.name}</td>
                     </tr>
                     <tr>
-                        <th>Salida: </th>
+                        <th>Fecha de Salida: </th>
                         <td>${flight.departure}</td>
                     </tr>
                     <tr>
-                        <th>Llegada: </th>
-                        <td>${flight.arrival}</td>
+                        <th>Tiempo de Salida </th>
+                        <td>${flight.departuretime}</td>
+                    </tr>                    
+                    <tr>
+                        <th>Tiempo de Llegada: </th>
+                        <td>${flight.arrivaltime}</td>
                     </tr>
                 </table>
             </div>

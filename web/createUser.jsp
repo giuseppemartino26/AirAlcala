@@ -21,10 +21,10 @@
         src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <link rel="stylesheet" type="text/css" href="styles/styles.css">
         <script>
-            function checkPasswordMatch() {
-                if ($("#pass1").val() !== $("pass2").val())
-                    alert("Passwords do not match!");
-            }
+      //      function checkPasswordMatch() {
+      //          if ($("#pass1").val() !== $("pass2").val())
+      //              alert("Passwords do not match!");
+      //      }
         </script>
     </head>
 

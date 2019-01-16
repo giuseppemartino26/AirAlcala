@@ -86,7 +86,7 @@ public class flightController extends HttpServlet {
         } else if (operation.equalsIgnoreCase("view")){
             flightId = Integer.parseInt(request.getParameter("flightId"));
             forward = "viewFlights.jsp";
-            request.setAttribute("flights", flightDAO.find(flightId));
+            request.setAttribute("flight", flightDAO.find(flightId));
         } else {
             forward = "listFlights.jsp";
         }
@@ -105,18 +105,21 @@ public class flightController extends HttpServlet {
         flight = new Flight();
         Route route = new Route();
         RouteDAO routeDAO = new JDBCRouteDAO();
-        int routeId=Integer.parseInt(req.getParameter("route"));
+        int routeId=Integer.parseInt(req.getParameter("routeID"));
         route=routeDAO.find(routeId);
-        System.out.println("ruta- "+route.getId()+"-"+routeId);
         
-        java.sql.Date departureDate = java.sql.Date.valueOf(req.getParameter("departure"));
-        java.sql.Date arrivalDate = java.sql.Date.valueOf(req.getParameter("arrival"));
+        String locator = req.getParameter("locator");
+        java.sql.Date departureDate = java.sql.Date.valueOf(req.getParameter("departuredate"));
+        String departuretime = req.getParameter("departuretime");
+        String arrivaltime= req.getParameter("arrivaltime");
         
-        flight.setLocator(req.getParameter("locator"));
+        flight.setLocator(locator);
         flight.setRoute(route);
         flight.setDeparture(departureDate);
-        flight.setArrival(arrivalDate);
-
+        flight.setDeparturetime(departuretime);
+        flight.setArrivaltime(arrivaltime);
+        flight.setAvailableSeats(route.getPlane().getPlaces());
+        System.out.println(flight.getArrivaltime());
         //This is the "add flight" case
         if(req.getParameter("id") == null || req.getParameter("id").isEmpty()){
             success = flightDAO.insert(flight);

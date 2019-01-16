@@ -79,23 +79,14 @@ public class administratorController extends HttpServlet {
         HttpSession s = req.getSession(true);
 
         Boolean success = false;
-        String securePass = "";        
-        String clearPass = req.getParameter("pass1");
-        SecurePasswordHelper sec = new SecurePasswordHelper();
-        
-        // Convert Password into secure hash using helper class
-        try {
-            securePass = sec.generateSecurePasswordHash(clearPass);
-        } catch (NoSuchAlgorithmException | InvalidKeySpecException ex) {
-            Logger.getLogger(userController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
         
         admin = new Administrator();
         admin.setPname(req.getParameter("pname"));
         admin.setSname1(req.getParameter("sname1"));
         admin.setSname2(req.getParameter("sname2"));
         admin.setEmail(req.getParameter("email"));
-        admin.setPass(securePass);
+        admin.setPass(req.getParameter("pass1"));
         
         //This is the "add user" case
         if(req.getParameter("id") == null || req.getParameter("id").isEmpty()){

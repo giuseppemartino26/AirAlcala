@@ -5,10 +5,16 @@
  */
 package Model.Repository.JDBC;
 
+import Controller.userController;
+import Helpers.SecurePasswordHelper;
 import Model.Administrator;
 import Model.Repository.AdministratorDAO;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -127,14 +133,27 @@ public class JDBCAdministratorDAO implements AdministratorDAO {
     public boolean insert(Administrator admin) {
         boolean inserted = false;
         int insertedId = 0;
+        
         String query = "INSERT INTO administrators (email, pass, prename, surname1, surname2) "
                 + "VALUES (?,?,?,?,?)";
+        
+        // Insert Password as a salted hash with 1000 iterations
+        String securePass = "";        
+        SecurePasswordHelper sec = new SecurePasswordHelper();
+        
+        // Convert Password into secure hash using helper class
+        try {
+            securePass = sec.generateSecurePasswordHash(admin.getPass());
+        } catch (NoSuchAlgorithmException | InvalidKeySpecException ex) {
+            Logger.getLogger(userController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         
         try {
             connObj = dbConnect();
             stmtObj = connObj.prepareStatement(query);
             stmtObj.setString(1, admin.getEmail());
-            stmtObj.setString(2,admin.getPass());
+            stmtObj.setString(2,securePass);
             stmtObj.setString(3,admin.getPname());
             stmtObj.setString(4,admin.getSname1());
             stmtObj.setString(5,admin.getSname2());
@@ -155,26 +174,61 @@ public class JDBCAdministratorDAO implements AdministratorDAO {
     public boolean update(Administrator admin) {
         boolean updated = false;
         int updatedId = 0; 
-        String query = "UPDATE administrators SET email= '"+admin.getEmail()+"', pass= '"+admin.getPass()+"',"
-                + "prename= '"+admin.getPname()+"', surname1= '"+admin.getSname1()+"',surname2= '"+admin.getSname2()+"'"
-                + "WHERE id = ?";
-        try {
-            connObj = dbConnect();
-            stmtObj = connObj.prepareStatement(query);
-           
-            /*stmtObj.setString(1,admin.getEmail());
-            stmtObj.setString(2,admin.getPass());            
-            stmtObj.setString(3,admin.getPname());
-            stmtObj.setString(4,admin.getSname1());
-            stmtObj.setString(5,admin.getSname2());*/
-            stmtObj.setInt(1, admin.getId());
-            
-            updatedId = stmtObj.executeUpdate();
+        
+        // Diferentiate two cases: 1. Psasword has not been changed -> Must remain unchanged in DB too
+        if(admin.getPass().equals("")){
+            String query = "UPDATE administrators SET email= ?, "
+                    + "prename= ?, surname1= ?,surname2= ?"
+                    + "WHERE id = ?";
+            try {
+                connObj = dbConnect();
+                stmtObj = connObj.prepareStatement(query);
 
-            dbDisconnect();
-        } catch (SQLException e) {
-            System.out.println("Not inserted. " + e);
+                stmtObj.setString(1,admin.getEmail());
+                stmtObj.setString(2,admin.getPname());
+                stmtObj.setString(3,admin.getSname1());
+                stmtObj.setString(4,admin.getSname2());
+                stmtObj.setInt(5, admin.getId());
+
+                updatedId = stmtObj.executeUpdate();
+
+                dbDisconnect();
+            } catch (SQLException e) {
+                System.out.println("Not inserted. " + e);
+            }
+        // If Password was changed change it by replacing secure hash value    
+        } else{
+            // Convert Password into secure hash using helper class
+            String securePass = "";
+            SecurePasswordHelper sec = new SecurePasswordHelper();
+            
+            try {
+                securePass = sec.generateSecurePasswordHash(admin.getPass());
+            } catch (NoSuchAlgorithmException | InvalidKeySpecException ex) {
+                Logger.getLogger(userController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            String query = "UPDATE administrators SET email= ?, pass = ?, "
+                    + "prename= ?, surname1= ?,surname2= ?"
+                    + "WHERE id = ?";
+            try {
+                connObj = dbConnect();
+                stmtObj = connObj.prepareStatement(query);
+                stmtObj.setString(1, admin.getEmail());
+                stmtObj.setString(2, securePass);
+                stmtObj.setString(3,admin.getPname());
+                stmtObj.setString(4,admin.getSname1());
+                stmtObj.setString(5,admin.getSname2());
+                stmtObj.setInt(6, admin.getId());
+
+                updatedId = stmtObj.executeUpdate();
+
+                dbDisconnect();
+            } catch (SQLException e) {
+                System.out.println("Not inserted. " + e);
+            }            
         }
+        
         if (updatedId > 0) {
             updated = true;
         }
