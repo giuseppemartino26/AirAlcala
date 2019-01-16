@@ -47,8 +47,9 @@ public class loginController extends HttpServlet {
         HttpSession s = request.getSession(true);
         double iva = 0.21;
         int flightId = 0;
-        System.out.println(request.getParameter("flightId"));
-        if (request.getParameter("flightId")!=null) {
+        String operation = request.getParameter("operation");
+        String forward = "";
+        if (operation.equalsIgnoreCase("sale")) {
             flightId = Integer.parseInt(request.getParameter("flightId"));
             Flight flight = new Flight();
             FlightDAO flightDAO = new JDBCFlightDAO();
@@ -58,16 +59,25 @@ public class loginController extends HttpServlet {
             System.out.println(flight.getLocator());
             double price = flight.getRoute().getTicketPrice();
             double tax = flight.getRoute().getOrigin().getTax();
-            compra = ((price + tax) * iva)*((int) s.getAttribute("passengers"));
+            compra = ((price + tax) * iva) * ((int) s.getAttribute("passengers"));
             s.setAttribute("flightId", flightId);
             s.setAttribute("price", compra);
             s.setAttribute("proceso", "ventaFlight");
-
+            forward = "index.jsp";
+        } else if (operation.equalsIgnoreCase("alreadylogin")) {
+            forward = "Pay_data.jsp";
+            user=userDAO.find((int) s.getAttribute("sessionUserId"));
+            request.setAttribute("user", user);
+            CreditCard creditCard = new CreditCard();
+            CreditCardDAO creditCardDAO = new JDBCCreditCardDAO();
+            creditCard = creditCardDAO.findByUserId(user.getId());
+            request.setAttribute("creditCard", creditCard);
         } else {
+            forward = "index.jsp";
             s.setAttribute("proceso", "myAcount");
         }
 
-        RequestDispatcher view = request.getRequestDispatcher("index.jsp");
+        RequestDispatcher view = request.getRequestDispatcher(forward);
         view.forward(request, response);
     }
 
@@ -79,7 +89,6 @@ public class loginController extends HttpServlet {
         String clearPass = req.getParameter("pass");
         SecurePasswordHelper sec = new SecurePasswordHelper();
         Boolean success = false;
-        System.out.println("Test");
 
         User user = new User();
         UserDAO userDAO = new JDBCUserDAO();
@@ -99,13 +108,15 @@ public class loginController extends HttpServlet {
                 HttpSession s = req.getSession(true);
                 s.setAttribute("sessionUserId", user.getId());
                 s.setAttribute("sessionUserPname", user.getPname());
+
                 if (s.getAttribute("proceso").equals("ventaFlight")) {
                     RequestDispatcher view = req.getRequestDispatcher("Pay_data.jsp");
                     req.setAttribute("user", user);
                     req.setAttribute("creditCard", creditCard);
+                    s.setAttribute("creditCardId", creditCard.getId());
                     view.forward(req, res);
                 } else {
-                    res.sendRedirect("flightController?operation=search");
+                    res.sendRedirect("paginauser.jsp");
                 }
             } else {
                 res.sendRedirect("loginController");

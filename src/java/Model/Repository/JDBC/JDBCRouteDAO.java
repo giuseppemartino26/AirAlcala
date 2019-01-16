@@ -62,18 +62,14 @@ public class JDBCRouteDAO implements RouteDAO {
             if (rsObj.next()) {
                 AirplaneDAO planeDAO = new JDBCAirplaneDAO();
                 Airplane plane = planeDAO.find(rsObj.getInt("airplane_id"));
-
                 AirportDAO airportDAO = new JDBCAirportDAO();
-                Airport origin = airportDAO.findName(rsObj.getString("origin"));
-                Airport destination = airportDAO.findName(rsObj.getString("destination"));
-
+                Airport origin = airportDAO.find(rsObj.getInt("origin"));
+                Airport destination = airportDAO.find(rsObj.getInt("destination"));
                 route.setId(rsObj.getInt("id"));
                 route.setOrigin(origin);
                 route.setDestination(destination);
                 route.setPlane(plane);
                 route.setTicketPrice(rsObj.getInt("ticketprice"));
-                route.setLuggagePrice(rsObj.getInt("luggageprice"));
-                route.setTax(rsObj.getDouble("tax"));
             }
             rsObj.close();
             dbDisconnect();
@@ -87,8 +83,8 @@ public class JDBCRouteDAO implements RouteDAO {
     public boolean insert(Route route) {
         boolean inserted = false;
         int insertedId = 0;
-        String query = "INSERT INTO routes (origin, destination, airplane_id, ticketprice, luggageprice, tax) "
-                + "VALUES (?,?,?,?,?,?)";
+        String query = "INSERT INTO routes (origin, destination, airplane_id, ticketprice) "
+                + "VALUES (?,?,?,?)";
 
         try {
             connObj = dbConnect();
@@ -97,8 +93,6 @@ public class JDBCRouteDAO implements RouteDAO {
             stmtObj.setInt(2, route.getDestination().getId());
             stmtObj.setInt(3, route.getPlane().getId());
             stmtObj.setDouble(4, route.getTicketPrice());
-            stmtObj.setDouble(5, route.getLuggagePrice());
-            stmtObj.setDouble(5, route.getTax());
 
             insertedId = stmtObj.executeUpdate();
 
@@ -117,7 +111,7 @@ public class JDBCRouteDAO implements RouteDAO {
         boolean updated = false;
         int updatedId = 0;
         String query = "UPDATE routes SET origin = ?, destination = ?,"
-                + "airplane_id = ?, ticketprice = ?,luggageprice = ?, tax = ?"
+                + "airplane_id = ?, ticketprice = ?"
                 + "WHERE id = ?;";
         try {
             connObj = dbConnect();
@@ -127,8 +121,6 @@ public class JDBCRouteDAO implements RouteDAO {
             stmtObj.setInt(2, route.getDestination().getId());
             stmtObj.setInt(3, route.getPlane().getId());
             stmtObj.setDouble(4, route.getTicketPrice());
-            stmtObj.setDouble(5, route.getLuggagePrice());
-            stmtObj.setDouble(6, route.getTax());
             stmtObj.setInt(7, route.getId());
             updatedId = stmtObj.executeUpdate();
 
@@ -182,14 +174,13 @@ public class JDBCRouteDAO implements RouteDAO {
                 AirportDAO airportDAO = new JDBCAirportDAO();
                 Airport origin = airportDAO.find(rsObj.getInt("origin"));
                 Airport destination = airportDAO.find(rsObj.getInt("destination"));
+                
 
                 route.setId(rsObj.getInt("id"));
                 route.setOrigin(origin);
                 route.setDestination(destination);
                 route.setPlane(plane);
                 route.setTicketPrice(rsObj.getInt("ticketprice"));
-                route.setLuggagePrice(rsObj.getInt("luggageprice"));
-                route.setTax(rsObj.getDouble("tax"));
 
                 routeList.add(route);
             }
@@ -226,8 +217,6 @@ public class JDBCRouteDAO implements RouteDAO {
                 route.setDestination(destinationAirpot);
                 route.setPlane(plane);
                 route.setTicketPrice(rsObj.getInt("ticketprice"));
-                route.setLuggagePrice(rsObj.getInt("luggageprice"));
-                route.setTax(rsObj.getDouble("tax"));
                 if (plane.getPlaces() > passengers) {
                     routeList.add(route);
                 }

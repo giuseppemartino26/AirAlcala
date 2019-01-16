@@ -27,6 +27,8 @@ public interface SaleDAO {
     public String generarID();
     
     public boolean comprobarId(String id);
+    
+    public ArrayList<Sale> findByUserId(int userId);
 
 
 }

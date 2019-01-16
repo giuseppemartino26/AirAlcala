@@ -62,11 +62,14 @@ public class flightController extends HttpServlet {
         if (operation.equalsIgnoreCase("delete")){
             flightId = Integer.parseInt(request.getParameter("flightId"));
             success = flightDAO.delete(flightId);
+            if(success)
+                System.out.println("se borro vuelo");
             forward = "listFlights.jsp";
             request.setAttribute("flights", flightDAO.findAll());
         } else if (operation.equalsIgnoreCase("add")){
-            forward = "createFlights.jsp";
-            request.setAttribute("flight", flight);
+            forward = "createFlight.jsp";
+            //request.setAttribute("flight", flight);
+            System.out.println(routeList.toString());
             request.setAttribute("routes", routeList);
         } else if (operation.equalsIgnoreCase("search")){
             forward = "searchFlights.jsp";
@@ -82,7 +85,7 @@ public class flightController extends HttpServlet {
             request.setAttribute("flights", flightDAO.findAll());
         } else if (operation.equalsIgnoreCase("view")){
             flightId = Integer.parseInt(request.getParameter("flightId"));
-            forward = "viewFlight.jsp";
+            forward = "viewFlights.jsp";
             request.setAttribute("flights", flightDAO.find(flightId));
         } else {
             forward = "listFlights.jsp";
@@ -102,7 +105,9 @@ public class flightController extends HttpServlet {
         flight = new Flight();
         Route route = new Route();
         RouteDAO routeDAO = new JDBCRouteDAO();
-        routeDAO.find(Integer.parseInt(req.getParameter("route_id")));
+        int routeId=Integer.parseInt(req.getParameter("route"));
+        route=routeDAO.find(routeId);
+        System.out.println("ruta- "+route.getId()+"-"+routeId);
         
         java.sql.Date departureDate = java.sql.Date.valueOf(req.getParameter("departure"));
         java.sql.Date arrivalDate = java.sql.Date.valueOf(req.getParameter("arrival"));
@@ -117,7 +122,7 @@ public class flightController extends HttpServlet {
             success = flightDAO.insert(flight);
             req.setAttribute("success", success);
             if(success){
-                RequestDispatcher view = req.getRequestDispatcher("viewFlight.jsp");
+                RequestDispatcher view = req.getRequestDispatcher("viewFlights.jsp");
                 req.setAttribute("flight", flight);
                 view.forward(req, res);
             }
@@ -128,7 +133,7 @@ public class flightController extends HttpServlet {
             success = flightDAO.update(flight);
             req.setAttribute("success", success);
             if(success){
-                RequestDispatcher view = req.getRequestDispatcher("viewFlight.jsp");
+                RequestDispatcher view = req.getRequestDispatcher("viewFlights.jsp");
                 req.setAttribute("flight", flight);
                 view.forward(req, res);
             }

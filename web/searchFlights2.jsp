@@ -28,14 +28,6 @@
             function check_data() {
                 var dNow = new Date();
                 var date = new Date($("#departure_date").val());
-                if ($("#source").val() == "") {
-                    alert("Falta el origen del vuelo");
-                    return false;
-                }
-                if ($("#destination").val() == "") {
-                    alert("Falta el destino del vuelo");
-                    return false;
-                }
                 if (dNow > date) {  /*cant pick today */
                     alert("Fecha de salida invalida");
                     return false;
@@ -56,13 +48,13 @@
         </script>
     </head>
     <body>
-    
-    <%
-    //allow access only if session exists
-    if(session.getAttribute("sessionUserId") == null){
-            response.sendRedirect("loginController");
-    }
-    %>
+
+        <%
+            //allow access only if session exists
+            if (session.getAttribute("sessionUserId") == null) {
+                response.sendRedirect("loginController");
+            }
+        %>
 
 
         <div id="wrapper">
@@ -86,12 +78,12 @@
                         <li class="active"><a href="routeController?operation=list">Rutas</a></li>        
                         <li class="active"><a href="saleController?operation=overview">Estadsticas</a></li>    <!-- an no existe, hay que crearlo y calcular las estadsticas en el Controlador (GET) -->
                             <%}
-                if (session.getAttribute("sessionUserId") != null && !(session.getAttribute("sessionUserId") != null && session.getAttribute("sessionAdminId") != null)) {%>
+                                if (session.getAttribute("sessionUserId") != null && !(session.getAttribute("sessionUserId") != null && session.getAttribute("sessionAdminId") != null)) {%>
                         <li class="active"><a href="flightController?operation=search">Buscar Vuelos</a></li>
                         <li class="active"><a href="salesController?operation=list&userId=<%=session.getAttribute("sessionUserId")%>">Mirar Compras</a></li>
                         <li class="active"><a href="creditcardController?operation=list">Editar Medios de Pago</a></li>
                             <%}
-                if (session.getAttribute("sessionUserId") == null && session.getAttribute("sessionAdminId") == null) { %>
+                                if (session.getAttribute("sessionUserId") == null && session.getAttribute("sessionAdminId") == null) { %>
                         <li class="active"><a href="index.jsp">Inicio</a></li>
                         <li class="active"><a href="userController?operation=add">Crear Cuenta</a></li>
                             <%}%>
@@ -102,12 +94,12 @@
                                 <span class="glyphicon glyphicon-user"></span><%=session.getAttribute("sessionAdminPname")%></a></li>
                         <li><a href="adminlogoutController"><span class="glyphicon glyphicon-log-out"></span>Admin Logout</a></li>
                             <%}
-                if (session.getAttribute("sessionUserId") != null && !(session.getAttribute("sessionUserId") != null && session.getAttribute("sessionAdminId") != null)) {%>
+                                if (session.getAttribute("sessionUserId") != null && !(session.getAttribute("sessionUserId") != null && session.getAttribute("sessionAdminId") != null)) {%>
                         <li><a href="userController?operation=view&userId=<%=session.getAttribute("sessionUserId")%>">
                                 <span class="glyphicon glyphicon-user"></span><%=session.getAttribute("sessionUserPname")%></a></li>
                         <li><a href="logoutController"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
                             <%}
-                if (session.getAttribute("sessionUserId") == null && session.getAttribute("sessionAdminId") == null) {%>
+                                if (session.getAttribute("sessionUserId") == null && session.getAttribute("sessionAdminId") == null) {%>
                         <li><a href="loginController"><span class="glyphicon glyphicon-log-out">
                                 </span>Login</a></li>
                                 <% }%>
@@ -147,12 +139,6 @@
                             <button type="submit" class="btn">Busca</button>
                         </div>
                     </div>
-
-                   
-
-
-                    </div>
-
                 </form>
             </div>   
         </div>
@@ -175,6 +161,5 @@
                 </div>
             </div>
         </footer>
-    </div>
-</body>
+    </body>
 </html>

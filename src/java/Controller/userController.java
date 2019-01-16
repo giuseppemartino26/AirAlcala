@@ -51,7 +51,7 @@ public class userController extends HttpServlet {
             request.setAttribute("users", userDAO.findAll());
         } else if (operation.equalsIgnoreCase("add")) {
             forward = "createUser.jsp";
-            request.setAttribute("user", user);
+            //request.setAttribute("user", user);
         } else if (operation.equalsIgnoreCase("edit")) {
             userId = Integer.parseInt(request.getParameter("userId"));
             forward = "editUser.jsp";

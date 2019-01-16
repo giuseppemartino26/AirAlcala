@@ -5,19 +5,19 @@
 
 <html lang="es">
     <head>
-       <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-       <title>AirAlcala</title>
-       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+        <title>AirAlcala</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <link rel="stylesheet" type="text/css" href="styles/styles.css">
     </head>
     <body>
-        
-     
-    
-    
+
+
+
+
         <div id="wrapper">
             <header>
                 <div class="container">
@@ -26,41 +26,41 @@
             </header>
             <nav class="navbar navbar-default">
                 <div class="container-fluid">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="#">AirAlcalá</a>
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="#">AirAlcalï¿½</a>
+                    </div>
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="index.html">Inicio</a></li>
                 </div>
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="index.html">Inicio</a></li>
-              </div>
             </nav>
             <br>
             <div class="container">
-            <h2>P&aacutegina de el Administrador</h2>
-            <br>
-            
-            <table class="table">
-                <tbody>
-                    <tr>
-                        <td>   <div class="topButton"><a href="userController?operation=list" class="btn btn-primary" role="button">Gestionar usuarios</a></div> </td>
-            
-            
-             
-                        <td>     <div class="topButton"><a href="flightController?operation=list" class="btn btn-primary" role="button">Gestionar vuelos</a></div> </td>
-             
-              
-                        <td>   <div class="topButton"><a href="airportController?operation=list" class="btn btn-primary" role="button">Gestionar aeropuertos</a></div> </td>
-                    </tr>
-                </tbody>
-            </table>
+                <h2>P&aacutegina de el Administrador</h2>
+                <br>
+
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <td>   <div class="topButton"><a href="userController?operation=list" class="btn btn-primary" role="button">Gestionar usuarios</a></div> </td>
+
+
+
+                            <td>     <div class="topButton"><a href="flightController?operation=list" class="btn btn-primary" role="button">Gestionar vuelos</a></div> </td>
+
+
+                            <td>   <div class="topButton"><a href="airportController?operation=list" class="btn btn-primary" role="button">Gestionar aeropuertos</a></div> </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
-            
-            <footer>
+
+        <footer>
             <div class='container'>
                 <div class="row">
                     <div class="col-xs-6">
                         <p>
-                            AirAlcala - Alcal&aacute; de Henares, Madrid, España
+                            AirAlcala - Alcal&aacute; de Henares, Madrid, Espaï¿½a
                         </p>
                     </div>
                     <div class="col-xs-6">
@@ -72,10 +72,7 @@
                     </div>
                 </div>
             </div>
-            </div>
-        
-       
         </footer>
-            
-</body>
+
+    </body>
 </html>

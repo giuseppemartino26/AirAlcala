@@ -1,7 +1,7 @@
 <%-- 
-    Document   : ListUsers
-    Created on : 09-ene-2019, 13:12:03
-    Author     : Martin
+    Document   : viewSale
+    Created on : 15-ene-2019, 12:28:56
+    Author     : pablo
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -18,7 +18,7 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <script type="text/javascript" charset="utf-8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.1.min.js"></script>
         <script type="text/javascript" charset="utf-8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.0/jquery.dataTables.min.js"></script>
-        <link rel="stylesheet" type="text/css" href="styles/styles.css">
+        <link rel="stylesheet" type="text/css" href="styles/styles.css">    
 
         <script>
             $(document).ready(function () {
@@ -29,8 +29,8 @@
     <body>
         <%
             //allow access only if session exists
-            if (session.getAttribute("sessionAdminId") == null) {
-                response.sendRedirect("adminloginController");
+            if (session.getAttribute("sessionUserId") == null) {
+                response.sendRedirect("loginController");
             }
         %>
         <div id="wrapper">
@@ -54,12 +54,12 @@
                         <li class="active"><a href="routeController?operation=list">Rutas</a></li>        
                         <li class="active"><a href="saleController?operation=overview">Estadísticas</a></li>    <!-- aún no existe, hay que crearlo y calcular las estadísticas en el Controlador (GET) -->
                             <%}
-                                if (session.getAttribute("sessionUserId") != null && !(session.getAttribute("sessionUserId") != null && session.getAttribute("sessionAdminId") != null)) {%>
+                if (session.getAttribute("sessionUserId") != null && !(session.getAttribute("sessionUserId") != null && session.getAttribute("sessionAdminId") != null)) {%>
                         <li class="active"><a href="flightController?operation=search">Buscar Vuelos</a></li>
                         <li class="active"><a href="salesController?operation=list&userId=<%=session.getAttribute("sessionUserId")%>">Mirar Compras</a></li>
                         <li class="active"><a href="creditcardController?operation=list">Editar Medios de Pago</a></li>
                             <%}
-                                if (session.getAttribute("sessionUserId") == null && session.getAttribute("sessionAdminId") == null) { %>
+                if (session.getAttribute("sessionUserId") == null && session.getAttribute("sessionAdminId") == null) { %>
                         <li class="active"><a href="index.jsp">Inicio</a></li>
                         <li class="active"><a href="userController?operation=add">Crear Cuenta</a></li>
                             <%}%>
@@ -70,12 +70,12 @@
                                 <span class="glyphicon glyphicon-user"></span><%=session.getAttribute("sessionAdminPname")%></a></li>
                         <li><a href="adminlogoutController"><span class="glyphicon glyphicon-log-out"></span>Admin Logout</a></li>
                             <%}
-                                if (session.getAttribute("sessionUserId") != null && !(session.getAttribute("sessionUserId") != null && session.getAttribute("sessionAdminId") != null)) {%>
+                if (session.getAttribute("sessionUserId") != null && !(session.getAttribute("sessionUserId") != null && session.getAttribute("sessionAdminId") != null)) {%>
                         <li><a href="userController?operation=view&userId=<%=session.getAttribute("sessionUserId")%>">
                                 <span class="glyphicon glyphicon-user"></span><%=session.getAttribute("sessionUserPname")%></a></li>
                         <li><a href="logoutController"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
                             <%}
-                                if (session.getAttribute("sessionUserId") == null && session.getAttribute("sessionAdminId") == null) {%>
+                if (session.getAttribute("sessionUserId") == null && session.getAttribute("sessionAdminId") == null) {%>
                         <li><a href="loginController"><span class="glyphicon glyphicon-log-out">
                                 </span>Login</a></li>
                                 <% }%>
@@ -86,63 +86,42 @@
             <br>
             <br>
             <div class="container">
-                <h4>Lista Usarios</h4>
-                <div class="topButton"><a href="userController?operation=add" class="btn btn-primary" role="button">Añadir Usario</a></div>
+                <h4>Ver Datos Compra</h4>
                 <br>
-                <table id="datatable" class="display" style="width:100%">
-                    <thead>
-                        <tr>
-                            <th>Id</th>
-                            <th>Nombre</th>
-                            <th>Primer Apelido</th>
-                            <th>Segundo Apelido</th>
-                            <th>Email</th>
-                            <th>Birthday</th>
-                            <th>Dirección</th>
-                            <th>Codigo Postal</th>
-                            <th>Ciudad</th>
-                            <th>País</th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <c:forEach items="${users}" var="user">
-                            <tr>
-                                <td><c:out value="${user.id}" /></td>
-                                <td><c:out value="${user.pname}" /></td>
-                                <td><c:out value="${user.sname1}" /></td>
-                                <td><c:out value="${user.sname2}" /></td>
-                                <td><c:out value="${user.email}" /></td>
-                                <td><c:out value="${user.bday}" /></td>
-                                <td><c:out value="${user.address}" /></td>
-                                <td><c:out value="${user.pcode}" /></td>
-                                <td><c:out value="${user.city}" /></td>
-                                <td><c:out value="${user.country}" /></td>
-                                <td><a href="userController?operation=view&userId=<c:out value="${user.id}"/>">mirar</a></td>
-                                <td><a href="userController?operation=edit&userId=<c:out value="${user.id}"/>">actualizar</a></td>
-                                <td><a href="userController?operation=delete&userId=<c:out value="${user.id}"/>">borrar</a></td>
-                            </tr>
-                        </c:forEach>
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <th>Id</th>
-                            <th>Nombre</th>
-                            <th>Primer Apelido</th>
-                            <th>Segundo Apelido</th>
-                            <th>Email</th>
-                            <th>Birthday</th>
-                            <th>Dirección</th>
-                            <th>Codigo Postal</th>
-                            <th>Ciudad</th>
-                            <th>País</th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                        </tr> 
-                    </tfoot>
+                <table class="table table-striped" style="width:100%">
+                    <tr>
+                        <th>Id</th> 
+                        <td>${sale.id}</td>
+                    </tr>
+                    <tr>
+                        <th>Localizador del Avi&oacute;n</th>
+                        <td>${sale.flight.locator}</td>
+                    </tr>
+                    <tr>
+                        <th>Nombre</th>
+                        <td>${sale.user.pname}</td>
+                    </tr>
+                    <tr>
+                        <th>Primer Apelido</th>
+                        <td>${sale.user.sname1}</td>
+                    </tr>
+                    <tr>
+                        <th>Aeropuerto de salida</th>
+                        <td>${sale.place}</td>
+                    </tr>
+                    <tr>
+                        <th>Pasajeros</th>
+                        <td>${sale.passengers}</td>
+                    </tr>
+                    <tr>
+                        <th>N&uacute;mero de Tarjeta</th>
+                        <td>${sale.creditCard.number}</td>
+                    </tr>
+                    <tr>
+                        <th>Precio</th>
+                        <td>${sale.price}</td>
+                    </tr>
+
                 </table>
             </div>
         </div>

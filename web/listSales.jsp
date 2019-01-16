@@ -29,8 +29,8 @@
     <body>
         <%
             //allow access only if session exists
-            if (session.getAttribute("sessionAdminId") == null) {
-                response.sendRedirect("adminloginController");
+            if (session.getAttribute("sessionUserId") == null) {
+                response.sendRedirect("paginauser.jsp");
             }
         %>
         <div id="wrapper">
@@ -55,9 +55,9 @@
                         <li class="active"><a href="saleController?operation=overview">Estadísticas</a></li>    <!-- aún no existe, hay que crearlo y calcular las estadísticas en el Controlador (GET) -->
                             <%}
                                 if (session.getAttribute("sessionUserId") != null && !(session.getAttribute("sessionUserId") != null && session.getAttribute("sessionAdminId") != null)) {%>
-                        <li class="active"><a href="flightController?operation=search">Buscar Vuelos</a></li>
-                        <li class="active"><a href="salesController?operation=list&userId=<%=session.getAttribute("sessionUserId")%>">Mirar Compras</a></li>
-                        <li class="active"><a href="creditcardController?operation=list">Editar Medios de Pago</a></li>
+                        <li class="active"><a href="index.html">Buscar Vuelos</a></li>
+                        <li class="active"><a href="saleController?operation=list&userId=<%=session.getAttribute("sessionUserId")%>">Mirar Compras</a></li>
+                        <li class="active"><a href="creditcardController?operation=edit&userId=<%=session.getAttribute("sessionUserId")%>">Editar Medios de Pago</a></li>
                             <%}
                                 if (session.getAttribute("sessionUserId") == null && session.getAttribute("sessionAdminId") == null) { %>
                         <li class="active"><a href="index.jsp">Inicio</a></li>
@@ -86,60 +86,39 @@
             <br>
             <br>
             <div class="container">
-                <h4>Lista Usarios</h4>
-                <div class="topButton"><a href="userController?operation=add" class="btn btn-primary" role="button">Añadir Usario</a></div>
+                <h4>Lista de Compras </h4>
+
                 <br>
                 <table id="datatable" class="display" style="width:100%">
                     <thead>
                         <tr>
                             <th>Id</th>
-                            <th>Nombre</th>
-                            <th>Primer Apelido</th>
-                            <th>Segundo Apelido</th>
-                            <th>Email</th>
-                            <th>Birthday</th>
-                            <th>Dirección</th>
-                            <th>Codigo Postal</th>
-                            <th>Ciudad</th>
-                            <th>País</th>
-                            <th></th>
-                            <th></th>
+                            <th>Id_vuelo</th>
+                            <th>Lugar de Salida</th>
+                            <th>Pasajeros</th>
+                            <th>Precio</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach items="${users}" var="user">
+                        <c:forEach items="${sales}" var="sale">
                             <tr>
-                                <td><c:out value="${user.id}" /></td>
-                                <td><c:out value="${user.pname}" /></td>
-                                <td><c:out value="${user.sname1}" /></td>
-                                <td><c:out value="${user.sname2}" /></td>
-                                <td><c:out value="${user.email}" /></td>
-                                <td><c:out value="${user.bday}" /></td>
-                                <td><c:out value="${user.address}" /></td>
-                                <td><c:out value="${user.pcode}" /></td>
-                                <td><c:out value="${user.city}" /></td>
-                                <td><c:out value="${user.country}" /></td>
-                                <td><a href="userController?operation=view&userId=<c:out value="${user.id}"/>">mirar</a></td>
-                                <td><a href="userController?operation=edit&userId=<c:out value="${user.id}"/>">actualizar</a></td>
-                                <td><a href="userController?operation=delete&userId=<c:out value="${user.id}"/>">borrar</a></td>
+                                <td><c:out value="${sale.id}" /></td>
+                                <td><c:out value="${sale.flight.locator}" /></td>
+                                <td><c:out value="${sale.place}" /></td>
+                                <td><c:out value="${sale.passengers}" /></td>
+                                <td><c:out value="${sale.price}" /></td>
+                                <td><a href="saleController?operation=view&saleId=<c:out value="${sale.id}"/>">mirar</a></td>
                             </tr>
                         </c:forEach>
                     </tbody>
                     <tfoot>
                         <tr>
                             <th>Id</th>
-                            <th>Nombre</th>
-                            <th>Primer Apelido</th>
-                            <th>Segundo Apelido</th>
-                            <th>Email</th>
-                            <th>Birthday</th>
-                            <th>Dirección</th>
-                            <th>Codigo Postal</th>
-                            <th>Ciudad</th>
-                            <th>País</th>
-                            <th></th>
-                            <th></th>
+                            <th>Id_vuelo</th>
+                            <th>Lugar de Salida</th>
+                            <th>Pasajeros</th>
+                            <th>Precio</th>
                             <th></th>
                         </tr> 
                     </tfoot>
