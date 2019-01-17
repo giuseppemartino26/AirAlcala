@@ -91,12 +91,12 @@
                     <div class="row">
                          <div class="col-lg-6">
                             <label for="locator"><b>Locator:</b></label>
-                            <input name="locator" id="locator" type="text"
+                            <input name="locator" id="locator" type="text" class="form-control input-lg" id="routeID"
                                    value="${flight.locator}" required>
                         </div>
                         <div class="col-lg-6">
                             <label for="routeID"><b>Ruta: </b></label>
-                           <select name="routeID" class="form-control" id="routeID">
+                           <select name="routeID" class="form-control input-lg" id="routeID" id="routeID">
                                 <c:forEach items="${routes}" var="route">    
                                     <option value="${route.id}" 
                                         <c:if test="${flight.route.id} == ${route.id}"></c:if>
@@ -109,17 +109,17 @@
                     <div class="row">
                         <div class="col-lg-4">
                             <label for="departuredate"><b>Fecha de Salida: </b></label>
-                            <input name="departuredate" class="form-control" id="departuredate"
+                            <input name="departuredate" class="form-control input-lg" id="routeID" id="departuredate"
                                    value = "${flight.departure}"type="date" required>
                         </div>
                         <div class="col-lg-4">
                             <label for="departuretime"><b>Tiempo de Salida: </b></label>
-                            <input name="departuretime" class="form-control" id="departuretime"
+                            <input name="departuretime" class="form-control input-lg" id="routeID" id="departuretime"
                                    value = "${flight.departuretime}" type="time" required>
                         </div>
                         <div class="col-lg-4">
                             <label for="arrivaltime"><b>Tiempo de Llegada: </b></label>
-                            <input name="arrivaltime" class="form-control" id="arrivaltime"
+                            <input name="arrivaltime" class="form-control input-lg" id="routeID" id="arrivaltime"
                                    value = "${flight.arrivaltime}" type = "time" required>
                         </div>
                     </div>

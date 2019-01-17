@@ -91,11 +91,11 @@
                     <div class="row">
                          <div class="col-lg-6">
                             <label for="locator"><b>Locator:</b></label>
-                            <input name="locator" id="locator" type="text" required>
+                            <input name="locator" id="locator" type="text" class="form-control input-lg" id="routeID" required>
                         </div>
                         <div class="col-lg-6">
                             <label for="routeID"><b>Ruta: </b></label>
-                           <select name="routeID" class="form-control" id="routeID">
+                           <select name="routeID" class="form-control input-lg" id="routeID">
                                 <c:forEach items="${routes}" var="route">    
                                     <option value="${route.id}">${route.origin.name} a ${route.destination.name}</option>
                                 </c:forEach> 
@@ -105,15 +105,15 @@
                     <div class="row">
                         <div class="col-lg-4">
                             <label for="departuredate"><b>Fecha de Salida: </b></label>
-                            <input name="departuredate" class="form-control" id="departuredate" type="date" required>
+                            <input name="departuredate" class="form-control input-lg" id="departuredate" type="date" required>
                         </div>
                         <div class="col-lg-4">
                             <label for="departuretime"><b>Hora de Salida: </b></label>
-                            <input name="departuretime" class="form-control" id="departuretime" type="time" required>
+                            <input name="departuretime" class="form-control input-lg" id="departuretime" type="time" required>
                         </div>
                         <div class="col-lg-4">
                             <label for="arrivaltime"><b>Hora de Llegada: </b></label>
-                            <input name="arrivaltime" class="form-control" id="arrivaltime" type = "time" required>
+                            <input name="arrivaltime" class="form-control input-lg" id="arrivaltime" type = "time" required>
                         </div>
                     </div>
 
