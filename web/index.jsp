@@ -32,7 +32,7 @@
             <nav class="navbar navbar-default">
                 <div class="container-fluid">
                     <div class="navbar-header">
-                        <a class="navbar-brand" href="index.html">AirAlcalá</a>
+                        <a class="navbar-brand" href="indexNew.jsp">AirAlcalá</a>
                     </div>
                     <ul class="nav navbar-nav">
                         <%if (session.getAttribute("sessionAdminId") != null || (session.getAttribute("sessionUserId") != null && session.getAttribute("sessionAdminId") != null)) { %>
@@ -45,12 +45,12 @@
                         <li class="active"><a href="saleController?operation=overview">Estadísticas</a></li>    <!-- aún no existe, hay que crearlo y calcular las estadísticas en el Controlador (GET) -->
                             <%}
                                 if (session.getAttribute("sessionUserId") != null && !(session.getAttribute("sessionUserId") != null && session.getAttribute("sessionAdminId") != null)) {%>
-                        <li class="active"><a href="index.html">Buscar Vuelos</a></li>
+                        <li class="active"><a href="indexNew.jsp">Buscar Vuelos</a></li>
                         <li class="active"><a href="saleController?operation=list&userId=<%=session.getAttribute("sessionUserId")%>">Mirar Compras</a></li>
                         <li class="active"><a href="creditcardController?operation=edit&userId=<%=session.getAttribute("sessionUserId")%>">Editar Medios de Pago</a></li>
                             <%}
                                 if (session.getAttribute("sessionUserId") == null && session.getAttribute("sessionAdminId") == null) { %>
-                        <li class="active"><a href="index.html">Inicio</a></li>
+                        <li class="active"><a href="indexNew.jsp">Inicio</a></li>
                         <li class="active"><a href="userController?operation=add">Crear Cuenta</a></li>
                             <%}%>
                     </ul>
@@ -76,7 +76,7 @@
             <div class="container">
                 <h2>Login</h2>
                 <br>
-                <form method="POST" action="loginController?operation=login" class="form-container" onsubmit="return validation()">
+                <form method="POST" action="loginController" class="form-container" onsubmit="return validation()">
                     <div class="row">
                         <div class="col-lg-6">
                             <label for="email"><b>Email</b></label>

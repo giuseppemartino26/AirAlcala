@@ -4,6 +4,8 @@
     Author     : Martin
 --%>
 
+<%@page import="java.util.ArrayList"%>
+<%@page import="Model.Flight"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
@@ -42,7 +44,7 @@
             <nav class="navbar navbar-default">
                 <div class="container-fluid">
                     <div class="navbar-header">
-                        <a class="navbar-brand" href="index.html">AirAlcalá</a>
+                        <a class="navbar-brand" href="indexNew.jsp">AirAlcalá</a>
                     </div>
                     <ul class="nav navbar-nav">
                         <%if (session.getAttribute("sessionAdminId") != null || (session.getAttribute("sessionUserId") != null && session.getAttribute("sessionAdminId") != null)) { %>
@@ -55,12 +57,12 @@
                         <li class="active"><a href="saleController?operation=overview">Estadísticas</a></li>    <!-- aún no existe, hay que crearlo y calcular las estadísticas en el Controlador (GET) -->
                             <%}
                                 if (session.getAttribute("sessionUserId") != null && !(session.getAttribute("sessionUserId") != null && session.getAttribute("sessionAdminId") != null)) {%>
-                        <li class="active"><a href="index.html">Buscar Vuelos</a></li>
+                        <li class="active"><a href="indexNew.jsp">Buscar Vuelos</a></li>
                         <li class="active"><a href="saleController?operation=list&userId=<%=session.getAttribute("sessionUserId")%>">Mirar Compras</a></li>
                         <li class="active"><a href="creditcardController?operation=edit&userId=<%=session.getAttribute("sessionUserId")%>">Editar Medios de Pago</a></li>
                             <%}
                                 if (session.getAttribute("sessionUserId") == null && session.getAttribute("sessionAdminId") == null) { %>
-                        <li class="active"><a href="index.html">Inicio</a></li>
+                        <li class="active"><a href="indexNew.jsp">Inicio</a></li>
                         <li class="active"><a href="userController?operation=add">Crear Cuenta</a></li>
                             <%}%>
                     </ul>
@@ -97,25 +99,32 @@
                             <th>Tiempo de Salida</th>
                             <th>Tiempo de Llegada</th>
                             <th>Plazas disponibles</th>
-                            <th></th>
+                            <th>Plazas ocupadas</th>
+                            <th>Ganancia</th>
                             <th></th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach items="${flights}" var="flight">
-                            <tr>
-                                <td><c:out value="${flight.locator}" /></td>
-                                <td><c:out value="${flight.route.origin.name} a ${flight.route.destination.name} "/></td>
-                                <td><c:out value="${flight.departure}" /></td>
-                                <td><c:out value="${flight.departuretime}" /></td>
-                                <td><c:out value="${flight.arrivaltime}" /></td>
-                                <td><c:out value="${flight.availableSeats}" /></td>
-                                <td><a href="flightController?operation=view&flightId=<c:out value="${flight.id}"/>">mirar</a></td>
-                                <td><a href="flightController?operation=edit&flightId=<c:out value="${flight.id}"/>">actualizar</a></td>
-                                <td><a href="flightController?operation=delete&flightId=<c:out value="${flight.id}"/>">borrar</a></td>
-                            </tr>
-                        </c:forEach>
+                        <%
+                            ArrayList<Flight> flights = (ArrayList<Flight>) request.getAttribute("flights");
+                            for (Flight flight : flights) {
+                        %>
+                        <tr>                                
+                            <td><%=flight.getLocator()%></td>
+                            <td><%=flight.getRoute().getOrigin().getName()%> a <%=flight.getRoute().getDestination().getName()%></td>
+                            <td><%=flight.getDeparture()%></td>
+                            <td><%=flight.getDeparturetime()%></td>
+                            <td><%=flight.getArrivaltime()%></td>
+                            <td><%=flight.getAvailableSeats()%></td>
+                            <td><%=flight.getRoute().getPlane().getPlaces() - flight.getAvailableSeats()%></td>
+                            <td><%=flight.getRoute().getTicketPrice() * (flight.getRoute().getPlane().getPlaces() - flight.getAvailableSeats())%></td>
+                            <td><a href="flightController?operation=edit&flightId=<%=flight.getId()%>">actualizar</a></td>
+                            <td><a href="flightController?operation=delete&flightId=<%=flight.getId()%>">borrar</a></td>
+                        </tr>
+                        <% }
+                        %>
+
                     </tbody>
                     <tfoot>
                         <tr>
@@ -125,13 +134,21 @@
                             <th>Tiempo de Salida</th>
                             <th>Tiempo de Llegada</th>
                             <th>Plazas disponibles</th>
-                            <th></th>
+                            <th>Plazas ocupadas</th>
+                            <th>Ganancia</th>
                             <th></th>
                             <th></th>
 
                         </tr> 
                     </tfoot>
                 </table>
+                <%
+                    double gananciaTotal = 0;
+                    for (Flight flight : flights) {
+                        gananciaTotal += flight.getRoute().getTicketPrice() * (flight.getRoute().getPlane().getPlaces() - flight.getAvailableSeats());
+                    }
+                %>
+                <br> <br> <h3>Ganancia Total: <%=gananciaTotal%></h3>
             </div>
         </div>
         <footer>
