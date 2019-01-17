@@ -1,11 +1,20 @@
-<!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<!DOCTYPE html>
+<%-- 
+    Document   : index
+    Created on : 16-gen-2019, 19.53.13
+    Author     : fabri
+--%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page import="Model.Airport"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="Model.Repository.JDBC.JDBCAirportDAO"%>
+<%@page import="Model.Repository.AirportDAO"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.Statement"%>
+<%@page import="java.sql.DriverManager"%>
+<%@page import="java.sql.Connection"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
 <html lang="es">
     <head>
         <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
@@ -40,7 +49,7 @@ and open the template in the editor.
             }
             ;
         </script>
-        
+
     </head>
     <body>
         <div id="wrapper">
@@ -66,11 +75,57 @@ and open the template in the editor.
                 <form method="POST" action="searchController" class="form-container" onsubmit="return check_data()">
                     <div class="form-group">
                         <label for="source" class="control-label">Origen</label>
-                         <input type="text" id="source" name="source" class="form-control" required pattern="[A-zÀ-ž\s]{1,}" >
+                        <select name="source" id="source" required>
+                            <%
+                                try {
+                                    String Query = "select * from airports";
+                                    Class.forName("org.apache.derby.jdbc.ClientDriver").newInstance();
+                                    Connection conn = DriverManager.getConnection("jdbc:derby://localhost:1527/airAlcala", "root", "root");
+                                    Statement stm = conn.createStatement();
+                                    ResultSet rs = stm.executeQuery(Query);
+                                    while (rs.next()) {
+                                        String name = rs.getString("name");
+                            %>
+                            <option value="<%=name%>"> <%=name%> </option>
+
+                            <%
+                                    }
+
+                                } catch (Exception ex) {
+                                    ex.printStackTrace();
+                                    out.println("Error" + ex.getMessage());
+                                }
+                            %>
+
+
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="destination">Destino</label>
-                        <input type="text" id="destination" name="destination" class="form-control" required pattern="[A-zÀ-ž\s]{1,}" >
+                        <select name="destination" id="destination" required>
+                            <%
+                                try {
+                                    String Query = "select * from airports";
+                                    Class.forName("org.apache.derby.jdbc.ClientDriver").newInstance();
+                                    Connection conn = DriverManager.getConnection("jdbc:derby://localhost:1527/airAlcala", "root", "root");
+                                    Statement stm = conn.createStatement();
+                                    ResultSet rs = stm.executeQuery(Query);
+                                    while (rs.next()) {
+                                        String name = rs.getString("name");
+                            %>
+                            <option value="<%=name%>"> <%=name%> </option>
+
+                            <%
+                                    }
+
+                                } catch (Exception ex) {
+                                    ex.printStackTrace();
+                                    out.println("Error" + ex.getMessage());
+                                }
+                            %>
+
+
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="departure_date">Fecha de Salida</label>
@@ -103,7 +158,7 @@ and open the template in the editor.
                         <input type="date" name="departure_date_2" id="departure_date_2" class="form-control">
                     </div>
 
-                    <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-arrow-right"></i></span> Buscar</button>
+                    <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-arrow-right"></i>Buscar</button>
                 </form>
             </div>
         </div>

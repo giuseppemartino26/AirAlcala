@@ -32,9 +32,9 @@
     <body>
         <%
             //allow access only if session exists
-            if (session.getAttribute("sessionAdminId") == null) {
-                response.sendRedirect("adminloginController");
-            }
+            //if (session.getAttribute("sessionAdminId") == null) {
+              //  response.sendRedirect("adminloginController");
+            //}
         %>
         <div id="wrapper">
             <header>
