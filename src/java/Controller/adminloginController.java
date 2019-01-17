@@ -75,7 +75,7 @@ public class adminloginController extends HttpServlet {
                 res.sendRedirect("adminloginController");
             }
         }else {
-                RequestDispatcher view = req.getRequestDispatcher("index.html");
+                RequestDispatcher view = req.getRequestDispatcher("adminLogin.jsp");
                 PrintWriter out= res.getWriter();
                 out.println("<font color=red>Either user name or password is wrong.</font>");                
                 view.forward(req, res);
