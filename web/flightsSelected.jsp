@@ -26,6 +26,10 @@
                 $('#datatable2').DataTable();
                 
             });
+            
+            function check_data(){
+                
+            }
         </script>
     </head>
     <body>   
@@ -81,7 +85,7 @@
 
             <br>
             <br>
-            <form method="POST" action="selectflightController" >
+            <form method="POST" action="selectflightController" onsubmit="return check_data()">
             <div class="container">
                 <h3>Vuelos encontrados</h3>
 
@@ -106,7 +110,7 @@
                                 <td><c:out value="${flight.departure}"/></td>
 
 
-                                <td><input type="radio" name="flightDeparture" value="${flight.id}" required></td>
+                                <td><input type="radio" name="flightDeparture" value="${flight.id}" required ></td>
 
                             </tr>
                         </c:forEach>

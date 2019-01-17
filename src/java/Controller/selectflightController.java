@@ -28,6 +28,9 @@ public class selectflightController extends HttpServlet {
         HttpSession s = req.getSession(true);
         double iva = 0.21;
         String forward = "";
+        if(req.getParameter("flightDeparture")==null){
+            resp.sendRedirect("indexNew.jsp");
+        }else{
         int flightIdDeparture = Integer.parseInt(req.getParameter("flightDeparture"));
         Flight flight;
         FlightDAO flightDAO = new JDBCFlightDAO();
@@ -60,7 +63,7 @@ public class selectflightController extends HttpServlet {
         forward = "index.jsp";
         RequestDispatcher view = req.getRequestDispatcher(forward);
         view.forward(req, resp);
-
+        }
     }
 
     /**
