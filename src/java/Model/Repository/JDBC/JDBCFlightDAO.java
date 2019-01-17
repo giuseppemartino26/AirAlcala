@@ -201,7 +201,7 @@ public class JDBCFlightDAO implements FlightDAO {
     @Override
     public ArrayList<Flight> findFlights(Route route, String date, int passengers) {
         ArrayList<Flight> flightList = new ArrayList<>();
-        String query = "SELECT * FROM flights WHERE route_id = ? AND departure_date > '"+date+"' AND available_seats > ?";
+        String query = "SELECT * FROM flights WHERE route_id = ? AND departure_date >= '"+date+"' AND available_seats > ?";
         try {
             connObj = dbConnect();
             stmtObj = connObj.prepareStatement(query);

@@ -35,6 +35,7 @@
             });
             function check_data() {
                 var dNow = new Date();
+                dNow.setHours(0,0,0,0);
                 var date = new Date($("#departure_date").val());
                 if (dNow > date) {  /*cant pick today */
                     alert("Fecha de salida invalida");
