@@ -50,7 +50,7 @@ public class selectflightController extends HttpServlet {
             int flightIdArrival = Integer.parseInt(flightArrival);
             flight = flightDAO.find(flightIdArrival);
             price = flight.getRoute().getTicketPrice();
-            tax=flight.getRoute().getOrigin().getTax();
+            tax=flight.getRoute().getDestination().getTax();
             double compra_2 =(price+(price*(tax/100))+(price*iva))* ((int) s.getAttribute("passengers"));
             s.setAttribute("flightIdArrival", flightIdArrival);
             s.setAttribute("price_2", compra_2);
