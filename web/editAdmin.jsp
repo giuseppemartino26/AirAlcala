@@ -22,9 +22,12 @@
         <link rel="stylesheet" type="text/css" href="styles/styles.css">
         <script>
             function checkPasswordMatch() {
-                if ($("#pass1").val() !== $("pass2").val())
-                    alert("Passwords do not match!");
-            }
+                if ($("#pass1").val() !== $("pass2").val()){
+                    alert("LAs contrase&ntilde;as no coinciden");
+                    return false;
+                };
+                  return true;  
+            };
         </script>
 
     </head>
@@ -92,7 +95,7 @@
                     <a href="adminController?operation=list" class="btn btn-primary" role="button">Volver a Lista</a>
                     <a href="adminController?operation=add" class="btn btn-primary" role="button">Añadir Usario</a>        
                 </div>
-                <form method="POST" action="administratorController" class="form-container" onsubmit="showResponse()">
+                <form method="POST" action="administratorController" class="form-container" onsubmit="retunr checkPasswordMatch()">
                     <div class="row">
                         <input type="hidden" name="id" value="${admin.id}" />
                         <div class="col-lg-4">

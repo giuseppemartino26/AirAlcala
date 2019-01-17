@@ -24,9 +24,12 @@
 
         <script>
             function checkPasswordMatch() {
-                if ($("#pass1").val() !== $("pass2").val())
-                    alert("Passwords do not match!");
-            }
+                if ($("#pass1").val() !== $("pass2").val()){
+                    alert("LAs contrase&ntilde;as no coinciden");
+                    return false;
+                };
+                  return true;  
+            };
         </script>
 
     </head>
@@ -98,7 +101,7 @@
                     <a href="userController?operation=view&userId=<%=session.getAttribute("sessionUserId")%>" class="btn btn-primary" role="button">Volver a Mirar Datos</a>  
                     <% }%>
                 </div>
-                <form method="POST" action="userController" class="form-container" onsubmit="showResponse()">
+                <form method="POST" action="userController" class="form-container" onsubmit="return checkPasswordMatch()">
                     <div class="row">
                         <input type="hidden" name="id" value="${user.id}" />
                         <div class="col-lg-4">

@@ -23,9 +23,12 @@
         <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
         <script>
             function checkPasswordMatch() {
-                if ($("#pass1").val() !== $("pass2").val())
-                    alert("Passwords do not match!");
-            }
+                if ($("#pass1").val() !== $("pass2").val()){
+                    alert("LAs contrase&ntilde;as no coinciden");
+                    return false;
+                };
+                  return true;  
+            };
         </script>
     </head>
 
@@ -92,7 +95,7 @@
                 <div class="btn-group topButton" role="group" aria-label="Basic example">
                     <a href="administratorController?operation=list" class="btn btn-primary" role="button">Volver a Lista</a>
                 </div>
-                <form method="POST" action="administratorController" class="form-container">
+                <form method="POST" action="administratorController" class="form-container" onsubmit="return checkPasswordMatch()">
                     <div class="row">
                         <div class="col-lg-4">
                             <label for="pname"><b>Nombre</b></label>
