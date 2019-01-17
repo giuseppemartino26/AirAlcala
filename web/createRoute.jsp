@@ -21,7 +21,15 @@
         <script
         src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <link rel="stylesheet" type="text/css" href="styles/styles.css">
-        
+        <script>
+            function validation(){
+                if($("#originID").val()===$("#destinationID").val()){
+                    alert("El origen no puede ser igual al destino");
+                    return false;
+                }
+                return true;
+            };
+        </script>
     </head>
 
     <body>
@@ -87,7 +95,7 @@
                 <div class="btn-group topButton" role="group" aria-label="Basic example">
                     <a href="routeController?operation=list" class="btn btn-primary" role="button">Volver a Lista</a>
                 </div>
-                <form method="POST" action="routeController?operation=add" class="form-container" onsubmit="showResponse()">
+                <form method="POST" action="routeController?operation=add" class="form-container" onsubmit="return validation()">
                     <div class="row">
                         <div class="col-lg-6">
                             <label for="originID"><b>Origen: </b></label>
