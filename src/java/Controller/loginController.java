@@ -58,11 +58,11 @@ public class loginController extends HttpServlet {
             request.setAttribute("user", user);
             CreditCard creditCard = new CreditCard();
             CreditCardDAO creditCardDAO = new JDBCCreditCardDAO();
-            // Como un usario puede tener más que una tarjeta es una lista por cada usario
-            // Hay que elegir tarjeta de Menú Drop Down durante el proceso y poner la id de la tarjeta
-            // en la sesión
-            creditCard = creditCardDAO.findByUserId(user.getId());
-            request.setAttribute("creditCard", creditCard);
+             // Como un usario puede tener más que una tarjeta es una lista por cada usario
+             // Hay que elegir tarjeta de Menú Drop Down durante el proceso y poner la id de la tarjeta
+             // en la sesión
+          //  creditCard = creditCardDAO.findByUserId(user.getId());
+          //  request.setAttribute("creditCard", creditCard);
         } else {
             forward = "index.jsp";
             s.setAttribute("proceso", "myAcount");
@@ -84,9 +84,10 @@ public class loginController extends HttpServlet {
         User user = new User();
         UserDAO userDAO = new JDBCUserDAO();
         user = userDAO.findbyEmail(email);
-        CreditCard creditCard = new CreditCard();
-        CreditCardDAO creditCardDAO = new JDBCCreditCardDAO();
-        creditCard = creditCardDAO.findByUserId(user.getId());
+        // IMPORTANTE: Hay que elegir tarjeta crédito de una lista del bbdd (varios por usario
+     //  CreditCard creditCard = new CreditCard();
+     //   CreditCardDAO creditCardDAO = new JDBCCreditCardDAO();
+     //   creditCard = creditCardDAO.findByUserId(user.getId());
 
         if (user != null) {
             // Check typed in password with stored hash in Database
@@ -103,13 +104,15 @@ public class loginController extends HttpServlet {
                 if (s.getAttribute("proceso").equals("ventaFlight")) {
                     RequestDispatcher view = req.getRequestDispatcher("Pay_data.jsp");
                     req.setAttribute("user", user);
-                    req.setAttribute("creditCard", creditCard);
-                    s.setAttribute("creditCardId", creditCard.getId());
+                    // IMPORTANTE: Hay que elegir tarjeta crédito de una lista del bbdd (varios por usario
+            //        req.setAttribute("creditCard", creditCard);
+            //        s.setAttribute("creditCardId", creditCard.getId());
                     view.forward(req, res);
                 } else {
                     res.sendRedirect("paginauser.jsp");
                 }
             } else {
+                // lo he puesto porque da NullPointerException sin
                 res.sendRedirect("loginController?operation=login");
             }
         } else {

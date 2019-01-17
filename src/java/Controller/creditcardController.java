@@ -61,7 +61,7 @@ public class creditcardController extends HttpServlet {
             request.setAttribute("user", user);
             
         }else if(operation.equals("edit")){
-            id= Integer.parseInt(request.getParameter("id"));
+            id= Integer.parseInt(request.getParameter("userId"));
             ccId = creditCardDAO.find(id).getId();
             
             forward="editCreditCard.jsp";

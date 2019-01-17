@@ -52,7 +52,7 @@
                                 if (session.getAttribute("sessionUserId") != null && !(session.getAttribute("sessionUserId") != null && session.getAttribute("sessionAdminId") != null)) {%>
                         <li class="active"><a href="indexNew.jsp">Buscar Vuelos</a></li>
                         <li class="active"><a href="saleController?operation=list&userId=<%=session.getAttribute("sessionUserId")%>">Mirar Compras</a></li>
-                        <li class="active"><a href="creditcardController?operation=edit&userId=<%=session.getAttribute("sessionUserId")%>">Editar Medios de Pago</a></li>
+                        <li class="active"><a href="creditcardController?operation=list">Editar Medios de Pago</a></li>
                             <%}
                                 if (session.getAttribute("sessionUserId") == null && session.getAttribute("sessionAdminId") == null) { %>
                         <li class="active"><a href="indexNew.jsp">Inicio</a></li>
@@ -71,7 +71,7 @@
                         <li><a href="logoutController"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
                             <%}
                                 if (session.getAttribute("sessionUserId") == null && session.getAttribute("sessionAdminId") == null) {%>
-                        <li><a href="loginController"><span class="glyphicon glyphicon-log-out">
+                        <li><a href="loginController?operation=login"><span class="glyphicon glyphicon-log-out">
                                 </span>Login</a></li>
                                 <% }%>
                     </ul>

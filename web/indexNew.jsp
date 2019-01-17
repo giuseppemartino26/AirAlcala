@@ -64,9 +64,40 @@
                         <a class="navbar-brand" href="indexNew.jsp">AirAlcalá</a>
                     </div>
                     <ul class="nav navbar-nav">
+                        <%if (session.getAttribute("sessionAdminId") != null || (session.getAttribute("sessionUserId") != null && session.getAttribute("sessionAdminId") != null)) { %>
+                        <li class="active"><a href="userController?operation=list">Usarios</a></li>
+                        <li class="active"><a href="administratorController?operation=list">Administradores</a></li>
+                        <li class="active"><a href="airplaneController?operation=list">Aviones</a></li>
+                        <li class="active"><a href="airportController?operation=list">Aeropuertos</a></li>
+                        <li class="active"><a href="flightController?operation=list">Vuelos</a></li>        
+                        <li class="active"><a href="routeController?operation=list">Rutas</a></li>        
+                        <li class="active"><a href="saleController?operation=overview">Estadísticas</a></li>    <!-- aún no existe, hay que crearlo y calcular las estadísticas en el Controlador (GET) -->
+                            <%}
+                                if (session.getAttribute("sessionUserId") != null && !(session.getAttribute("sessionUserId") != null && session.getAttribute("sessionAdminId") != null)) {%>
+                        <li class="active"><a href="indexNew.jsp">Buscar Vuelos</a></li>
+                        <li class="active"><a href="saleController?operation=list&userId=<%=session.getAttribute("sessionUserId")%>">Mirar Compras</a></li>
+                        <li class="active"><a href="creditcardController?operation=list">Editar Medios de Pago</a></li>
+                            <%}
+                                if (session.getAttribute("sessionUserId") == null && session.getAttribute("sessionAdminId") == null) { %>
                         <li class="active"><a href="indexNew.jsp">Inicio</a></li>
-                        <li class="active"><a href="paginauser.jsp">Login Usuario</a></li>  
-                        <li class="active"><a href="adminloginController">Login Admin</a></li>
+                        <li class="active"><a href="userController?operation=add">Crear Cuenta</a></li>
+                            <%}%>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <%if (session.getAttribute("sessionAdminId") != null || (session.getAttribute("sessionUserId") != null && session.getAttribute("sessionAdminId") != null)) {%>
+                        <li><a href="administratorController?operation=view&adminId=<%=session.getAttribute("sessionAdminId")%>">
+                                <span class="glyphicon glyphicon-user"></span><%=session.getAttribute("sessionAdminPname")%></a></li>
+                        <li><a href="adminlogoutController"><span class="glyphicon glyphicon-log-out"></span>Admin Logout</a></li>
+                            <%}
+                                if (session.getAttribute("sessionUserId") != null && !(session.getAttribute("sessionUserId") != null && session.getAttribute("sessionAdminId") != null)) {%>
+                        <li><a href="userController?operation=view&userId=<%=session.getAttribute("sessionUserId")%>">
+                                <span class="glyphicon glyphicon-user"></span><%=session.getAttribute("sessionUserPname")%></a></li>
+                        <li><a href="logoutController"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                            <%}
+                                if (session.getAttribute("sessionUserId") == null && session.getAttribute("sessionAdminId") == null) {%>
+                        <li><a href="loginController?operation=login"><span class="glyphicon glyphicon-log-out">
+                                </span>Login</a></li>
+                                <% }%>
                     </ul>
                 </div>
             </nav>
@@ -75,7 +106,7 @@
                 <form method="POST" action="searchController" class="form-container" onsubmit="return check_data()">
                     <div class="form-group">
                         <label for="source" class="control-label">Origen</label>
-                        <select name="source" id="source" required>
+                        <select name="source" class="form-control" id="source" required>
                             <%
                                 try {
                                     String Query = "select * from airports";
@@ -102,7 +133,7 @@
                     </div>
                     <div class="form-group">
                         <label for="destination">Destino</label>
-                        <select name="destination" id="destination" required>
+                        <select name="destination" class="form-control" id="destination" required>
                             <%
                                 try {
                                     String Query = "select * from airports";
