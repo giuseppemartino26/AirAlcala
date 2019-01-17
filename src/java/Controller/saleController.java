@@ -171,7 +171,7 @@ public class saleController extends HttpServlet {
         }
 
         s.setAttribute("Departure_date", flight.getDeparture());
-        
+        s.setAttribute("price", price_1+price_2);
         resp.sendRedirect("Summary.jsp");
         /*if (success) {
             resp.sendRedirect("Summary.jsp");
