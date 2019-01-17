@@ -21,10 +21,18 @@
         src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <link rel="stylesheet" type="text/css" href="styles/styles.css">
         <script>
-      //      function checkPasswordMatch() {
-      //          if ($("#pass1").val() !== $("pass2").val())
-      //              alert("Passwords do not match!");
-      //      }
+
+            function check_data() {
+                var pass1 = $("#pass1").val();
+                var pass2 = $("#pass2").val();
+                if (pass1 !== pass2) {  /*cant pick today */
+                    alert("Contraseñas no coinciden");
+                    return false;
+                }
+
+                return true;
+            }
+            ;
         </script>
     </head>
 
@@ -87,7 +95,7 @@
                     <a href="userController?operation=list" class="btn btn-primary" role="button">Volver a Lista</a>
                 </div>
                 <% }%>
-                <form method="POST" action="userController" class="form-container" onsubmit="showResponse()">
+                <form method="POST" action="userController" class="form-container" onsubmit="return check_data()">
                     <div class="row">
                         <div class="col-lg-4">
                             <label for="pname"><b>Nombre</b></label>
@@ -120,11 +128,11 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <label for="pass1"><b>Contraseña</b></label>
-                            <input name="pass1" id="pass1" type="password" required onChange="checkPasswordMatch()">
+                            <input name="pass1" id="pass1" type="password" required>
                         </div>
                         <div class="col-lg-6">
                             <label for="pass2"><b>Repetir Contraseña</b></label>
-                            <input name="pass2" id="pass2" type="password" required onChange="checkPasswordMatch()">
+                            <input name="pass2" id="pass2" type="password" required>
                         </div>
                     </div>
 
@@ -136,7 +144,7 @@
 
                         <div class="col-lg-2">    
                             <label for="pcode"><b>Código Postal</b></label>
-                            <input placeholder="CP" name="pcode" id="pcode" type="text" required maxlength="5">
+                            <input placeholder="CP" name="pcode" id="pcode" type="text" pattern="{1,}" required required maxlength="5">
                         </div>
 
                         <div class="col-lg-3">    
