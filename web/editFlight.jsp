@@ -68,7 +68,7 @@
             <nav class="navbar navbar-default">
                 <div class="container-fluid">
                     <div class="navbar-header">
-                        <a class="navbar-brand" href="#">AirAlcalá</a>
+                        <a class="navbar-brand" href="indexNew.jsp">AirAlcalá</a>
                     </div>
                     <ul class="nav navbar-nav">
                         <%if (session.getAttribute("sessionAdminId") != null || (session.getAttribute("sessionUserId") != null && session.getAttribute("sessionAdminId") != null)) { %>
@@ -86,7 +86,7 @@
                         <li class="active"><a href="creditcardController?operation=list">Editar Medios de Pago</a></li>
                             <%}
                 if (session.getAttribute("sessionUserId") == null && session.getAttribute("sessionAdminId") == null) { %>
-                        <li class="active"><a href="index.jsp">Inicio</a></li>
+                        <li class="active"><a href="indexNew.jsp">Inicio</a></li>
                         <li class="active"><a href="userController?operation=add">Crear Cuenta</a></li>
                             <%}%>
                     </ul>
