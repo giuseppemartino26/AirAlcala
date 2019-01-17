@@ -134,7 +134,7 @@
                             <th>Destino</th>
                             <th>Fecha salida</th>
                             <th></th>
-                        </tr>
+                        </tr>                       
                     </thead>
                     <tbody>
                         <c:forEach items="${flights_arrival}" var="flight">
@@ -158,11 +158,15 @@
                             <th>Fecha salida</th>
 
                             <th></th>
-                        </tr> 
+                        </tr>
                     </tfoot>
                 </table>
+                    <table>
+                        <tr>
+                            <td> <button type="submit" class="btn btn-secondary"><span class="glyphicon glyphicon-search"></span> Buscar</button></td>
+                        </tr>
+                    </table>
             </div>
-            <button type="submit" class="btn btn-secondary"><span class="glyphicon glyphicon-search"></span> Buscar</button>
             </form>
         </div>
         <footer>
