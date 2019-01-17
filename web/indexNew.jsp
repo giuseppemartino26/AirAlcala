@@ -33,8 +33,10 @@
                     $("#div_departure_2").show();       /*only if use back in browser*/
                 } ;
             });
+            
             function check_data() {
                 var dNow = new Date();
+                dNow.setHours(0,0,0,0);
                 var date = new Date($("#departure_date").val());
                 if (dNow > date) {  /*cant pick today */
                     alert("Fecha de salida invalida");
@@ -47,6 +49,10 @@
                         return false;
                     }
                     ;
+                }
+                if($("#source").val()===$("#destination").val()){
+                    alert("El origen no puede ser igual al destino");
+                    return false;
                 }
                 return true;
             }
