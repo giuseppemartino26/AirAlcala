@@ -50,7 +50,6 @@ public class loginController extends HttpServlet {
         String operation = request.getParameter("operation");
         String forward = "";
         System.err.print(operation);
-        
         if (operation.equalsIgnoreCase("sale")) {
             s.setAttribute("proceso", "ventaFlight");
             forward = "index.jsp";
