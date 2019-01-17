@@ -48,7 +48,9 @@ public class userController extends HttpServlet {
 
         if (operation.equalsIgnoreCase("delete")) {
             userId = Integer.parseInt(request.getParameter("userId"));
-            success = userDAO.delete(userId);
+            if(sessionAdminId != null){
+                success = userDAO.delete(userId);
+            } 
             forward = "listUsers.jsp";
             request.setAttribute("users", userDAO.findAll());
         } else if (operation.equalsIgnoreCase("add")) {
