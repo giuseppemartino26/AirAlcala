@@ -113,6 +113,7 @@ public class saleController extends HttpServlet {
         double price_1 = Double.parseDouble(price1);
         boolean success = false;
         int sales = saleDAO.numberSales(userId) + 1;
+        System.out.println("sales: "+sales);
         if (sales % 3 == 0) {
             price_1 = price_1 / 2;
             s.setAttribute("price_1", "Precio rebajado (50%) por haber contratado 2 viajes anteriormente: " + price_1);
@@ -140,8 +141,8 @@ public class saleController extends HttpServlet {
         //Reset sessions
         s.setAttribute("saleID_2", null);
         if (flightIdArrival > 0) {
-            System.out.println("text2");
-            sales = saleDAO.numberSales(userId) + 2;
+            //System.out.println("text2");
+            sales ++;
             if (sales % 3 == 0) {
                 price_2 = price_2 / 2;
                 s.setAttribute("price_2", "Precio rebajado (50%) por haber contratado 2 viajes anteriormente: " + price_2);
@@ -153,17 +154,20 @@ public class saleController extends HttpServlet {
             while (!saleDAO.comprobarId(id)) {
                 id = saleDAO.generarID();
             }
-            sale.setId(id);
-            sale.setFlight(flight_arrival);
-            sale.setUser(user);
-            sale.setPlace(place);
-            sale.setPassengers(passengers);
-            sale.setCreditCard(creditCard);
-            sale.setPrice(price_2);
-
+            
+            //place = (String) s.getAttribute("destination");
+            Sale sale2=new Sale();
+            sale2.setId(id);
+            sale2.setFlight(flight_arrival);
+            sale2.setUser(user);
+            sale2.setPlace(sale2.getFlight().getRoute().getOrigin().getName());
+            sale2.setPassengers(passengers);
+            sale2.setCreditCard(creditCard);
+            sale2.setPrice(price_2);
+            System.out.println(flight.getRoute().getDestination().getName());
             s.setAttribute("Departure_2", flight_arrival.getDeparture());
-            success = saleDAO.insert(sale);
-            s.setAttribute("saleID_2", sale.getId());
+            success = saleDAO.insert(sale2);
+            s.setAttribute("saleID_2", sale2.getId());
         }
 
         s.setAttribute("Departure_date", flight.getDeparture());
