@@ -150,8 +150,9 @@
                         <c:forEach items="${flights_arrival}" var="flight">
                             <tr>
                                 <td><c:out value="${flight.id}" /></td>
-                                <td><%= session.getAttribute("destination")%></td>
                                 <td><%= session.getAttribute("origin")%></td>
+                                <td><%= session.getAttribute("destination")%></td>
+                                <td><c:out value="${flight.departure}"/></td>
                                 <td><c:out value="${flight.departuretime}"/></td>
                                 <td><c:out value="${flight.arrivaltime}"/></td>
 
