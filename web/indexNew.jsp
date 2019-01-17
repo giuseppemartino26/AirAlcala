@@ -169,7 +169,7 @@
                     <div class="form-group">
                         <!--Only 5 passengers with you-->
                         <label for="passengers">Pasajeros</label>
-                        <input type="number" min="0" id="passengers" required>
+                        <input type="number" min="0" id="passengers" name="passengers" required>
                     </div>
                     <label for="round_trip">Ida/Vuelta</label>
                     <input type="checkbox" name="ida_vuelta" id="round_trip"><br>
