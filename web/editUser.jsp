@@ -23,13 +23,17 @@
         <link rel="stylesheet" type="text/css" href="styles/styles.css">
 
         <script>
-            function checkPasswordMatch() {
-                if ($("#pass1").val() !== $("pass2").val()){
-                    alert("LAs contrase&ntilde;as no coinciden");
+            function check_data() {
+                var pass1 = $("#pass1").val();
+                var pass2 = $("#pass2").val();
+                if (pass1 !== pass2) {  
+                    alert("Contraseñas no coinciden");
                     return false;
-                };
-                  return true;  
-            };
+                }
+
+                return true;
+            }
+            ;
         </script>
 
     </head>
@@ -101,7 +105,7 @@
                     <a href="userController?operation=view&userId=<%=session.getAttribute("sessionUserId")%>" class="btn btn-primary" role="button">Volver a Mirar Datos</a>  
                     <% }%>
                 </div>
-                <form method="POST" action="userController" class="form-container" onsubmit="return checkPasswordMatch()">
+                <form method="POST" action="userController" class="form-container" onsubmit="return check_data()">
                     <div class="row">
                         <input type="hidden" name="id" value="${user.id}" />
                         <div class="col-lg-4">

@@ -22,13 +22,17 @@
         <link rel="stylesheet" type="text/css" href="styles/styles.css">
         <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
         <script>
-            function checkPasswordMatch() {
-                if ($("#pass1").val() !== $("pass2").val()){
-                    alert("LAs contrase&ntilde;as no coinciden");
+            function check_data() {
+                var pass1 = $("#pass1").val();
+                var pass2 = $("#pass2").val();
+                if (pass1 !== pass2) {  
+                    alert("Contraseñas no coinciden");
                     return false;
-                };
-                  return true;  
-            };
+                }
+
+                return true;
+            }
+            ;
         </script>
     </head>
 
@@ -95,7 +99,7 @@
                 <div class="btn-group topButton" role="group" aria-label="Basic example">
                     <a href="administratorController?operation=list" class="btn btn-primary" role="button">Volver a Lista</a>
                 </div>
-                <form method="POST" action="administratorController" class="form-container" onsubmit="return checkPasswordMatch()">
+                <form method="POST" action="administratorController" class="form-container" onsubmit="return check_data()">
                     <div class="row">
                         <div class="col-lg-4">
                             <label for="pname"><b>Nombre</b></label>
@@ -124,7 +128,7 @@
                         </div>
                         <div class="col-lg-4">
                             <label for="pass2"><b>Repetir Contraseña</b></label>
-                            <input name="pass2" id="pass2" type="password" required onChange="checkPasswordMatch()">
+                            <input name="pass2" id="pass2" type="password" required >
                         </div>
                     </div>
 

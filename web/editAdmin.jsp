@@ -21,13 +21,17 @@
         src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <link rel="stylesheet" type="text/css" href="styles/styles.css">
         <script>
-            function checkPasswordMatch() {
-                if ($("#pass1").val() !== $("pass2").val()){
-                    alert("LAs contrase&ntilde;as no coinciden");
+            function check_data() {
+                var pass1 = $("#pass1").val();
+                var pass2 = $("#pass2").val();
+                if (pass1 !== pass2) {  
+                    alert("Contraseñas no coinciden");
                     return false;
-                };
-                  return true;  
-            };
+                }
+
+                return true;
+            }
+            ;
         </script>
 
     </head>
@@ -95,7 +99,7 @@
                     <a href="adminController?operation=list" class="btn btn-primary" role="button">Volver a Lista</a>
                     <a href="adminController?operation=add" class="btn btn-primary" role="button">Añadir Usario</a>        
                 </div>
-                <form method="POST" action="administratorController" class="form-container" onsubmit="retunr checkPasswordMatch()">
+                <form method="POST" action="administratorController" class="form-container" onsubmit="return check_data()">
                     <div class="row">
                         <input type="hidden" name="id" value="${admin.id}" />
                         <div class="col-lg-4">
