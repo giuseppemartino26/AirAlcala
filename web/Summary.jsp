@@ -170,7 +170,6 @@
                     </tr>
                 </table>
             </div>
-            <h4>Precio final: <%=session.getAttribute("price")%></h4>
         </div>
         <footer>
             <div class='container'>
