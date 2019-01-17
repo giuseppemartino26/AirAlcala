@@ -170,7 +170,7 @@
                     </div>
                     <div class="form-group">
                         <label for="departure_date">Fecha de Salida</label>
-                        <input type="date" id="departure_date" name="departure_date" class="form-control" required> 
+                        <input type="date" id="departure_date" name="departure_date" class="" required> 
                     </div>
                     <div class="form-group">
                         <!--Only 5 passengers with you-->
@@ -183,7 +183,7 @@
                     <!--hide until you check round_trip-->
                     <div class="form-group" id="div_departure_2" style="display:none">  
                         <label for="departure_date_2" id="label_date_2" >Fecha de salida del vuelo de vuelta</label>
-                        <input type="date" name="departure_date_2" id="departure_date_2" class="form-control">
+                        <input type="date" name="departure_date_2" id="departure_date_2" class="">
                     </div>
 
                     <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-arrow-right"></i>Buscar</button>
