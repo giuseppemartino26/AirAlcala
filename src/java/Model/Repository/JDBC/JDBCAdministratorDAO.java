@@ -175,7 +175,7 @@ public class JDBCAdministratorDAO implements AdministratorDAO {
         boolean updated = false;
         int updatedId = 0; 
         
-        // Diferentiate two cases: 1. Psasword has not been changed -> Must remain unchanged in DB too
+        // IMPORTANT Diferentiate two cases: 1. Psasword has not been changed -> Must remain unchanged in DB
         if(admin.getPass().equals("")){
             String query = "UPDATE administrators SET email= ?, "
                     + "prename= ?, surname1= ?,surname2= ?"
@@ -196,7 +196,7 @@ public class JDBCAdministratorDAO implements AdministratorDAO {
             } catch (SQLException e) {
                 System.out.println("Not inserted. " + e);
             }
-        // If Password was changed change it by replacing secure hash value    
+        // IMPORTANT If Password was changed change it by replacing secure hash value    
         } else{
             // Convert Password into secure hash using helper class
             String securePass = "";

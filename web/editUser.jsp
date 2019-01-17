@@ -32,21 +32,9 @@
     </head>
     <body>     
         <%
-            // Realizes that a user can only open his own edit form
-            User user = (User) request.getAttribute("user");
-            int userId=-1;
-            if(user!=null)
-                userId = user.getId();
-            Integer sessionUserId = (Integer) session.getAttribute("sessionUserId");
             //allow access only if session exists
             if (session.getAttribute("sessionUserId") == null && session.getAttribute("sessionAdminId") == null)
                 response.sendRedirect("loginController");
-            if(user != null){
-                if( sessionUserId != userId)
-                    response.sendRedirect("userController?operation=edit&userId="+sessionUserId);
-            } else{
-                response.sendRedirect("userController?operation=edit&userId="+sessionUserId);
-            }
         %>
         <div id="wrapper">
             <header>
@@ -150,12 +138,12 @@
                         <div class="col-lg-6">
                             <label for="pass1"><b>Contraseña</b></label>
                             <input placeholder="sin cambio" name="pass1" id="pass1" type="password"
-                                   value="" required onChange="checkPasswordMatch()"/>
+                                   value="" onChange="checkPasswordMatch()"/>
                         </div>
                         <div class="col-lg-6">
                             <label for="pass2"><b>Repetir Contraseña</b></label>
                             <input placeholder="sin cambio" name="pass2" id="pass2" type="password"
-                                   value="" required onChange="checkPasswordMatch()"/>
+                                   value="" onChange="checkPasswordMatch()"/>
                         </div>
                     </div>
 

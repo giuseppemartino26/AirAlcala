@@ -63,7 +63,6 @@ public class saleController extends HttpServlet {
         if (operation.equalsIgnoreCase("list")) {
             userId = Integer.parseInt(request.getParameter("userId"));
             forward = "listSales.jsp";
-            System.out.println(saleDAO.findByUserId(userId).toString());
             request.setAttribute("sales", saleDAO.findByUserId(userId));
         } else if (operation.equalsIgnoreCase("view")) {
             String saleId = request.getParameter("saleId");

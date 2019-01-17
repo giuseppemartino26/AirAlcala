@@ -43,6 +43,8 @@ public class userController extends HttpServlet {
         String operation = request.getParameter("operation");
         boolean success = false;
         int userId;
+        Integer sessionUserId = (Integer) session.getAttribute("sessionUserId");
+        Integer sessionAdminId = (Integer) session.getAttribute("sessionAdminId");
 
         if (operation.equalsIgnoreCase("delete")) {
             userId = Integer.parseInt(request.getParameter("userId"));
@@ -55,15 +57,30 @@ public class userController extends HttpServlet {
         } else if (operation.equalsIgnoreCase("edit")) {
             userId = Integer.parseInt(request.getParameter("userId"));
             forward = "editUser.jsp";
-            User user = userDAO.find(userId);
-            request.setAttribute("user", user);
+            
+            // IMPORTANT: Ensures that only Admins can see ALL profiles.
+            if(sessionUserId != null && sessionAdminId == null){
+                request.setAttribute("user", userDAO.find(sessionUserId));
+            }
+            if(sessionAdminId != null){
+                request.setAttribute("user", userDAO.find(userId));
+            }
+
         } else if (operation.equalsIgnoreCase("list")) {
             forward = "listUsers.jsp";
             request.setAttribute("users", userDAO.findAll());
         } else if (operation.equalsIgnoreCase("view")) {
             userId = Integer.parseInt(request.getParameter("userId"));
             forward = "viewUser.jsp";
-            request.setAttribute("user", userDAO.find(userId));
+   
+            // IMPORTANT: Ensures that only Admins can see ALL profiles.
+            if(sessionUserId != null && sessionAdminId == null){
+                request.setAttribute("user", userDAO.find(sessionUserId));
+            }
+            if(sessionAdminId != null){
+                request.setAttribute("user", userDAO.find(userId));
+            }
+            
         } else {
             forward = "listUsers.jsp";
         }
@@ -75,31 +92,20 @@ public class userController extends HttpServlet {
     // Will be run at POST Events (e.g. sending a form)
     @Override
     public void doPost(HttpServletRequest req,
-            HttpServletResponse res) throws ServletException, IOException {
+        HttpServletResponse res) throws ServletException, IOException {
         HttpSession s = req.getSession(true);
         DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         java.sql.Date userBday;
         Boolean success = false;
-        String securePass = "";
 
         userBday = java.sql.Date.valueOf(req.getParameter("bday"));
-
-        String clearPass = req.getParameter("pass1");
-        SecurePasswordHelper sec = new SecurePasswordHelper();
-
-        // Convert Password into secure hash using helper class
-        try {
-            securePass = sec.generateSecurePasswordHash(clearPass);
-        } catch (NoSuchAlgorithmException | InvalidKeySpecException ex) {
-            Logger.getLogger(userController.class.getName()).log(Level.SEVERE, null, ex);
-        }
 
         user = new User();
         user.setPname(req.getParameter("pname"));
         user.setSname1(req.getParameter("sname1"));
         user.setSname2(req.getParameter("sname2"));
         user.setEmail(req.getParameter("email"));
-        user.setPass(securePass);
+        user.setPass(req.getParameter("pass1"));
         user.setBday(userBday);
         user.setAddress(req.getParameter("addr"));
         user.setPcode(req.getParameter("pcode"));

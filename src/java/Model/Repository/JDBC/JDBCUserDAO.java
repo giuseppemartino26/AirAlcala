@@ -5,6 +5,7 @@
  */
 package Model.Repository.JDBC;
 
+import Controller.userController;
 import Helpers.SecurePasswordHelper;
 import Model.Repository.UserDAO;
 import Model.User;
@@ -234,33 +235,74 @@ public class JDBCUserDAO implements UserDAO {
     @Override
     public boolean update(User user) {
         boolean updated = false;
-        int updatedId = 0;
-        String query = "UPDATE users SET prename= '"+user.getPname()+"', surname1= '"+user.getSname1()+"',"
-                + "surname2= '"+user.getSname2()+"', email= '"+user.getEmail()+"',pass= '"+user.getPass()+"', birthday=  ?, "
-                + "address= '"+user.getAddress()+"', postalcode= '"+user.getPcode()+"', city='"+user.getCity()+"', country= '"+user.getCountry()+"'"
+        int updatedId = 0;      
+        
+        // IMPORTANT to enable not changing password in edit-form!
+        if(user.getPass().equals("")){
+            String query = "UPDATE users SET prename= ?, surname1= ?,"
+                + "surname2= ?, email= ?, birthday=  ?, "
+                + "address= ?, postalcode= ?, city=?, country= ?"
                 + "WHERE id = ?";
-        try {
-            connObj = dbConnect();
-            stmtObj = connObj.prepareStatement(query);
+            try {
+                connObj = dbConnect();
+                stmtObj = connObj.prepareStatement(query);
+
+                stmtObj.setString(1, user.getPname());
+                stmtObj.setString(2,user.getSname1());
+                stmtObj.setString(3,user.getSname2());
+                stmtObj.setString(4,user.getEmail());
+                stmtObj.setDate(5, (Date) user.getBday());
+                stmtObj.setString(6,user.getAddress());
+                stmtObj.setString(7,user.getPcode());
+                stmtObj.setString(8,user.getCity());
+                stmtObj.setString(9, user.getCountry());
+                stmtObj.setInt(10,user.getId());
+
+                updatedId = stmtObj.executeUpdate();
+
+                dbDisconnect();
+            } catch (SQLException e) {
+                System.out.println("Not inserted. " + e);
+            } 
+        // IMPORTANT to enable not changing password in edit form!    
+        } else{
+            String securePass = "";
+            SecurePasswordHelper sec = new SecurePasswordHelper();
+            try {
+                // Convert Password into secure hash using helper class
+                securePass = sec.generateSecurePasswordHash(user.getPass());
+            } catch (NoSuchAlgorithmException | InvalidKeySpecException ex) {
+                Logger.getLogger(JDBCUserDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
             
-            /*stmtObj.setString(1, user.getPname());
-            stmtObj.setString(2,user.getSname1());
-            stmtObj.setString(3,user.getSname2());
-            stmtObj.setString(4,user.getEmail());
-            stmtObj.setString(5,user.getPass());*/
-            stmtObj.setDate(1, (Date) user.getBday());
-            /*stmtObj.setString(7,user.getAddress());
-            stmtObj.setString(8,user.getPcode());
-            stmtObj.setString(9,user.getCity());
-            stmtObj.setString(10, user.getCountry());*/
-            stmtObj.setInt(2,user.getId());
-            
-            updatedId = stmtObj.executeUpdate();
-            
-            dbDisconnect();
-        } catch (SQLException e) {
-            System.out.println("Not inserted. " + e);
+            String query = "UPDATE users SET prename= ?, surname1= ?,"
+                    + "surname2= ?, email= ?,pass= ?, birthday=  ?, "
+                    + "address= ?, postalcode= ?, city=?, country= ?"
+                    + "WHERE id = ?";
+            try {
+                connObj = dbConnect();
+                stmtObj = connObj.prepareStatement(query);
+
+                stmtObj.setString(1, user.getPname());
+                stmtObj.setString(2,user.getSname1());
+                stmtObj.setString(3,user.getSname2());
+                stmtObj.setString(4,user.getEmail());
+                stmtObj.setString(5,securePass);
+                stmtObj.setDate(6, (Date) user.getBday());
+                stmtObj.setString(7,user.getAddress());
+                stmtObj.setString(8,user.getPcode());
+                stmtObj.setString(9,user.getCity());
+                stmtObj.setString(10, user.getCountry());
+                stmtObj.setInt(11,user.getId());
+
+                updatedId = stmtObj.executeUpdate();
+
+                dbDisconnect();
+            } catch (SQLException e) {
+                System.out.println("Not inserted. " + e);
+            }            
         }
+
         if (updatedId > 0) {
             updated = true;
         }
