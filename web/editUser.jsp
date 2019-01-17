@@ -94,7 +94,7 @@
             </nav>
             <br>
             <div class="container">
-                <h2>Editar Cuenta de Usario <%=session.getAttribute("sessionUserId")%></h2>
+                <h2>Editar Cuenta de Usario ${user.id}</h2>
                 <br>
                 <div class="btn-group topButton" role="group" aria-label="Basic example">
                     <% if (session.getAttribute("sessionAdminId") != null) { %>
