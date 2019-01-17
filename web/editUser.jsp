@@ -41,7 +41,7 @@
         <%
             //allow access only if session exists
             if (session.getAttribute("sessionUserId") == null && session.getAttribute("sessionAdminId") == null)
-                response.sendRedirect("loginController");
+                response.sendRedirect("loginController?operation=nologin");
         %>
         <div id="wrapper">
             <header>
