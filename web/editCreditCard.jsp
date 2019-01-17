@@ -111,33 +111,40 @@
             <br>
             <div class="container">
                 <h2>Editar Tarjeta de Cr&eacute;dito</h2>
-                <br>
-                <form method="POST" action="creditCardController" class="form-container" onsubmit="check_credit_data()">
+                <div class="btn-group topButton" role="group" aria-label="Basic example">
+                    <a href="creditcardController?operation=list" class="btn btn-primary" role="button">Volver a Lista</a>
+                </div>
+                <form method="POST" action="creditcardController" class="form-container" onsubmit="check_credit_data()">
                     <input type="hidden" name="id" value="${creditCard.id}" />
                     <div class="row">
                         <div class= "col-lg-6">
                         <label for="name_credit">Nombre del titular</label>
-                        <input type="text" id="name_credit" class="form-control" required pattern="[A-zÀ-ž\s]{1,}">
+                        <input type="text" id="name_credit" class="form-control" 
+                               value="${creditCard.user.pname} ${creditCard.user.sname1} ${creditCard.user.sname2}" required pattern="[A-zÀ-ž\s]{1,}">
                         </div>
-                    
                         <div class="col-lg-6">
-                        <input type="number" id="number" class="form-control" placeholder="${creditCard.number}" required>
+                        <label for="number">Número de Tarjeta</label>
+                        <input type="number" name="number" id="number" class="form-control"
+                               value="${creditCard.number}" required>
                         </div>
                    </div>
                     <div class="row">
                         <div class="col-xs-2">
-                        <input type="number" id="month" class="form-control" placeholder="${creditCard.month}" min="1" max="12" required>
+                        <label for="month">Mes</label>
+                        <input type="number" name="month" id="month" class="form-control" value="${creditCard.month}" min="1" max="12" required>
                         <!--1-12 Range-->
-                        <br>
-                        <input type="number" id="year" class="form-control" placeholder="${creditCard.year}" min="2019" required>
+                        </div>
+                        <div class="col-xs-2">
+                        <label for="year">Año</label>
+                        <input type="number" name="year" id="year" class="form-control" value="${creditCard.year}" min="2019" required>
                         <!--+19 Range-->
                         </div> 
                         <div class="col-xs-2" >
-                        <input type="number" id="cvc" class="form-control" placeholder="${creditCard.securityCode}" min="1" max="999" required>
+                        <label for="cvc">cvc</label>
+                        <input type="number" id="cvc" class="form-control" value="${creditCard.securityCode}" min="1" max="999" required>
                         <!--3 digits Range-->
                         </div>
                    </div>
-
                     <button type="submit" class="btn btn-primary">Env&iacute;o</button>
                 </form>
             </div>

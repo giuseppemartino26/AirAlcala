@@ -63,7 +63,7 @@ public class creditcardController extends HttpServlet {
         }else if(operation.equals("edit")){
             id= Integer.parseInt(request.getParameter("id"));
             ccId = creditCardDAO.find(id).getId();
-
+            
             forward="editCreditCard.jsp";
             CreditCard cc = creditCardDAO.find(ccId);
             request.setAttribute("creditCard", cc);
@@ -97,7 +97,9 @@ public class creditcardController extends HttpServlet {
         //userId from session that we save in loginUser.jsp session.setAtribute("userId",id)
         int userId = (int) s.getAttribute("sessionUserId");
         user = userDAO.find(userId);
-        long number = Long.parseLong(req.getParameter("number"));
+        
+        String number = req.getParameter("number");
+        System.out.println(req.getParameter("year"));
         int year=Integer.parseInt(req.getParameter("year"));
         int month=Integer.parseInt(req.getParameter("month")) ;
         //expiration = java.sql.Date.valueOf(req.getParameter("year") + "-" + req.getParameter("month"));

@@ -68,7 +68,7 @@ public class JDBCCreditCardDAO implements CreditCardDAO {
                 int cc_id = rsObj.getInt("id");
                 int userId = rsObj.getInt("user_id");
                 user = userDAO.find(userId);
-                long number = rsObj.getLong("number");
+                String number = rsObj.getString("number");
                 int year=rsObj.getInt("expiration_year");
                 int month=rsObj.getInt("expiration_month");
                 int cvc = rsObj.getInt("securitycode");
@@ -108,7 +108,7 @@ public class JDBCCreditCardDAO implements CreditCardDAO {
                 CreditCard cc = new CreditCard();
                 cc.setId(rsObj.getInt("id"));
                 cc.setUser(user);
-                cc.setNumber(rsObj.getLong("number"));
+                cc.setNumber(rsObj.getString("number"));
                 cc.setMonth(rsObj.getInt("expiration_month"));
                 cc.setYear(rsObj.getInt("expiration_year"));
                 cc.setSecurityCode(rsObj.getInt("securitycode"));
@@ -135,7 +135,7 @@ public class JDBCCreditCardDAO implements CreditCardDAO {
             stmtObj= connObj.prepareStatement(query);
             //stmtObj.setInt(1, creditCard.getId());
             stmtObj.setInt(1, creditCard.getUser().getId());
-            stmtObj.setLong(2, creditCard.getNumber());
+            stmtObj.setString(2, creditCard.getNumber());
             stmtObj.setInt(3, creditCard.getYear());
             stmtObj.setInt(4, creditCard.getMonth());
             stmtObj.setInt(5, creditCard.getSecurityCode());
@@ -163,7 +163,7 @@ public class JDBCCreditCardDAO implements CreditCardDAO {
             connObj = dbConnect();
             stmtObj = connObj.prepareStatement(query);
             stmtObj.setInt(1, creditCard.getUser().getId());
-            stmtObj.setLong(2, creditCard.getNumber());
+            stmtObj.setString(2, creditCard.getNumber());
             stmtObj.setInt(3, creditCard.getYear());
             stmtObj.setInt(4, creditCard.getMonth());
             stmtObj.setInt(5, creditCard.getSecurityCode());

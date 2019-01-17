@@ -116,7 +116,7 @@
                         <td>${creditCard.number}</td>
                     </tr>
                     <tr>
-                        <th>Fecha de Expiraci&oacute;n</th>
+                        <th>Fecha de Expiracion</th>
                         <td>${creditCard.year}</td>
                     </tr>
                     <tr>

@@ -15,7 +15,7 @@ public class CreditCard {
 
     private int id;
     private User user;
-    private long number;
+    private String number;
     private int securityCode;
     private int month;
     private int year;
@@ -39,11 +39,11 @@ public class CreditCard {
         this.user = user;
     }
 
-    public long getNumber() {
+    public String getNumber() {
         return number;
     }
 
-    public void setNumber(long number) {
+    public void setNumber(String number) {
         this.number = number;
     }
 
