@@ -114,7 +114,7 @@
                 <h2>Crear Tarjeta de Cr&eacute;dito</h2>
                 <br>
 
-                <form method="POST" action="creditcardController" class="form-container" onsubmit="check_credit_data()">
+                <form method="POST" action="creditcardController" class="form-container" onsubmit="return check_credit_data()">
                   <div class="row">
                     <div class= "col-lg-6">
                         <label for="name_credit">Nombre del titular</label>

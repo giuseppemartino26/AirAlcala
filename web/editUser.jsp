@@ -124,7 +124,7 @@
                         <div class="col-lg-6">
                             <label for="email"><b>Email</b></label>
                             <input placeholder="Email" name="email" id="email" type="email"
-                                   value="${user.email}" />
+                                   value="${user.email}" required />
                         </div>
 
                         <div class="col-lg-6">               
@@ -138,12 +138,12 @@
                         <div class="col-lg-6">
                             <label for="pass1"><b>Contraseña</b></label>
                             <input placeholder="sin cambio" name="pass1" id="pass1" type="password"
-                                   value="" onChange="checkPasswordMatch()"/>
+                                   value="" onChange="checkPasswordMatch()" required/>
                         </div>
                         <div class="col-lg-6">
                             <label for="pass2"><b>Repetir Contraseña</b></label>
                             <input placeholder="sin cambio" name="pass2" id="pass2" type="password"
-                                   value="" onChange="checkPasswordMatch()"/>
+                                   value="" onChange="checkPasswordMatch()" required/>
                         </div>
                     </div>
 

@@ -114,7 +114,7 @@
                 <div class="btn-group topButton" role="group" aria-label="Basic example">
                     <a href="creditcardController?operation=list" class="btn btn-primary" role="button">Volver a Lista</a>
                 </div>
-                <form method="POST" action="creditcardController" class="form-container" onsubmit="check_credit_data()">
+                <form method="POST" action="creditcardController" class="form-container" onsubmit="return check_credit_data()">
                     <input type="hidden" name="id" value="${creditCard.id}" />
                     <div class="row">
                         <div class= "col-lg-6">

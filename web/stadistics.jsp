@@ -259,50 +259,5 @@
 </html>
 
 
-<!--<div class="container">
-                <h4>Lista de Administradores</h4>
-                <div class="topButton"><a href="administratorController?operation=add" class="btn btn-primary" role="button">Añadir Administrador</a></div>
-                <br>
-                <table id="datatable" class="display" style="width:100%">
-                    <thead>
-                        <tr>
-                            <th>Id</th>
-                            <th>Nombre</th>
-                            <th>Primer Apelido</th>
-                            <th>Segundo Apelido</th>
-                            <th>Email</th>
-                            <th></th>
-                            <th></th>
-                            <th></th>                
-                        </tr>
-                    </thead>
-                    <tbody>
-<c:forEach items="${admins}" var="admin">
-    <tr>
-        <td><c:out value="${admin.id}" /></td>
-        <td><c:out value="${admin.pname}" /></td>
-        <td><c:out value="${admin.sname1}" /></td>
-        <td><c:out value="${admin.sname2}" /></td>
-        <td><c:out value="${admin.email}" /></td>
-        <td><a href="administratorController?operation=view&adminId=<c:out value="${admin.id}"/>">mirar</a></td>
-        <td><a href="administratorController?operation=edit&adminId=<c:out value="${admin.id}"/>">actualizar</a></td>
-        <td><a href="administratorController?operation=delete&adminId=<c:out value="${admin.id}"/>">borrar</a></td>
-    </tr>
-</c:forEach>
-</tbody>
-<tfoot>
-<tr>
-    <th>Id</th>
-    <th>Nombre</th>
-    <th>Primer Apelido</th>
-    <th>Segundo Apelido</th>
-    <th>Email</th>
-    <th></th>
-    <th></th>
-    <th></th>
 
-</tr> 
-</tfoot>
-</table>
-</div>-->
 

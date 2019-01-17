@@ -24,6 +24,9 @@
             $(document).ready(function () {
                 $('#datatable').DataTable();
                 $('#datatable2').DataTable();
+                if(<c:out value="${flights_arrival}" />!==null){
+                    $("#comeback").toggle();
+                }
             });
         </script>
     </head>
@@ -123,7 +126,7 @@
                 </table>
                 </div>
             <br><br>
-                <div class="container">
+            <div class="container" style=" display:none" id="comeback">
                     <h4>Vuelos Vuelta</h4>
                 <table id="datatable2" class="display" style="width:100%">
                     <thead>

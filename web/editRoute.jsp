@@ -22,33 +22,13 @@
         src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <link rel="stylesheet" type="text/css" href="styles/styles.css">
         <script>
-            function validation() {
-                if (document.getElementById('origin').value == '') {
-                    alert('Introduzca un origen');
+            function validation(){
+                if($("#originID").val()===$("#destinationID").val()){
+                    alert("El origen no puede ser igual al destino");
                     return false;
                 }
-                if (document.getElementById('destination').value == '') {
-                    alert('Introduzca una destinación');
-                    return false;
-                }
-                if (document.getElementById('airplane_id').value == '') {
-                    alert('Introduzca un avión');
-                    return false;
-                }
-                if (document.getElementById('ticketprice').value == '') {
-                    alert('Introduzca una precio de billete');
-                    return false;
-                }
-                if (document.getElementById('luggageprice').value == '') {
-                    alert('Introduzca un precio de maleta');
-                    return false;
-                }
-                if (document.getElementById('tax').value == '') {
-                    alert('Introduzca un porcentaje de impuestos');
-                    return false;
-                }                
                 return true;
-            }
+            };
         </script>
     </head>
 
@@ -115,7 +95,7 @@
                 <div class="btn-group topButton" role="group" aria-label="Basic example">
                     <a href="routeController?operation=list" class="btn btn-primary" role="button">Volver a Lista</a>
                 </div>
-                <form method="POST" action="routeController" class="form-container" onsubmit="showResponse()">
+                <form method="POST" action="routeController" class="form-container" onsubmit="return validation()">
                     <div class="row">
                         <input type="hidden" name="id" value="${route.id}" />
                         <div class="col-lg-6">

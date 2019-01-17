@@ -29,6 +29,9 @@
                 $("#round_trip").on("click", function () {
                     $("#div_departure_2").toggle();        /*only show if you select the checkbox*/
                 });
+                if($('#round_trip').is(':checked')){
+                    $("#div_departure_2").show();       /*only if use back in browser*/
+                } ;
             });
             function check_data() {
                 var dNow = new Date();
@@ -166,20 +169,7 @@
                     <div class="form-group">
                         <!--Only 5 passengers with you-->
                         <label for="passengers">Pasajeros</label>
-                        <select class="form-control" name="passengers" id="passengers" required>
-                            <option value="1">1 pasajero</option>
-                            <option value="2">2 pasajeros</option>
-                            <option value="3">3 pasajeros</option>
-                            <option value="4">4 pasajeros</option>
-                            <option value="5">5 pasajeros</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="class">Clase</label>
-                        <select class="form-control" name="flyclass" id="class" required>
-                            <option value="economy">Turista</option>
-                            <option value="first">Primera</option>
-                        </select>
+                        <input type="number" min="0" id="passengers" required>
                     </div>
                     <label for="round_trip">Ida/Vuelta</label>
                     <input type="checkbox" name="ida_vuelta" id="round_trip"><br>

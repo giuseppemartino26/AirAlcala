@@ -21,15 +21,7 @@
         src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <link rel="stylesheet" type="text/css" href="styles/styles.css">
 
-        <script>
-            function validate()
-            {
-                var x = document.getElementById("places").value;
-                if (isNaN(x))
-                    alert("Places must be a number");
-            }
-
-        </script>
+        
     </head>
     <body>
         <%
@@ -112,7 +104,7 @@
                         <div class="col-lg-4">
                             <label for="tax"><b>Tax</b></label>
                             <input placeholder="Tax" name="tax" id="tax" type="number" step="any"
-                                   value="${airport.tax}" required onChange="validate()"/>
+                                   value="${airport.tax}" required />
                         </div>
                     </div>
 

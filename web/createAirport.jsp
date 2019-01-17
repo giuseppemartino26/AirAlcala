@@ -90,12 +90,12 @@
                     <div class="row">
                         <div class="col-lg-4">
                             <label for="name"><b>Nombre</b></label>
-                            <input placeholder="Nombre" name="name" id="name" type="text" required pattern="[A-zÀ-ž\s]{1,}">
+                            <input placeholder="Nombre" name="name" id="name" type="text" required pattern="[A-zÀ-ž\s]{1,}" required>
                         </div>
 
                         <div class="col-lg-4">              
                             <label for="country"><b>País</b></label>
-                            <input placeholder="País" name="country" id="country" type="text" required pattern="[A-zÀ-ž\s]{1,}">
+                            <input placeholder="País" name="country" id="country" type="text" required pattern="[A-zÀ-ž\s]{1,}" required>
                         </div>
 
                         <div class="col-lg-4">

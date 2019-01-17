@@ -96,17 +96,17 @@
                     <div class="row">
                         <div class="col-lg-4">
                             <label for="pname"><b>Nombre</b></label>
-                            <input placeholder="Nombre" name="pname" id="pname" type="text" required pattern="[A-zÀ-ž\s]{1,}">
+                            <input placeholder="Nombre" name="pname" id="pname" type="text" required pattern="[A-zÀ-ž\s]{1,}" required>
                         </div>
 
                         <div class="col-lg-4">              
                             <label for="sname1"><b>Primer Apelido</b></label>
-                            <input placeholder="Primer Apelido" name="sname1" id="sname1" type="text" required pattern="[A-zÀ-ž\s]{1,}">
+                            <input placeholder="Primer Apelido" name="sname1" id="sname1" type="text" required pattern="[A-zÀ-ž\s]{1,}" required>
                         </div>
 
                         <div class="col-lg-4">
                             <label for="sname2"><b>Segundo Apelido</b></label>
-                            <input placeholder="Segundo Apelido" name="sname2" id="sname2" type="text" pattern="[A-zÀ-ž\s]{1,}">
+                            <input placeholder="Segundo Apelido" name="sname2" id="sname2" type="text" pattern="[A-zÀ-ž\s]{1,}" >
                         </div>
                     </div>
 

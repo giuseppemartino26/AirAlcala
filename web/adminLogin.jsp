@@ -77,7 +77,7 @@
             <div class="container">
                 <h2>Login de Administradores</h2>
                 <br>
-                <form method="POST" action="adminloginController" class="form-container"> <%--onsubmit="return validation()"--%>
+                <form method="POST" action="adminloginController" class="form-container">
                     <div class="row">
                         <div class="col-lg-6">
                             <label for="email"><b>Email</b></label>

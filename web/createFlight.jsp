@@ -21,35 +21,7 @@
         <script
         src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <link rel="stylesheet" type="text/css" href="styles/styles.css">
-        <script>
-            function validation() {
-                if (document.getElementById('origin').value == '') {
-                    alert('Introduzca un origen');
-                    return false;
-                }
-                if (document.getElementById('destination').value == '') {
-                    alert('Introduzca una destinación');
-                    return false;
-                }
-                if (document.getElementById('airplane_id').value == '') {
-                    alert('Introduzca un avión');
-                    return false;
-                }
-                if (document.getElementById('ticketprice').value == '') {
-                    alert('Introduzca una precio de billete');
-                    return false;
-                }
-                if (document.getElementById('luggageprice').value == '') {
-                    alert('Introduzca un precio de maleta');
-                    return false;
-                }
-                if (document.getElementById('tax').value == '') {
-                    alert('Introduzca un porcentaje de impuestos');
-                    return false;
-                }                
-                return true;
-            }
-        </script>
+        
     </head>
 
     <body>
@@ -136,11 +108,11 @@
                             <input name="departuredate" class="form-control" id="departuredate" type="date" required>
                         </div>
                         <div class="col-lg-4">
-                            <label for="departuretime"><b>Tiempo de Salida: </b></label>
+                            <label for="departuretime"><b>Hora de Salida: </b></label>
                             <input name="departuretime" class="form-control" id="departuretime" type="time" required>
                         </div>
                         <div class="col-lg-4">
-                            <label for="arrivaltime"><b>Tiempo de Llegada: </b></label>
+                            <label for="arrivaltime"><b>Hora de Llegada: </b></label>
                             <input name="arrivaltime" class="form-control" id="arrivaltime" type = "time" required>
                         </div>
                     </div>

@@ -25,7 +25,6 @@
         <script>
             $(document).ready(function () {
                 if(<%=session.getAttribute("saleID_2")%> == null){
-                    alert("no hay segunda compra");
                     $("#roundTrip").toggle();
                 }
             });
@@ -156,7 +155,7 @@
                     </tr>
                 </table>
             </div>
-            <!--<h4>Precio final: <--%=compra%></h4>-->
+            <h4>Precio final: <%=session.getAttribute("price")%></h4>
         </div>
         <footer>
             <div class='container'>

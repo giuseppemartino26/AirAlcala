@@ -25,7 +25,7 @@
             function check_data() {
                 var pass1 = $("#pass1").val();
                 var pass2 = $("#pass2").val();
-                if (pass1 !== pass2) {  /*cant pick today */
+                if (pass1 !== pass2) {  
                     alert("Contraseñas no coinciden");
                     return false;
                 }
@@ -144,7 +144,7 @@
 
                         <div class="col-lg-2">    
                             <label for="pcode"><b>Código Postal</b></label>
-                            <input placeholder="CP" name="pcode" id="pcode" type="text" pattern="{1,}" required required maxlength="5">
+                            <input placeholder="CP" name="pcode" id="pcode" type="text" pattern="{1,}" required maxlength="5">
                         </div>
 
                         <div class="col-lg-3">    

@@ -15,19 +15,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <link rel="stylesheet" type="text/css" href="styles/styles.css">
-        <script>
-            function validation() {
-                if (document.getElementById('email').value == '') {
-                    alert('Introduzca un email');
-                    return false;
-                }
-                if (document.getElementById('pass').value == '') {
-                    alert('Introduzca una contraseña');
-                    return false;
-                }
-                return true;
-            }
-        </script>
+
     </head>
     <body>
         <%
@@ -93,11 +81,23 @@
                 <table class="table">
                     <tbody>
                         <tr>
-                            <td>   <div class="topButton"><a class="btn btn-primary" role="button" href="saleController?operation=list&userId=<%=session.getAttribute("sessionUserId")%>">Mirar Compras</a></div> </td>
+                            <td>
+                                <div class="topButton">
+                                    <a class="btn btn-primary" role="button" href="saleController?operation=list&userId=<%=session.getAttribute("sessionUserId")%>">Mirar Compras</a>
+                                </div> 
+                            </td>
 
-                            <td>   <div class="topButton"><a class="btn btn-primary" role="button" href="userController?operation=view&userId=<%=session.getAttribute("sessionUserId")%>">Mis Datos</a></div> </td>
+                            <td>
+                                <div class="topButton">
+                                    <a class="btn btn-primary" role="button" href="userController?operation=view&userId=<%=session.getAttribute("sessionUserId")%>">Mis Datos</a>
+                                </div>
+                            </td>
 
-                            <td>     <div class="topButton"><a href="creditcardController?operation=list&userId=<%=session.getAttribute("sessionUserId")%> " class="btn btn-primary" role="button" >Mis Medios de Pago</a></div> </td>
+                            <td>
+                                <div class="topButton">
+                                    <a href="creditcardController?operation=list&userId=<%=session.getAttribute("sessionUserId")%> " class="btn btn-primary" role="button" >Mis Medios de Pago</a>
+                                </div>
+                            </td>
 
 
                         </tr>
@@ -105,25 +105,24 @@
                 </table>
             </div>
         </div>
-            <footer>
-                <div class='container'>
-                    <div class="row">
-                        <div class="col-xs-6">
-                            <p>
-                                AirAlcala - Alcal&aacute; de Henares, Madrid, España
-                            </p>
-                        </div>
-                        <div class="col-xs-6">
-                            <ul class="list-inline text-right">
-                                <li><a href="adminloginController">Login Administrador</a></li>
-                                <li><a href="https://twitter.com/">Twitter</a></li>
-                                <li><a href="https://www.facebook.com/">Facebook</a></li>
-                                <li>Contacto 900 900 411 <a href="mailto:ciu@uah.es">ciu@uah.es</a></li>
-                            </ul>
-                        </div>
+        <footer>
+            <div class='container'>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <p>
+                            AirAlcala - Alcal&aacute; de Henares, Madrid, España
+                        </p>
+                    </div>
+                    <div class="col-xs-6">
+                        <ul class="list-inline text-right">
+                            <li><a href="https://twitter.com/">Twitter</a></li>
+                            <li><a href="https://www.facebook.com/">Facebook</a></li>
+                            <li>Contacto 900 900 411 <a href="mailto:ciu@uah.es">ciu@uah.es</a></li>
+                        </ul>
                     </div>
                 </div>
-            </footer>
-        </div>
-    </body>
+            </div>
+        </footer>
+    </div>
+</body>
 </html>

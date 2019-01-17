@@ -24,8 +24,8 @@
             function validate()
             {
                 var x = document.getElementById("places").value;
-                if (isNaN(x))
-                    alert("Places must be a number");
+                if (x==0)
+                    alert("El vuelo de de tener m&aacute;s de 0 asientos");
             }
 
         </script>
