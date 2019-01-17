@@ -14,6 +14,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -89,32 +90,37 @@ public class JDBCCreditCardDAO implements CreditCardDAO {
     }
 
     @Override
-    public CreditCard findByUserId(int userId) {
-        CreditCard cc = new CreditCard();
+    public ArrayList<CreditCard> findAllByUserId(int userId) {
+        ArrayList<CreditCard> ccList = new ArrayList<CreditCard>();
         userDAO = new JDBCUserDAO();
+        user = new User();
+        
+        user = userDAO.find(userId);
+
         String query="SELECT * FROM creditcards WHERE user_id = ?";
-        System.out.println("text");
         try {
             connObj = dbConnect();
             stmtObj = connObj.prepareStatement(query);
             stmtObj.setInt(1, userId);
             rsObj = stmtObj.executeQuery();
 
-            if (rsObj.next()) {
+            while (rsObj.next()) {
+                CreditCard cc = new CreditCard();
                 cc.setId(rsObj.getInt("id"));
-                user = userDAO.find(userId);
                 cc.setUser(user);
                 cc.setNumber(rsObj.getLong("number"));
                 cc.setMonth(rsObj.getInt("expiration_month"));
                 cc.setYear(rsObj.getInt("expiration_year"));
                 cc.setSecurityCode(rsObj.getInt("securitycode"));
+                
+                ccList.add(cc);
             }
             rsObj.close();
             dbDisconnect();
         } catch (SQLException e) {
             System.out.println("Not inserted. " + e);
         }
-        return cc;
+        return ccList;
     }
     @Override
     public boolean insert(CreditCard creditCard) {

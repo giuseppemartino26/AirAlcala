@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -45,28 +46,40 @@ public class creditcardController extends HttpServlet {
         String forward="";
         String operation = request.getParameter("operation");
         boolean sucess=false;
+        int id;
         int userId;
-        int creditCard_Id;
+        int ccId;
         
         if(operation.equalsIgnoreCase("delete")){
-            userId=Integer.parseInt(request.getParameter("userId"));
-            creditCard_Id = creditCardDAO.findByUserId(userId).getId();
-            sucess=creditCardDAO.delete(creditCard_Id);
+            ccId=Integer.parseInt(request.getParameter("id"));
+            sucess=creditCardDAO.delete(ccId);
             forward = "createCreditCard.jsp";
         }else if(operation.equalsIgnoreCase("add")){
+            userId = (Integer) session.getAttribute("sessionUserId");
+            user = userDAO.find(userId);
             forward = "createCreditCard.jsp";
+            request.setAttribute("user", user);
+            
         }else if(operation.equals("edit")){
-            userId=Integer.parseInt(request.getParameter("userId"));
-            creditCard_Id = creditCardDAO.findByUserId(userId).getId();
-            System.out.println(creditCard_Id);
+            id= Integer.parseInt(request.getParameter("id"));
+            ccId = creditCardDAO.find(id).getId();
+
             forward="editCreditCard.jsp";
-            CreditCard cc = creditCardDAO.find(creditCard_Id);
+            CreditCard cc = creditCardDAO.find(ccId);
             request.setAttribute("creditCard", cc);
+        } else if (operation.equalsIgnoreCase("list")) {
+            userId = (Integer) session.getAttribute("sessionUserId");
+
+            ArrayList<CreditCard> ccList = new ArrayList<CreditCard>();
+            ccList = creditCardDAO.findAllByUserId(userId);
+         
+            forward = "listCreditCards.jsp";
+            request.setAttribute("creditcards", ccList);    
         }else if(operation.equalsIgnoreCase("view")){
-            userId=Integer.parseInt(request.getParameter("userId"));
-            creditCard_Id = creditCardDAO.findByUserId(userId).getId();
+            id = Integer.parseInt(request.getParameter("id"));
+            ccId = creditCardDAO.find(id).getId();
             forward="viewCreditCard.jsp";
-            CreditCard cc = creditCardDAO.find(creditCard_Id);
+            CreditCard cc = creditCardDAO.find(ccId);
             request.setAttribute("creditCard", cc);
         }else{
             forward="paginauser.jsp";
@@ -101,10 +114,9 @@ public class creditcardController extends HttpServlet {
         if (req.getParameter("id") == null || req.getParameter("id").isEmpty()) {
             success = creditCardDAO.insert(creditCard);
             req.setAttribute("success", success);
-            s.setAttribute("creditCardId", creditCard.getId());
             if (success) {
                 RequestDispatcher view = req.getRequestDispatcher("viewCreditCard.jsp");
-                req.setAttribute("credtiCard", creditCard);
+                req.setAttribute("creditCard", creditCard);
                 view.forward(req, resp);
             }
         } //This is the "edit cc" case

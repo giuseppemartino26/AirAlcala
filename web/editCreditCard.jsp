@@ -114,24 +114,30 @@
                 <br>
                 <form method="POST" action="creditCardController" class="form-container" onsubmit="check_credit_data()">
                     <input type="hidden" name="id" value="${creditCard.id}" />
-                    <div class="form-group">
+                    <div class="row">
+                        <div class= "col-lg-6">
                         <label for="name_credit">Nombre del titular</label>
                         <input type="text" id="name_credit" class="form-control" required pattern="[A-zÀ-ž\s]{1,}">
-                    </div>
-                    <div class="form-group">
+                        </div>
+                    
+                        <div class="col-lg-6">
                         <input type="number" id="number" class="form-control" placeholder="${creditCard.number}" required>
-                    </div>    
-                    <div class="form-group col-xs-2">
+                        </div>
+                   </div>
+                    <div class="row">
+                        <div class="col-xs-2">
                         <input type="number" id="month" class="form-control" placeholder="${creditCard.month}" min="1" max="12" required>
                         <!--1-12 Range-->
                         <br>
                         <input type="number" id="year" class="form-control" placeholder="${creditCard.year}" min="2019" required>
                         <!--+19 Range-->
-                    </div>    
-                    <div class="form-group" >
+                        </div> 
+                        <div class="col-xs-2" >
                         <input type="number" id="cvc" class="form-control" placeholder="${creditCard.securityCode}" min="1" max="999" required>
                         <!--3 digits Range-->
-                    </div> 
+                        </div>
+                   </div>
+
                     <button type="submit" class="btn btn-primary">Env&iacute;o</button>
                 </form>
             </div>

@@ -6,6 +6,7 @@
 package Model.Repository;
 
 import Model.CreditCard;
+import java.util.ArrayList;
 
 /**
  *
@@ -15,7 +16,7 @@ public interface CreditCardDAO {
 
     public CreditCard find(int id);
 
-    public CreditCard findByUserId(int userId);
+    public ArrayList<CreditCard> findAllByUserId(int userId);
 
     public boolean insert(CreditCard creditCard);
 

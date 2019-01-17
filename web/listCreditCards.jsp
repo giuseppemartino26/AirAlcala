@@ -1,63 +1,36 @@
 <%-- 
-    Document   : createCreditCard
-    Created on : 12-ene-2019, 23:14:45
+    Document   : listRoutes
+    Created on : 16-ene-2019, 4:14:05
     Author     : pablo
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="java.sql.*;" %>
-<!DOCTYPE html>
-
-<html lang="en">
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<!doctype html>
+<html lang="es">
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>AirAlcala</title>   
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet"
-              href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <script
-        src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script
-        src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+        <title>AirAlcala</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.0/css/jquery.dataTables.css">
+        <link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.0/css/jquery.dataTables_themeroller.css">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script type="text/javascript" charset="utf-8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.1.min.js"></script>
+        <script type="text/javascript" charset="utf-8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.0/jquery.dataTables.min.js"></script>
         <link rel="stylesheet" type="text/css" href="styles/styles.css">
-        <link rel="stylesheet" type="text/css" href="styles/styles.css">
+
         <script>
-            /*validate visa*/
-            function visa_cardnumber() {
-                var cardno = /^(?:4[0-9]{12}(?:[0-9]{3})?)$/; /*visa format*/
-                if ($("#number_credit").val().match(cardno)) {
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-            ;
-            /*validate mastercard*/
-            function mc_cardnumber() {
-                var cardno = /^(?:5[1-5][0-9]{14})$/;/*mastercard format*/
-                if ($("#number_credit").val().match(cardno)) {
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-            ;
-            function check_credit_data() {
-                if (!mc_cardnumber() && !visa_cardnumber()) {
-                    alert("Numero de tarjeta de credito no valido");
-                    return false;
-                }
-                return true;
-            }
-            ;
+            $(document).ready(function () {
+                $('#datatable').DataTable();
+            });
         </script>
     </head>
-
     <body>
         <%
             //allow access only if session exists
             if (session.getAttribute("sessionUserId") == null) {
-                response.sendRedirect("adminloginController");
+                response.sendRedirect("loginController");
             }
         %>
         <div id="wrapper">
@@ -110,41 +83,52 @@
                 </div>
             </nav>
             <br>
+            <br>
             <div class="container">
-                <h2>Crear Tarjeta de Cr&eacute;dito</h2>
+                <h4>Lista de Rutas</h4>
+                <div class="topButton"><a href="creditcardController?operation=add" class="btn btn-primary" role="button">Añadir Tarjeta</a></div>
                 <br>
+                <table id="datatable" class="display" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Usario</th>
+                            <th>Número de Tarjeta</th>
+                            <th>Fecha de Expiración</th>
+                            <th>Código de Seguridad</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>                
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach items="${creditcards}" var="creditcard">
+                            <tr>
+                                <td><c:out value="${creditcard.id}" /></td>
+                                <td><c:out value="${creditcard.user.pname} ${creditcard.user.sname1} ${creditcard.user.sname2}"/></td>
+                                <td><c:out value="${creditcard.number}" /></td>
+                                <td><c:out value="${creditcard.month} / ${creditcard.year}" /></td>
+                                <td><c:out value="${creditcard.securityCode}" /></td>
+                                <td><a href="creditcardController?operation=view&id=<c:out value="${creditcard.id}"/>">mirar</a></td>
+                                <td><a href="creditcardController?operation=edit&id=<c:out value="${creditcard.id}"/>">actualizar</a></td>
+                                <td><a href="creditcardController?operation=delete&id=<c:out value="${creditcard.id}"/>">borrar</a></td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>Id</th>
+                            <th>Usario</th>
+                            <th>Número de Tarjeta</th>
+                            <th>Fecha de Expiración</th>
+                            <th>Código de Seguridad</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
 
-                <form method="POST" action="creditcardController" class="form-container" onsubmit="check_credit_data()">
-                  <div class="row">
-                    <div class= "col-lg-6">
-                        <label for="name_credit">Nombre del titular</label>
-                        <input type="text" id="name_credit" class="form-control"
-                               value="${user.pname} ${user.sname1} ${user.sname2}" disabled>
-                    </div>
-                    <div class= "col-lg-6">
-                        <label for="number">Numero de la tarjeta</label>
-                        <input type="number" name="number" id="number" class="form-control" placeholder="Numeros de tarjeta de crédito" required>
-                    </div>
-                  </div>  
-                  <div class="row">  
-                    <div class="col-xs-2">
-                        <label>Fecha de expiración (Month)</label>
-                        <input type="number" name="month" id="month" class="form-control" placeholder="mm" min="1" max="12" required>
-                        <!--1-12 Range-->
-                    </div>    
-                    <div class="col-xs-2">
-                        <label>Fecha de expiración (Year)</label>
-                        <input type="number" name="year" id="year" class="form-control" placeholder="yy" min="2019" required>
-                        <!--+19 Range-->
-                    </div>
-                    <div form-group class="col-xs-2">  
-                        <label for="cvc">Codigo de verificación</label>
-                        <input type="number" name="cvc" id="cvc" class="form-control" placeholder="cvc" min="1" max="999" required>
-                        <!--3 digits Range-->
-                    </div>
-                   </div> 
-                    <button type="submit" class="btn btn-primary">Env&iacute;o</button>
-                </form>
+                        </tr> 
+                    </tfoot>
+                </table>
             </div>
         </div>
         <footer>
@@ -167,3 +151,4 @@
         </footer>
     </body>
 </html>
+

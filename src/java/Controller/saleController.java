@@ -113,7 +113,8 @@ public class saleController extends HttpServlet {
         }
         user = userDAO.find(userId);
         flight = flightDAO.find(flightId);
-        creditCard = creditCardDAO.findByUserId(userId);
+        // Hay que elegir una durante el proceso de venta!!! Luego elegir objeto con find
+        creditCard = creditCardDAO.find(creditCardId);
 
         sale = new Sale();
         String id = saleDAO.generarID();

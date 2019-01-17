@@ -88,9 +88,9 @@
             <div class="container">
                 <h4>Tarjeta de cr&eacute;dito</h4>
                 <div class="btn-group topButton" role="group" aria-label="Basic example">
-                    <a href="creditCardController?operation=delete&creditCardId=<c:out value="${creditCard.id} "/>"class="btn btn-primary" role="button">Borrar Tarjeta de Cr&eacute;dito</a>
-                    <a href="creditCardController?operation=edit&creditCardId=<c:out value="${creditCard.id}"/>"class="btn btn-primary" role="button">Actualizar Tarjeta de Cr&eacute;dito</a>
-                    <a href="creditCardController?operation=add" class="btn btn-primary" role="button">Añadir Tarjeta de Cr&eacute;dito</a>        
+                    <a href="creditcardController?operation=list" class="btn btn-primary" role="button">Volver a Lista</a>
+                    <a href="creditcardController?operation=add" class="btn btn-primary" role="button">Añadir Tarjeta</a>        
+
                 </div>
 
                 <br>

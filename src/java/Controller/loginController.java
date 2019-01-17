@@ -58,6 +58,9 @@ public class loginController extends HttpServlet {
             request.setAttribute("user", user);
             CreditCard creditCard = new CreditCard();
             CreditCardDAO creditCardDAO = new JDBCCreditCardDAO();
+            // Como un usario puede tener más que una tarjeta es una lista por cada usario
+            // Hay que elegir tarjeta de Menú Drop Down durante el proceso y poner la id de la tarjeta
+            // en la sesión
             creditCard = creditCardDAO.findByUserId(user.getId());
             request.setAttribute("creditCard", creditCard);
         } else {
