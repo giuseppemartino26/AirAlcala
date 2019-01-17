@@ -49,6 +49,7 @@ public class loginController extends HttpServlet {
         int flightId = 0;
         String operation = request.getParameter("operation");
         String forward = "";
+        System.err.print(operation);
         if (operation.equalsIgnoreCase("sale")) {
             s.setAttribute("proceso", "ventaFlight");
             forward = "index.jsp";
@@ -56,8 +57,8 @@ public class loginController extends HttpServlet {
             forward = "Pay_data.jsp";
             user=userDAO.find((int) s.getAttribute("sessionUserId"));
             request.setAttribute("user", user);
-            CreditCard creditCard = new CreditCard();
             CreditCardDAO creditCardDAO = new JDBCCreditCardDAO();
+            request.setAttribute("creditcards", creditCardDAO.findAllByUserId(user.getId()));
              // Como un usario puede tener más que una tarjeta es una lista por cada usario
              // Hay que elegir tarjeta de Menú Drop Down durante el proceso y poner la id de la tarjeta
              // en la sesión
@@ -104,6 +105,8 @@ public class loginController extends HttpServlet {
                 if (s.getAttribute("proceso").equals("ventaFlight")) {
                     RequestDispatcher view = req.getRequestDispatcher("Pay_data.jsp");
                     req.setAttribute("user", user);
+                    CreditCardDAO creditCardDAO = new JDBCCreditCardDAO();
+                    req.setAttribute("creditcards", creditCardDAO.findAllByUserId(user.getId()));
                     // IMPORTANTE: Hay que elegir tarjeta crédito de una lista del bbdd (varios por usario
             //        req.setAttribute("creditCard", creditCard);
             //        s.setAttribute("creditCardId", creditCard.getId());

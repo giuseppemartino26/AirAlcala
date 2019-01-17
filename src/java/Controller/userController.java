@@ -111,6 +111,7 @@ public class userController extends HttpServlet {
         user.setPcode(req.getParameter("pcode"));
         user.setCity(req.getParameter("city"));
         user.setCountry(req.getParameter("country"));
+        System.out.println(user.toString());
 
         //This is the "add user" case
         if (req.getParameter("id") == null || req.getParameter("id").isEmpty()) {

@@ -96,10 +96,6 @@
                 <br>
                 <table class="table table-striped" style="width:100%">
                     <tr>
-                        <th>Id</th> 
-                        <td>${creditCard.id}</td>
-                    </tr>
-                    <tr>
                         <th>Nombre</th>
                         <td>${creditCard.user.pname}</td>
                     </tr>
@@ -123,7 +119,7 @@
                         <th>CVC</th>
                         <td>${creditCard.securityCode}</td>
                     </tr>
-                </table>-->
+                </table>
             </div>
         </div>
         <footer>

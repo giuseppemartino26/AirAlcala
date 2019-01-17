@@ -5,6 +5,8 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!doctype html>
 <html lang="es">
     <head>
@@ -84,54 +86,52 @@
             <br>
             <br>
             <div class="container">
-                <form method="POST" action="saleController" class="form-container" onsubmit="showResponse()">
+                <form method="POST" action="saleController"  class="form-container"onsubmit="showResponse()">
                     <p>Cantidad a Pagar: <%=session.getAttribute("price")%></p>
                     <p>Comprobacion de Datos de Pago</p>
-                    <table class="table table-striped" style="width:100%">
-                        <tr>
-                            <th>Id</th> 
-                            <td>${user.id}</td>
-                        </tr>
+                    <table class="table table-striped" style="width:90%">
                         <tr>
                             <th>Nombre</th>
                             <td>${user.pname}</td>
-                        </tr>
-                        <tr>
                             <th>Primer Apelido</th>
                             <td>${user.sname1}</td>
                         </tr>
                         <tr>
+
                             <th>Segundo Apelido</th>
                             <td>${user.sname2}</td>
                         </tr>
                         <tr>
+                            <th>Segundo Apelido</th>
+                            <td>${user.sname2}</td>
                             <th>Email</th>
                             <td>${user.email}</td>
                         </tr>
                         <tr>
                             <th>Birthday</th>
                             <td>${user.bday}</td>
-                        </tr>
-                        <tr>
                             <th>Dirección</th>
                             <td>${user.address}</td>
                         </tr>
                         <tr>
-                            <th>Codigo Postal</th>
-                            <td>${user.pcode}</td>
-                        </tr>
-                        <tr>
                             <th>Ciudad</th>
                             <td>${user.city}</td>
-                        </tr>
-                        <tr>
                             <th>País</th>
                             <td>${user.country}</td>
                         </tr>
                         <tr>
-                            <th>Tarjeta Cr&eacute;dito</th>
-                            <td>${creditCard.number}</td>
+                            <th>Elige una Tarjeta Cr&eacute;dito</th>
+                            <td>
+                                <select name="creditCardId" class="form-control" id="creditCardId" required>
+                            <c:forEach items="${creditcards}" var="creditCard">    
+                                <option value="${creditCard.id}">${creditCard.number}</option>
+                            </c:forEach> 
+                        </select>
+                            </td>
                         </tr>
+                        
+
+
                     </table>
                     <button type="submit" class="btn">Env&iacute;o</button>
                 </form>

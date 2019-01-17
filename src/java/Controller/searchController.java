@@ -57,19 +57,19 @@ public class searchController extends HttpServlet {
         s.setAttribute("destination", destination_name);
         s.setAttribute("passengers", passengers);
         //Date departure_date = Date.valueOf(date1);
-        ArrayList<Route> routes = routeDAO.findRoute(origin, destination, passengers);
+        ArrayList<Route> routes = routeDAO.findRoute(origin, destination);
         System.out.println(routes.toString());
         ArrayList<Flight> allFlights_departure = new ArrayList();
         ArrayList<Flight> allFlights_arrival = new ArrayList();
         for (int i = 0; i < routes.size(); i++) {
-            allFlights_departure.addAll(flightDAO.findFlights(routes.get(i), departure_date));
+            allFlights_departure.addAll(flightDAO.findFlights(routes.get(i), departure_date, passengers));
             System.out.println(allFlights_departure.toString());
             //allFlights_departure.addAll(flights);
         }
         if (!comeback_date.equals("")) {
-            ArrayList<Route> routesArrival = routeDAO.findRoute(destination, origin, passengers);
+            ArrayList<Route> routesArrival = routeDAO.findRoute(destination, origin);
             for (int i = 0; i < routes.size(); i++) {
-                ArrayList<Flight> flights = flightDAO.findFlights(routes.get(i), comeback_date);
+                ArrayList<Flight> flights = flightDAO.findFlights(routesArrival.get(i), comeback_date, passengers);
                 System.out.println(flights.toString());
                 allFlights_arrival.addAll(flights);
                 req.setAttribute("flights_arrival", allFlights_arrival);

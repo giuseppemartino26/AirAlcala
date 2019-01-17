@@ -26,6 +26,6 @@ public interface FlightDAO {
 
     public boolean delete(int id);
     
-    public ArrayList<Flight> findFlights(Route route, String date);
+    public ArrayList<Flight> findFlights(Route route, String date, int passengers);
 
 }

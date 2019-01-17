@@ -24,6 +24,6 @@ public interface RouteDAO {
 
     public ArrayList<Route> findAll();
     
-    public ArrayList<Route> findRoute(int origin, int destination, int passengers);
+    public ArrayList<Route> findRoute(int origin, int destination);
 
 }

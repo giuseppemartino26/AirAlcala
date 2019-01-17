@@ -68,7 +68,10 @@ public class saleController extends HttpServlet {
             String saleId = request.getParameter("saleId");
             forward = "viewSale.jsp";
             request.setAttribute("sale", saleDAO.find(saleId));
-        } else {
+        } else if (operation.equalsIgnoreCase("overview")){
+            request.setAttribute("flights", flightDAO.findAll());
+            forward = "stadistics.jsp";
+        }else {
             forward = "listUsers.jsp";
         }
 
@@ -97,19 +100,22 @@ public class saleController extends HttpServlet {
         String place = (String) s.getAttribute("origin");
         String flightArrival = String.valueOf(s.getAttribute("flightIdArrival"));
         double price_2 = 0;
-        if (flightArrival != null) {
-            flightIdArrival = (int) s.getAttribute("flightIdArrival");
-            price_2 = (double) s.getAttribute("price_2");
+        //System.out.println(s.getAttribute("flightIdArrival"));
+        if (s.getAttribute("flightIdArrival") !=null) {
+            flightIdArrival = Integer.parseInt(flightArrival);
+            String price2=String.valueOf(s.getAttribute("price_2"));
+            price_2 = Double.parseDouble(price2) ;
             s.setAttribute("price_2",price_2);
         }
         int passengers = (int) s.getAttribute("passengers");
-        int creditCardId = (int) s.getAttribute("creditCardId");
-        double price_1 = (double) s.getAttribute("price_1");
+        int creditCardId = Integer.parseInt(req.getParameter("creditCardId")) ;
+        String price1=String.valueOf(s.getAttribute("price_1"));
+        double price_1 = Double.parseDouble(price1);
         boolean success = false;
         int sales = saleDAO.numberSales(userId) + 1;
         if (sales % 3 == 0) {
             price_1 = price_1 / 2;
-            s.setAttribute("price_1", "Precio rebajado (50%) por haber contartado 2 viajes anteriormente: " + price_1);
+            s.setAttribute("price_1", "Precio rebajado (50%) por haber contratado 2 viajes anteriormente: " + price_1);
         }
         user = userDAO.find(userId);
         flight = flightDAO.find(flightId);
@@ -130,14 +136,19 @@ public class saleController extends HttpServlet {
         sale.setPrice(price_1);
         success = saleDAO.insert(sale);
         s.setAttribute("saleID", sale.getId());
-        if (flightIdArrival != 0) {
+        System.out.println("text: "+flightIdArrival);
+        //Reset sessions
+        s.setAttribute("saleID_2", null);
+        if (flightIdArrival > 0) {
+            System.out.println("text2");
             sales = saleDAO.numberSales(userId) + 2;
             if (sales % 3 == 0) {
                 price_2 = price_2 / 2;
-                s.setAttribute("price_2", "Precio rebajado (50%) por haber contartado 2 viajes anteriormente: " + price_2);
+                s.setAttribute("price_2", "Precio rebajado (50%) por haber contratado 2 viajes anteriormente: " + price_2);
             }
             flight_arrival = flightDAO.find(flightIdArrival);
-            sale = new Sale();
+            System.out.println(flight_arrival.toString());
+            
             id = saleDAO.generarID();
             while (!saleDAO.comprobarId(id)) {
                 id = saleDAO.generarID();

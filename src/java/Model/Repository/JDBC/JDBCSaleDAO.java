@@ -26,6 +26,7 @@ public class JDBCSaleDAO implements SaleDAO {
     private static Connection connObj;
     private static PreparedStatement stmtObj;
     private static ResultSet rsObj;
+    private FlightDAO flightDAO;
 
     private Connection dbConnect() {
         try {
@@ -144,7 +145,10 @@ public class JDBCSaleDAO implements SaleDAO {
             stmtObj.setInt(6, sale.getCreditCard().getId());
             stmtObj.setDouble(7, sale.getPrice());
             insertedId = stmtObj.executeUpdate();
-
+            flightDAO=new JDBCFlightDAO();
+            int availableSeats=sale.getFlight().getAvailableSeats();
+            sale.getFlight().setAvailableSeats(availableSeats-sale.getPassengers());
+            flightDAO.update(sale.getFlight());
             dbDisconnect();
         } catch (SQLException e) {
             System.out.println("Not inserted. " + e);

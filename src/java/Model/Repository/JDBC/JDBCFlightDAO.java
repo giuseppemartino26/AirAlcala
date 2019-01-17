@@ -117,7 +117,7 @@ public class JDBCFlightDAO implements FlightDAO {
         int updatedId = 0;
         String query = "UPDATE flights SET locator = ?, route_id = ?,"
                 + "departure_date = ?, departure_time = ?, arrival_time = ?, available_seats = ?"
-                + "WHERE id = ?;";
+                + "WHERE id = ?";
         try {
             connObj = dbConnect();
             stmtObj = connObj.prepareStatement(query);
@@ -199,14 +199,14 @@ public class JDBCFlightDAO implements FlightDAO {
     }
 
     @Override
-    public ArrayList<Flight> findFlights(Route route, String date) {
+    public ArrayList<Flight> findFlights(Route route, String date, int passengers) {
         ArrayList<Flight> flightList = new ArrayList<>();
-        String query = "SELECT * FROM flights WHERE route_id = ? AND departure_date > '"+date+"'";
+        String query = "SELECT * FROM flights WHERE route_id = ? AND departure_date > '"+date+"' AND available_seats > ?";
         try {
             connObj = dbConnect();
             stmtObj = connObj.prepareStatement(query);
             stmtObj.setInt(1, route.getId());
-            //stmtObj.setDate(2, date);
+            stmtObj.setInt(2, passengers);
             rsObj = stmtObj.executeQuery();
 
             while (rsObj.next()) {
@@ -215,7 +215,7 @@ public class JDBCFlightDAO implements FlightDAO {
                 flight.setId(rsObj.getInt("id"));
                 flight.setLocator(rsObj.getString("locator"));
                 flight.setRoute(route);
-                flight.setDeparture(rsObj.getDate("departure"));
+                flight.setDeparture(rsObj.getDate("departure_date"));
                 flight.setArrivaltime(rsObj.getString("departure_time"));
                 flight.setArrivaltime(rsObj.getString("arrival_time"));
                 flight.setAvailableSeats(rsObj.getInt("available_seats"));

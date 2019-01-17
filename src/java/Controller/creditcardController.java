@@ -61,8 +61,8 @@ public class creditcardController extends HttpServlet {
             request.setAttribute("user", user);
             
         }else if(operation.equals("edit")){
-            id= Integer.parseInt(request.getParameter("userId"));
-            ccId = creditCardDAO.find(id).getId();
+            ccId= Integer.parseInt(request.getParameter("id"));
+            //ccId = creditCardDAO.find(id).getId();
             
             forward="editCreditCard.jsp";
             CreditCard cc = creditCardDAO.find(ccId);
@@ -76,13 +76,13 @@ public class creditcardController extends HttpServlet {
             forward = "listCreditCards.jsp";
             request.setAttribute("creditcards", ccList);    
         }else if(operation.equalsIgnoreCase("view")){
-            id = Integer.parseInt(request.getParameter("id"));
-            ccId = creditCardDAO.find(id).getId();
+            ccId = Integer.parseInt(request.getParameter("id"));
+            //ccId = creditCardDAO.find(id).getId();
             forward="viewCreditCard.jsp";
             CreditCard cc = creditCardDAO.find(ccId);
             request.setAttribute("creditCard", cc);
         }else{
-            forward="paginauser.jsp";
+            forward="listCreditCards.jsp";
         }
         RequestDispatcher view = request.getRequestDispatcher(forward);
         view.forward(request, response);
@@ -120,16 +120,24 @@ public class creditcardController extends HttpServlet {
                 RequestDispatcher view = req.getRequestDispatcher("viewCreditCard.jsp");
                 req.setAttribute("creditCard", creditCard);
                 view.forward(req, resp);
+            }else{
+                RequestDispatcher view = req.getRequestDispatcher("listCreditCards.jsp");
+                req.setAttribute("creditcards", creditCardDAO.findAllByUserId(userId));
+                view.forward(req, resp);
             }
         } //This is the "edit cc" case
         else {
             creditCard.setId(Integer.parseInt(req.getParameter("id")));
             success = creditCardDAO.update(creditCard);
             req.setAttribute("success", success);
-            s.setAttribute("creditCardId", creditCard.getId());
+            //s.setAttribute("creditCardId", creditCard.getId());
             if (success) {
                 RequestDispatcher view = req.getRequestDispatcher("viewCreditCard.jsp");
-                req.setAttribute("credtiCard", creditCard);
+                req.setAttribute("creditCard", creditCard);
+                view.forward(req, resp);
+            }else{
+                RequestDispatcher view = req.getRequestDispatcher("listCreditCards.jsp");
+                req.setAttribute("creditcards", creditCardDAO.findAllByUserId(userId));
                 view.forward(req, resp);
             }
         }

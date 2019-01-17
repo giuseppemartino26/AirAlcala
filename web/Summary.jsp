@@ -23,7 +23,12 @@
         <link rel="stylesheet" type="text/css" href="styles/styles.css">    
 
         <script>
-
+            $(document).ready(function () {
+                if(<%=session.getAttribute("saleID_2")%> == null){
+                    alert("no hay segunda compra");
+                    $("#roundTrip").toggle();
+                }
+            });
         </script>
     </head>
     <body>
@@ -140,7 +145,7 @@
                         <td>Fecha Vuelta</td>
                         <td><%=session.getAttribute("Departure_2")%></td><!---->
                     </tr>
-                    
+
                     <tr>
                         <td>N&uacute;mero de pasajeros</td>
                         <td><%=session.getAttribute("passengers")%></td><!---->
@@ -151,7 +156,7 @@
                     </tr>
                 </table>
             </div>
-                    <!--<h4>Precio final: <--%=compra%></h4>-->
+            <!--<h4>Precio final: <--%=compra%></h4>-->
         </div>
         <footer>
             <div class='container'>

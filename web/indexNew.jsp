@@ -80,7 +80,8 @@
                             <%}
                                 if (session.getAttribute("sessionUserId") == null && session.getAttribute("sessionAdminId") == null) { %>
                         <li class="active"><a href="indexNew.jsp">Inicio</a></li>
-                        <li class="active"><a href="userController?operation=add">Crear Cuenta</a></li>
+                        <li class="active"><a href="loginController?operation=login">Cuenta Usuario</a></li>
+                        <li class="active"><a href="adminloginController">Login Admin</a></li>
                             <%}%>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">

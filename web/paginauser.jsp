@@ -97,7 +97,7 @@
 
                             <td>   <div class="topButton"><a class="btn btn-primary" role="button" href="userController?operation=view&userId=<%=session.getAttribute("sessionUserId")%>">Mis Datos</a></div> </td>
 
-                            <td>     <div class="topButton"><a href="creditcardController?operation=edit&userId=<%=session.getAttribute("sessionUserId")%> " class="btn btn-primary" role="button" >Editar Medios de Pago</a></div> </td>
+                            <td>     <div class="topButton"><a href="creditcardController?operation=list&userId=<%=session.getAttribute("sessionUserId")%> " class="btn btn-primary" role="button" >Mis Medios de Pago</a></div> </td>
 
 
                         </tr>

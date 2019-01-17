@@ -176,7 +176,6 @@ public class JDBCRouteDAO implements RouteDAO {
                 AirportDAO airportDAO = new JDBCAirportDAO();
                 Airport origin = airportDAO.find(rsObj.getInt("origin"));
                 Airport destination = airportDAO.find(rsObj.getInt("destination"));
-                
 
                 route.setId(rsObj.getInt("id"));
                 route.setOrigin(origin);
@@ -196,7 +195,7 @@ public class JDBCRouteDAO implements RouteDAO {
     }
 
     @Override
-    public ArrayList<Route> findRoute(int origin, int destination, int passengers) {
+    public ArrayList<Route> findRoute(int origin, int destination) {
         ArrayList<Route> routeList = new ArrayList<Route>();
         String query = "SELECT * FROM routes WHERE origin = ? AND destination = ? ";
         try {
@@ -211,17 +210,16 @@ public class JDBCRouteDAO implements RouteDAO {
                 Airplane plane = planeDAO.find(rsObj.getInt("airplane_id"));
 
                 AirportDAO airportDAO = new JDBCAirportDAO();
-                Airport originAirpot = airportDAO.findName(rsObj.getString("origin"));
-                Airport destinationAirpot = airportDAO.findName(rsObj.getString("destination"));
+                Airport originAirpot = airportDAO.find(rsObj.getInt("origin"));
+                Airport destinationAirpot = airportDAO.find(rsObj.getInt("destination"));
 
                 route.setId(rsObj.getInt("id"));
                 route.setOrigin(originAirpot);
                 route.setDestination(destinationAirpot);
                 route.setPlane(plane);
                 route.setTicketPrice(rsObj.getInt("ticketprice"));
-                if (plane.getPlaces() > passengers) {
-                    routeList.add(route);
-                }
+                routeList.add(route);
+
             }
             rsObj.close();
             dbDisconnect();
