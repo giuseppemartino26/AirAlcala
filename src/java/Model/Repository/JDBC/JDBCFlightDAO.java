@@ -216,7 +216,7 @@ public class JDBCFlightDAO implements FlightDAO {
                 flight.setLocator(rsObj.getString("locator"));
                 flight.setRoute(route);
                 flight.setDeparture(rsObj.getDate("departure_date"));
-                flight.setArrivaltime(rsObj.getString("departure_time"));
+                flight.setDeparturetime(rsObj.getString("departure_time"));
                 flight.setArrivaltime(rsObj.getString("arrival_time"));
                 flight.setAvailableSeats(rsObj.getInt("available_seats"));
 

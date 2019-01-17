@@ -41,7 +41,9 @@ public class selectflightController extends HttpServlet {
         double tax=flight.getRoute().getDestination().getTax();
         compra = (price+(price*(tax/100))+(price*iva))* ((int) s.getAttribute("passengers"));
         s.setAttribute("flightIdDeparture", flightIdDeparture);
-            s.setAttribute("price_1", compra);
+        s.setAttribute("price_1", compra);
+        s.setAttribute("departuretimeIda", flight.getDeparturetime());
+        s.setAttribute("arrivaltimeIda", flight.getArrivaltime());
         String flightArrival = req.getParameter("flightArrival");
         s.setAttribute("price_2", null);
         s.setAttribute("flightIdArrival", null);
@@ -53,6 +55,8 @@ public class selectflightController extends HttpServlet {
             tax=flight.getRoute().getDestination().getTax();
             double compra_2 =(price+(price*(tax/100))+(price*iva))* ((int) s.getAttribute("passengers"));
             s.setAttribute("flightIdArrival", flightIdArrival);
+            s.setAttribute("departuretimeVuelta", flight.getDeparturetime());
+            s.setAttribute("arrivaltimeVuelta", flight.getArrivaltime());
             s.setAttribute("price_2", compra_2);
             s.setAttribute("price", compra+compra_2);
         }else{

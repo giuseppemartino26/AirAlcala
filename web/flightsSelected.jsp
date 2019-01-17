@@ -98,6 +98,8 @@
                             <th>Origen</th>
                             <th>Destino</th>
                             <th>Fecha salida</th>
+                            <th>Tiempo Salida</th>
+                            <th>Tiempo Llegada</th>                            
                             <th></th>
                         </tr>
                     </thead>
@@ -108,7 +110,8 @@
                                 <td><%= session.getAttribute("origin")%></td>
                                 <td><%= session.getAttribute("destination")%></td>
                                 <td><c:out value="${flight.departure}"/></td>
-
+                                <td><c:out value="${flight.departuretime}"/></td>
+                                <td><c:out value="${flight.arrivaltime}"/></td>
 
                                 <td><input type="radio" name="flightDeparture" value="${flight.id}" required ></td>
 
@@ -121,7 +124,8 @@
                             <th>Origen</th>
                             <th>Destino</th>
                             <th>Fecha salida</th>
-
+                            <th>Tiempo Salida</th>
+                            <th>Tiempo Llegada</th> 
                             <th></th>
                         </tr> 
                     </tfoot>
@@ -137,6 +141,8 @@
                             <th>Origen</th>
                             <th>Destino</th>
                             <th>Fecha salida</th>
+                            <th>Tiempo Salida</th>
+                            <th>Tiempo Llegada</th>
                             <th></th>
                         </tr>                       
                     </thead>
@@ -144,9 +150,11 @@
                         <c:forEach items="${flights_arrival}" var="flight">
                             <tr>
                                 <td><c:out value="${flight.id}" /></td>
-                                <td><%= session.getAttribute("destination")%></td>
                                 <td><%= session.getAttribute("origin")%></td>
+                                <td><%= session.getAttribute("destination")%></td>
                                 <td><c:out value="${flight.departure}"/></td>
+                                <td><c:out value="${flight.departuretime}"/></td>
+                                <td><c:out value="${flight.arrivaltime}"/></td>
 
 
                                 <td><input type="radio" name="flightArrival" value="${flight.id}" ></td>
@@ -160,7 +168,8 @@
                             <th>Origen</th>
                             <th>Destino</th>
                             <th>Fecha salida</th>
-
+                            <th>Tiempo Salida</th>
+                            <th>Tiempo Llegada</th>
                             <th></th>
                         </tr>
                     </tfoot>

@@ -116,6 +116,14 @@
                         <td><%=session.getAttribute("Departure_date")%></td><!---->
                     </tr>
                     <tr>
+                        <td>Tiempo de Salida Ida</td>
+                        <td><%=session.getAttribute("departuretimeIda")%></td><!---->
+                    </tr>
+                    <tr>
+                        <td>Tiempo de Llegada Ida</td>
+                        <td><%=session.getAttribute("arrivaltimeIda")%></td><!---->
+                    </tr>                     
+                    <tr>
                         <td>N&uacute;mero de pasajeros</td>
                         <td><%=session.getAttribute("passengers")%></td><!---->
                     </tr>
@@ -144,7 +152,14 @@
                         <td>Fecha Vuelta</td>
                         <td><%=session.getAttribute("Departure_2")%></td><!---->
                     </tr>
-
+                    <tr>
+                        <td>Tiempo de Salida Ida</td>
+                        <td><%=session.getAttribute("departuretimeVuelta")%></td><!---->
+                    </tr>
+                    <tr>
+                        <td>Tiempo de Llegada Ida</td>
+                        <td><%=session.getAttribute("arrivaltimeVuelta")%></td><!---->
+                    </tr> 
                     <tr>
                         <td>N&uacute;mero de pasajeros</td>
                         <td><%=session.getAttribute("passengers")%></td><!---->
