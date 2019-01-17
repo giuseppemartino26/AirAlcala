@@ -136,7 +136,7 @@ public class userController extends HttpServlet {
                 view.forward(req, res);
                 //res.sendRedirect(res.encodeRedirectURL("viewUser.jsp"));
             } else {
-                res.sendRedirect(res.encodeRedirectURL("existingUserError.jsp"));
+                res.sendRedirect(res.encodeRedirectURL("createUser.jsp"));
             }
         }
     }

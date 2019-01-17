@@ -162,7 +162,8 @@
                     <thead>
                         <tr>
                             <th>Ganancias</th>
-                            <th>Id_vuelo</th>                
+                            <th>Origen</th>  
+                            <th>Destino</th>
                         </tr>
                     </thead>
                     <%
@@ -174,12 +175,18 @@
                             ResultSet rs = stm.executeQuery(Query);
                             while (rs.next()) {
                                 Double price = rs.getDouble(1);
+                                //String.format("%.3f", price);
                                 int flightId = rs.getInt(2);
+                                FlightDAO flightDAO = new JDBCFlightDAO();
+                                Flight flight=flightDAO.find(flightId);
+                                String origin = flight.getRoute().getOrigin().getName();
+                                String destination = flight.getRoute().getDestination().getName();
                     %>
                     <tbody>
                         <tr>
-                            <td> <%=price%> </td>
-                            <td> <%=flightId%> </td>
+                            <td> <%=String.format("%.3f", price)%> </td>
+                            <td> <%=origin%> </td>
+                            <td><%=destination%></td>
                         </tr>
                     </tbody>
                     <%
@@ -193,7 +200,8 @@
                     <tfoot>
                         <tr>
                             <th>Ganancias</th>
-                            <th>Id_vuelo</th> 
+                            <th>Origen</th>  
+                            <th>Destino</th> 
 
                         </tr> 
                     </tfoot>
@@ -218,7 +226,7 @@
                     %>
                     <tbody>
                         <tr>
-                            <td style=""> <%=price%> </td>
+                            <td style=""> <%=String.format("%.3f", price)%> </td>
                         </tr>
                     </tbody>
                     <%

@@ -35,7 +35,7 @@ public class selectflightController extends HttpServlet {
         double compra = 0;
         double price = flight.getRoute().getTicketPrice();
         System.out.println(price);
-        double tax=flight.getRoute().getOrigin().getTax();
+        double tax=flight.getRoute().getDestination().getTax();
         compra = (price+(price*(tax/100))+(price*iva))* ((int) s.getAttribute("passengers"));
         s.setAttribute("flightIdDeparture", flightIdDeparture);
             s.setAttribute("price_1", compra);
