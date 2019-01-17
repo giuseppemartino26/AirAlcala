@@ -56,7 +56,7 @@ public class adminloginController extends HttpServlet {
         Administrator admin = new Administrator();
         AdministratorDAO adminDAO = new JDBCAdministratorDAO();
         admin = adminDAO.findbyEmail(email);
-        System.out.println(admin.toString());
+        //System.out.println(admin.toString());
         
         if(admin != null) {
             // Check typed in password with stored hash in Database

@@ -50,6 +50,7 @@ public class loginController extends HttpServlet {
         String operation = request.getParameter("operation");
         String forward = "";
         System.err.print(operation);
+        if(operation!=null){
         if (operation.equalsIgnoreCase("sale")) {
             s.setAttribute("proceso", "ventaFlight");
             forward = "index.jsp";
@@ -68,7 +69,9 @@ public class loginController extends HttpServlet {
             forward = "index.jsp";
             s.setAttribute("proceso", "myAcount");
         }
-
+        }else{
+            forward="index.jsp";
+        }
         RequestDispatcher view = request.getRequestDispatcher(forward);
         view.forward(request, response);
     }
