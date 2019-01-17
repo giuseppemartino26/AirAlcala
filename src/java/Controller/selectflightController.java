@@ -36,7 +36,7 @@ public class selectflightController extends HttpServlet {
         double price = flight.getRoute().getTicketPrice();
         System.out.println(price);
         double tax=flight.getRoute().getOrigin().getTax();
-        compra = (((price + tax) * iva)+(price + tax)) * ((int) s.getAttribute("passengers"));
+        compra = (price+(price*(tax/100))+(price*iva))* ((int) s.getAttribute("passengers"));
         s.setAttribute("flightIdDeparture", flightIdDeparture);
             s.setAttribute("price_1", compra);
         String flightArrival = req.getParameter("flightArrival");
@@ -48,7 +48,7 @@ public class selectflightController extends HttpServlet {
             flight = flightDAO.find(flightIdArrival);
             price = flight.getRoute().getTicketPrice();
             tax=flight.getRoute().getOrigin().getTax();
-            double compra_2 =(((price + tax) * iva)+(price + tax)) * ((int) s.getAttribute("passengers"));
+            double compra_2 =(price+(price*(tax/100))+(price*iva))* ((int) s.getAttribute("passengers"));
             s.setAttribute("flightIdArrival", flightIdArrival);
             s.setAttribute("price_2", compra_2);
             s.setAttribute("price", compra+compra_2);

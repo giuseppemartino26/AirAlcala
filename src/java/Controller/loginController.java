@@ -50,7 +50,7 @@ public class loginController extends HttpServlet {
         String operation = request.getParameter("operation");
         String forward = "";
         System.err.print(operation);
-        if(operation!=null){
+        
         if (operation.equalsIgnoreCase("sale")) {
             s.setAttribute("proceso", "ventaFlight");
             forward = "index.jsp";
@@ -68,9 +68,6 @@ public class loginController extends HttpServlet {
         } else {
             forward = "index.jsp";
             s.setAttribute("proceso", "myAcount");
-        }
-        }else{
-            forward="index.jsp";
         }
         RequestDispatcher view = request.getRequestDispatcher(forward);
         view.forward(request, response);
@@ -122,7 +119,7 @@ public class loginController extends HttpServlet {
                 res.sendRedirect("loginController?operation=login");
             }
         } else {
-            RequestDispatcher view = req.getRequestDispatcher("index.html");
+            RequestDispatcher view = req.getRequestDispatcher("index.jsp");
             PrintWriter out = res.getWriter();
             out.println("<font color=red>Either user name or password is wrong.</font>");
             view.forward(req, res);
