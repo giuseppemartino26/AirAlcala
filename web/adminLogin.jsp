@@ -67,7 +67,7 @@
                         <li><a href="logoutController"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
                             <%}
                                 if (session.getAttribute("sessionUserId") == null && session.getAttribute("sessionAdminId") == null) {%>
-                        <li><a href="loginController"><span class="glyphicon glyphicon-log-out">
+                        <li><a href="loginController?operation=login"><span class="glyphicon glyphicon-log-out">
                                 </span>Login</a></li>
                                 <% }%>
                     </ul>
