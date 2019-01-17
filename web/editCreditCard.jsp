@@ -119,29 +119,29 @@
                     <div class="row">
                         <div class= "col-lg-6">
                         <label for="name_credit">Nombre del titular</label>
-                        <input type="text" id="name_credit" class="form-control" 
+                        <input type="text" id="name_credit" class="form-control input-lg" 
                                value="${creditCard.user.pname} ${creditCard.user.sname1} ${creditCard.user.sname2}" required pattern="[A-zÀ-ž\s]{1,}">
                         </div>
                         <div class="col-lg-6">
                         <label for="number">Número de Tarjeta</label>
-                        <input type="number" name="number" id="number" class="form-control"
+                        <input type="number" name="number" id="number" class="form-control input-lg"
                                value="${creditCard.number}" required>
                         </div>
                    </div>
                     <div class="row">
                         <div class="col-xs-2">
-                        <label for="month">Mes</label>
-                        <input type="number" name="month" id="month" class="form-control" value="${creditCard.month}" min="1" max="12" required>
+                        <label for="month">Expiración (Mes)</label>
+                        <input type="number" name="month" id="month" class="form-control input-lg" value="${creditCard.month}" min="1" max="12" required>
                         <!--1-12 Range-->
                         </div>
                         <div class="col-xs-2">
-                        <label for="year">Año</label>
-                        <input type="number" name="year" id="year" class="form-control" value="${creditCard.year}" min="2019" required>
+                        <label for="year">Expiració (Año)</label>
+                        <input type="number" name="year" id="year" class="form-control input-lg" value="${creditCard.year}" min="2019" required>
                         <!--+19 Range-->
                         </div> 
                         <div class="col-xs-2" >
                         <label for="cvc">cvc</label>
-                        <input type="number" id="cvc" name="cvc" class="form-control" value="${creditCard.securityCode}" min="1" max="999" required>
+                        <input type="number" id="cvc" name="cvc" class="form-control input-lg" value="${creditCard.securityCode}" min="1" max="999" required>
                         <!--3 digits Range-->
                         </div>
                    </div>

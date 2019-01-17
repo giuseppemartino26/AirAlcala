@@ -118,28 +118,28 @@
                   <div class="row">
                     <div class= "col-lg-6">
                         <label for="name_credit">Nombre del titular</label>
-                        <input type="text" id="name_credit" class="form-control"
+                        <input type="text" id="name_credit" class="form-control input-lg"
                                value="${user.pname} ${user.sname1} ${user.sname2}" disabled>
                     </div>
                     <div class= "col-lg-6">
                         <label for="number">Numero de la tarjeta</label>
-                        <input type="number" name="number" id="number" class="form-control" placeholder="Numeros de tarjeta de crédito" required>
+                        <input type="number" name="number" id="number" class="form-control input-lg" placeholder="Numeros de tarjeta de crédito" required>
                     </div>
                   </div>  
                   <div class="row">  
                     <div class="col-xs-2">
-                        <label>Fecha de expiración (Month)</label>
-                        <input type="number" name="month" id="month" class="form-control" placeholder="mm" min="1" max="12" required>
+                        <label>Expiración (Mes)</label>
+                        <input type="number" name="month" id="month" class="form-control input-lg" placeholder="mm" min="1" max="12" required>
                         <!--1-12 Range-->
                     </div>    
                     <div class="col-xs-2">
-                        <label>Fecha de expiración (Year)</label>
-                        <input type="number" name="year" id="year" class="form-control" placeholder="yy" min="2019" required>
+                        <label>Expiración (Año)</label>
+                        <input type="number" name="year" id="year" class="form-control input-lg" placeholder="yy" min="2019" required>
                         <!--+19 Range-->
                     </div>
-                    <div form-group class="col-xs-2">  
+                    <div class="col-xs-2">  
                         <label for="cvc">Codigo de verificación</label>
-                        <input type="number" name="cvc" id="cvc" class="form-control" placeholder="cvc" min="1" max="999" required>
+                        <input type="number" name="cvc" id="cvc" class="form-control input-lg" placeholder="cvc" min="1" max="999" required>
                         <!--3 digits Range-->
                     </div>
                    </div> 
