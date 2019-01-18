@@ -7,6 +7,10 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@page import="Model.Flight"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="Model.Repository.JDBC.JDBCFlightDAO"%>
+<%@page import="Model.Repository.FlightDAO"%>
 <!doctype html>
 <html lang="es">
     <head>
@@ -21,15 +25,27 @@
         <link rel="stylesheet" type="text/css" href="styles/styles.css">
 
         <script>
+
             $(document).ready(function () {
                 $('#datatable').DataTable();
                 $('#datatable2').DataTable();
+                var combebak = "<c:out value='${flights_arrival}'/>";
+                if (combebak==="") {
+                    $("#comeback").hide();
+                }
                 
             });
             
-            function check_data(){
-                
-            }
+            //function to not let you choose unsupported flights in date and time 
+            /* dont work yet
+            function checkFlight(){
+                var departure = $("#flightDeparture").val();
+                var comebak = $("#flightArrival").val();
+                FlightDAO flightDAO= new JDBCFlightDAO();
+                Flight flight=flightDAO.find(departure);
+                Date date_departure=flight.getDeparture()
+                return true;
+            }*/
         </script>
     </head>
     <body>   
@@ -86,100 +102,100 @@
             <br>
             <br>
             <form method="POST" action="selectflightController" onsubmit="return check_data()">
-            <div class="container">
-                <h3>Vuelos encontrados</h3>
+                <div class="container">
+                    <h3>Vuelos encontrados</h3>
 
-                <br>
-                <h4>Vuelos Ida</h4>
-                <table id="datatable" class="display" style="width:100%">
-                    <thead>
-                        <tr>
-                            <th>Id Vuelo</th>
-                            <th>Origen</th>
-                            <th>Destino</th>
-                            <th>Fecha salida</th>
-                            <th>Tiempo Salida</th>
-                            <th>Tiempo Llegada</th>                            
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <c:forEach items="${flights_departure}" var="flight">
+                    <br>
+                    <h4>Vuelos Ida</h4>
+                    <table id="datatable" class="display" style="width:100%">
+                        <thead>
                             <tr>
-                                <td><c:out value="${flight.id}" /></td>
-                                <td><%= session.getAttribute("origin")%></td>
-                                <td><%= session.getAttribute("destination")%></td>
-                                <td><c:out value="${flight.departure}"/></td>
-                                <td><c:out value="${flight.departuretime}"/></td>
-                                <td><c:out value="${flight.arrivaltime}"/></td>
-
-                                <td><input type="radio" name="flightDeparture" value="${flight.id}" required ></td>
-
+                                <th>Id Vuelo</th>
+                                <th>Origen</th>
+                                <th>Destino</th>
+                                <th>Fecha salida</th>
+                                <th>Tiempo Salida</th>
+                                <th>Tiempo Llegada</th>                            
+                                <th></th>
                             </tr>
-                        </c:forEach>
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <th>Id Vuelo</th>
-                            <th>Origen</th>
-                            <th>Destino</th>
-                            <th>Fecha salida</th>
-                            <th>Tiempo Salida</th>
-                            <th>Tiempo Llegada</th> 
-                            <th></th>
-                        </tr> 
-                    </tfoot>
-                </table>
+                        </thead>
+                        <tbody>
+                            <c:forEach items="${flights_departure}" var="flight">
+                                <tr>
+                                    <td><c:out value="${flight.id}" /></td>
+                                    <td><%= session.getAttribute("origin")%></td>
+                                    <td><%= session.getAttribute("destination")%></td>
+                                    <td><c:out value="${flight.departure}"/></td>
+                                    <td><c:out value="${flight.departuretime}"/></td>
+                                    <td><c:out value="${flight.arrivaltime}"/></td>
+
+                                    <td><input type="radio" id="flightDeparture" name="flightDeparture" value="${flight.id}" required ></td>
+
+                                </tr>
+                            </c:forEach>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Id Vuelo</th>
+                                <th>Origen</th>
+                                <th>Destino</th>
+                                <th>Fecha salida</th>
+                                <th>Tiempo Salida</th>
+                                <th>Tiempo Llegada</th> 
+                                <th></th>
+                            </tr> 
+                        </tfoot>
+                    </table>
                 </div>
-            <br><br>
-            <div class="container"  id="comeback">
+                <br><br>
+                <div class="container"  id="comeback">
                     <h4>Vuelos Vuelta</h4>
-                <table id="datatable2" class="display" style="width:100%">
-                    <thead>
-                        <tr>
-                            <th>Id Vuelo</th>
-                            <th>Origen</th>
-                            <th>Destino</th>
-                            <th>Fecha salida</th>
-                            <th>Tiempo Salida</th>
-                            <th>Tiempo Llegada</th>
-                            <th></th>
-                        </tr>                       
-                    </thead>
-                    <tbody>
-                        <c:forEach items="${flights_arrival}" var="flight">
+                    <table id="datatable2" class="display" style="width:100%">
+                        <thead>
                             <tr>
-                                <td><c:out value="${flight.id}" /></td>
-                                <td><%= session.getAttribute("origin")%></td>
-                                <td><%= session.getAttribute("destination")%></td>
-                                <td><c:out value="${flight.departure}"/></td>
-                                <td><c:out value="${flight.departuretime}"/></td>
-                                <td><c:out value="${flight.arrivaltime}"/></td>
+                                <th>Id Vuelo</th>
+                                <th>Origen</th>
+                                <th>Destino</th>
+                                <th>Fecha salida</th>
+                                <th>Tiempo Salida</th>
+                                <th>Tiempo Llegada</th>
+                                <th></th>
+                            </tr>                       
+                        </thead>
+                        <tbody>
+                            <c:forEach items="${flights_arrival}" var="flight">
+                                <tr>
+                                    <td><c:out value="${flight.id}" /></td>
+                                    <td><%= session.getAttribute("origin")%></td>
+                                    <td><%= session.getAttribute("destination")%></td>
+                                    <td><c:out value="${flight.departure}"/></td>
+                                    <td><c:out value="${flight.departuretime}"/></td>
+                                    <td><c:out value="${flight.arrivaltime}"/></td>
 
 
-                                <td><input type="radio" name="flightArrival" value="${flight.id}" ></td>
+                                    <td><input type="radio" id="flightArrival" name="flightArrival" value="${flight.id}" ></td>
 
+                                </tr>
+                            </c:forEach>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Id Vuelo</th>
+                                <th>Origen</th>
+                                <th>Destino</th>
+                                <th>Fecha salida</th>
+                                <th>Tiempo Salida</th>
+                                <th>Tiempo Llegada</th>
+                                <th></th>
                             </tr>
-                        </c:forEach>
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <th>Id Vuelo</th>
-                            <th>Origen</th>
-                            <th>Destino</th>
-                            <th>Fecha salida</th>
-                            <th>Tiempo Salida</th>
-                            <th>Tiempo Llegada</th>
-                            <th></th>
-                        </tr>
-                    </tfoot>
-                </table>
+                        </tfoot>
+                    </table>
                     <table>
                         <tr>
                             <td> <button type="submit" class="btn btn-secondary"><span class="glyphicon glyphicon-search"></span> Buscar</button></td>
                         </tr>
                     </table>
-            </div>
+                </div>
             </form>
         </div>
         <footer>

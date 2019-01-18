@@ -96,6 +96,8 @@
                         <tr>
                             <th>Id</th>
                             <th>Id_vuelo</th>
+                            <th>Fecha de Salida</th>
+                            <th>Hora de Salida</th>
                             <th>Lugar de Salida</th>
                             <th>Pasajeros</th>
                             <th>Precio</th>
@@ -107,6 +109,8 @@
                             <tr>
                                 <td><c:out value="${sale.id}" /></td>
                                 <td><c:out value="${sale.flight.locator}" /></td>
+                                <td><c:out value="${sale.flight.departure}" /></td>
+                                <td><c:out value="${sale.flight.departuretime}" /></td>
                                 <td><c:out value="${sale.place}" /></td>
                                 <td><c:out value="${sale.passengers}" /></td>
                                 <td><c:out value="${sale.price}" /></td>
@@ -118,6 +122,8 @@
                         <tr>
                             <th>Id</th>
                             <th>Id_vuelo</th>
+                            <th>Fecha de Salida</th>
+                            <th>Hora de Salida</th>
                             <th>Lugar de Salida</th>
                             <th>Pasajeros</th>
                             <th>Precio</th>
