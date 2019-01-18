@@ -6,6 +6,8 @@
 
 <%@page import="java.util.ArrayList"%>
 <%@page import="Model.Flight"%>
+<%@page import="Model.Repository.SaleDAO" %>
+<%@page import="Model.Repository.JDBC.JDBCSaleDAO" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
@@ -27,6 +29,7 @@
                 $('#datatable').DataTable();
             });
         </script>
+
     </head>
     <body>
         <%
@@ -118,7 +121,10 @@
                             <td><%=flight.getArrivaltime()%></td>
                             <td><%=flight.getAvailableSeats()%></td>
                             <td><%=flight.getRoute().getPlane().getPlaces() - flight.getAvailableSeats()%></td>
-                            <td><%=flight.getRoute().getTicketPrice() * (flight.getRoute().getPlane().getPlaces() - flight.getAvailableSeats())%></td>
+                            <!--<td><%=flight.getRoute().getTicketPrice() * (flight.getRoute().getPlane().getPlaces() - flight.getAvailableSeats())%></td>-->
+                            <% SaleDAO saleDAO = new JDBCSaleDAO();
+                                double total = saleDAO.sumByFlight(flight.getId());%>
+                            <td><%=total%></td>
                             <td><a href="flightController?operation=edit&flightId=<%=flight.getId()%>">actualizar</a></td>
                             <td><a href="flightController?operation=delete&flightId=<%=flight.getId()%>">borrar</a></td>
                         </tr>
@@ -144,8 +150,10 @@
                 </table>
                 <%
                     double gananciaTotal = 0;
+                    SaleDAO saleDAO = new JDBCSaleDAO();
+                                
                     for (Flight flight : flights) {
-                        gananciaTotal += flight.getRoute().getTicketPrice() * (flight.getRoute().getPlane().getPlaces() - flight.getAvailableSeats());
+                        gananciaTotal += saleDAO.sumByFlight(flight.getId());
                     }
                 %>
                 <br> <br> <h3>Ganancia Total: <%=gananciaTotal%></h3>

@@ -48,7 +48,6 @@ public class selectflightController extends HttpServlet {
         s.setAttribute("price_2", null);
         s.setAttribute("flightIdArrival", null);
         if (req.getParameter("flightArrival")!=null) {
-            System.out.println("text");
             int flightIdArrival = Integer.parseInt(flightArrival);
             flight = flightDAO.find(flightIdArrival);
             price = flight.getRoute().getTicketPrice();

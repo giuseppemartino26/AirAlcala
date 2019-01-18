@@ -31,5 +31,7 @@ public interface SaleDAO {
     public ArrayList<Sale> findByUserId(int userId);
 
     public int numberSales (int userId);
+    
+    public double sumByFlight (int flightId);
 
 }

@@ -307,6 +307,27 @@ public class JDBCSaleDAO implements SaleDAO {
         return number;
     }
     
+    @Override
+    public double sumByFlight(int flightId){
+        double total = 0;
+        String query = "SELECT SUM (price) FROM sales WHERE flight_id = ?";
+        try {
+            connObj = dbConnect();
+            stmtObj = connObj.prepareStatement(query);
+            stmtObj.setInt(1, flightId);
+            rsObj = stmtObj.executeQuery();
+            while(rsObj.next())
+                total+=rsObj.getDouble(1);
+            rsObj.close();
+            dbDisconnect();
+
+        } catch (SQLException e) {
+            System.out.println("Error Retrieving Data. " + e);
+        }
+        return total;
+        
+    }
+    
     
 }
 
