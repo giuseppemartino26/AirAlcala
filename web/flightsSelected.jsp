@@ -190,12 +190,14 @@
                             </tr>
                         </tfoot>
                     </table>
+                </div>
+                <div class="container">
                     <table>
                         <tr>
                             <td> <button type="submit" class="btn btn-secondary"><span class="glyphicon glyphicon-search"></span> Buscar</button></td>
                         </tr>
-                    </table>
-                </div>
+                    </table> 
+                </div>    
             </form>
         </div>
         <footer>
